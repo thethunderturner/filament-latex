@@ -1,15 +1,15 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace TheThunderTurner\FilamentLatex;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class SkeletonPlugin implements Plugin
+class FilamentLatexPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'skeleton';
+        return 'filament-latex';
     }
 
     public function register(Panel $panel): void

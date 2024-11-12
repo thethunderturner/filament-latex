@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace TheThunderTurner\FilamentLatex\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentLatexCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-latex';
 
     public $description = 'My command';
 
