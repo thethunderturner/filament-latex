@@ -39,8 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TheThunderTurner\\FilamentLatex\\": "src/",
-            "TheThunderTurner\\FilamentLatex\\Database\\Factories\\": "database/factories/"
+            "TheThunderTurner\\FilamentLatex\\": "src/"
         }
     },
     "autoload-dev": {
@@ -66,10 +65,7 @@
         "laravel": {
             "providers": [
                 "TheThunderTurner\\FilamentLatex\\FilamentLatexServiceProvider"
-            ],
-            "aliases": {
-                "FilamentLatex": "TheThunderTurner\\FilamentLatex\\Facades\\FilamentLatex"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
