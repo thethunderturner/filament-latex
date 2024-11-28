@@ -9,6 +9,7 @@
         "esbuild": "^0.17.19"
     },
     "dependencies": {
+        "@codemirror/commands": "^6.7.1",
         "@codemirror/lang-javascript": "^6.2.2",
         "@codemirror/state": "^6.4.1",
         "@codemirror/view": "^6.35.0",
