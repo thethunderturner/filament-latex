@@ -1,7 +1,10 @@
 <x-filament-panels::page>
     <x-filament::section>
-        <x-slot name="heading">CodeMirror Integration</x-slot>
-
+        <x-slot name="heading">Filament Latex</x-slot>
+        <script type="module">
+            import { LaTeXJSComponent } from "https://cdn.jsdelivr.net/npm/latex.js/dist/latex.mjs"
+            customElements.define("latex-js", LaTeXJSComponent)
+        </script>
         <div class="grid grid-flow-col justify-stretch gap-4">
             <div
                 id="codemirror-container"
@@ -10,10 +13,17 @@
                 ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
                 x-data="codeEditor()"
             >
-
             </div>
 
-            <div class="border rounded p-4">02</div>
+            <latex-js
+                class="border"
+            >
+                \documentclass{article}
+
+                \begin{document}
+                lorem ipsum dolor whatever
+                \end{document}
+            </latex-js>
         </div>
     </x-filament::section>
 </x-filament-panels::page>
