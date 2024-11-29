@@ -57,7 +57,7 @@
             "@php ./vendor/bin/testbench package:discover --ansi",
             "vendor/bin/phpstan analyse",
             "vendor/bin/pest",
-            "vendor/bin/pest --coverage",
+            "vendor/bin/pest --ci",
             "vendor/bin/pint"
         ]
     },
