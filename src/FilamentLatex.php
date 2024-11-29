@@ -10,7 +10,7 @@ class FilamentLatex extends Page
 {
     protected static string $view = 'filament-latex::page';
 
-    public static function getNavigationIcon(): string | Htmlable | null
+    public static function getNavigationIcon(): ?string
     {
         return view('filament-latex::svg.latex');
     }
