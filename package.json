@@ -13,6 +13,7 @@
         "@codemirror/lang-javascript": "^6.2.2",
         "@codemirror/state": "^6.4.1",
         "@codemirror/view": "^6.35.0",
-        "codemirror": "^6.0.1"
+        "codemirror": "^6.0.1",
+        "latex.js": "^0.12.6"
     }
 }

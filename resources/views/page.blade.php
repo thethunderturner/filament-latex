@@ -15,7 +15,9 @@
             >
             </div>
 
+{{--            pu ax-load here, and call the render function--}}
             <latex-js
+                id="latex-preview"
                 class="border"
             >
                 \documentclass{article}
