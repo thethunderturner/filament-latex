@@ -4,7 +4,6 @@ namespace TheThunderTurner\FilamentLatex;
 
 use Filament\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
-use Illuminate\Contracts\Support\Htmlable;
 
 class FilamentLatex extends Page
 {
