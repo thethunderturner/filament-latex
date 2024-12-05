@@ -5,13 +5,16 @@
             import { LaTeXJSComponent } from "https://cdn.jsdelivr.net/npm/latex.js/dist/latex.mjs"
             customElements.define("latex-js", LaTeXJSComponent)
         </script>
-        <div x-data="{ message: '' }" x-init="$watch('message', value => {
-            const container = $refs.latexContainer;
-            container.innerHTML = '';
-            const latex = document.createElement('latex-js');
-            latex.textContent = value;
-            container.appendChild(latex);
-        })">
+        <div
+            x-data="{ message: '' }"
+            x-init="$watch('message', value => {
+                const container = $refs.latexContainer;
+                container.innerHTML = '';
+                const latex = document.createElement('latex-js');
+                latex.textContent = value;
+                container.appendChild(latex);
+            })"
+        >
             <textarea
                 type="text"
                 x-model="message"
