@@ -6,6 +6,7 @@
             customElements.define("latex-js", LaTeXJSComponent)
         </script>
         <div
+            class="grid grid-flow-col justify-stretch gap-4"
             x-data="{ message: '' }"
             x-init="$watch('message', value => {
                 const container = $refs.latexContainer;
@@ -15,13 +16,14 @@
                 container.appendChild(latex);
             })"
         >
-            <textarea
-                type="text"
+            <div
                 x-model="message"
-                class="w-full p-2 mb-4 border rounded"
-                rows="5"
-            ></textarea>
-
+                x-ignore
+                ax-load
+                ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
+                x-data="codeEditor()"
+            >
+            </div>
             <div x-ref="latexContainer"></div>
         </div>
     </x-filament::section>

@@ -9,7 +9,7 @@ export default function codeEditor() {
     return {
         content: '\\documentclass{article}\n\\begin{document}\nHello LaTeX\n\\end{document}',
         init() {
-            new EditorView({
+            const editor = new EditorView({
                 state: EditorState.create({
                     doc: this.content,
                     extensions: [
@@ -19,18 +19,14 @@ export default function codeEditor() {
                         EditorView.lineWrapping,
                         EditorView.updateListener.of((update) => {
                             if (update.docChanged) {
-                                this.content = update.state.doc.toString();
-                                this.renderLatex();
+                                // Update the Alpine.js property 'message'
+                                this.$dispatch('input', update.state.doc.toString());
                             }
                         }),
                     ]
                 }),
                 parent: this.$el
             });
-        },
-        renderLatex() {
-            const previewContainer = document.getElementById('latex-preview');
-            previewContainer.innerHTML = this.content;
         }
     };
 }
