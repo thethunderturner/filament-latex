@@ -2,6 +2,10 @@
 
 All notable changes to `filament-latex` will be documented in this file.
 
+## 0.0.4 - 05-12-2024
+
+- fixed UI bugs (flickering when typing)
+
 ## 0.0.3 - 05-12-2024
 
 - can now write latex with codemirror

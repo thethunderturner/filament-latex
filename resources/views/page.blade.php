@@ -6,7 +6,7 @@
             customElements.define("latex-js", LaTeXJSComponent)
         </script>
         <div
-            class="grid grid-flow-col justify-stretch gap-4"
+            class="grid grid-cols-2 gap-4"
             x-data="{ message: '' }"
             x-init="$watch('message', value => {
                 const container = $refs.latexContainer;
@@ -17,6 +17,7 @@
             })"
         >
             <div
+                class="w-full"
                 x-model="message"
                 x-ignore
                 ax-load
