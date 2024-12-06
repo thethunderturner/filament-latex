@@ -5,6 +5,7 @@
             import { LaTeXJSComponent } from "https://cdn.jsdelivr.net/npm/latex.js/dist/latex.mjs"
             customElements.define("latex-js", LaTeXJSComponent)
         </script>
+
         <div
             class="grid grid-cols-2 gap-4"
             x-data="{ message: '' }"
@@ -14,6 +15,9 @@
                 const latex = document.createElement('latex-js');
                 latex.textContent = value;
                 container.appendChild(latex);
+
+                // Sync with Livewire component
+                @this.latexContent = value;
             })"
         >
             <div
