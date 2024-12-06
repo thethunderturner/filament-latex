@@ -7,7 +7,7 @@ import { HtmlGenerator } from 'latex.js';
 
 export default function codeEditor() {
     return {
-        content: '\\documentclass{article}\n\\begin{document}\nHello LaTeX\n\\end{document}',
+        content: '\\documentclass{article}\n\\begin{document}\n\n\n\\end{document}',
         init() {
             const editor = new EditorView({
                 state: EditorState.create({
