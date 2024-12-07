@@ -23,8 +23,6 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        Livewire::component('filament-latex', FilamentLatex::class);
-
         FilamentAsset::register(
             assets: [
                 AlpineComponent::make('filament-latex', __DIR__ . '/../resources/dist/filament-latex.js'),
