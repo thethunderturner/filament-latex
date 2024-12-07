@@ -14,6 +14,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Auth;
 use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\CreateFilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\EditFilamentLatex;
@@ -62,7 +63,7 @@ class FilamentLatexResource extends Resource
                         TextInput::make('author_name')
                             ->label('Author')
                             ->disabled()
-                            ->default(auth()->user()->name)
+                            ->default(Auth::getName())
                             ->required(),
                         Select::make('collaborators_id')
                             ->label('Collaborators')
@@ -79,6 +80,8 @@ class FilamentLatexResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $userModel = app(FilamentLatex::class)->getUserModel();
+
         return $table
             ->columns([
                 TextColumn::make('id')
@@ -91,19 +94,19 @@ class FilamentLatexResource extends Resource
                 ImageColumn::make('author')
                     ->label('Author')
                     ->circular()
-                    ->tooltip(function ($record) {
-                        return $record->getAuthorName();
+                    ->tooltip(function ($record) use ($userModel) {
+                        return $userModel::find($record->author_id)->name;
                     })
-                    ->getStateUsing(function ($record) {
-                        return $record->getAuthorAvatar();
+                    ->getStateUsing(function ($record) use ($userModel) {
+                        return $userModel::find($record->author_id)->avatar_url;
                     }),
                 ImageColumn::make('collaborators')
                     ->circular()
                     ->stacked()
                     ->limit(3)
                     ->limitedRemainingText()
-                    ->getStateUsing(function ($record) {
-                        return $record->getCollaboratorsAvatars();
+                    ->getStateUsing(function ($record) use ($userModel) {
+                        return $userModel::whereIn('id', $record->collaborators_id)->pluck('avatar_url')->toArray();
                     }),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
