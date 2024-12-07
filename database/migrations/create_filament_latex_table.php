@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Dont forget to delete (DEV ONLY)
+        if (Schema::hasTable('filament-latex')) {
+            Schema::dropIfExists('filament-latex');
+        }
         Schema::create('filament-latex', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }

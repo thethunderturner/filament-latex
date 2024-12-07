@@ -4,7 +4,7 @@ namespace TheThunderTurner\FilamentLatex;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use TheThunderTurner\FilamentLatex\Resources\LatexResource\LatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\FilamentLatexResource;
 
 class FilamentLatexPlugin implements Plugin
 {
@@ -17,7 +17,7 @@ class FilamentLatexPlugin implements Plugin
     {
         $panel
             ->resources([
-                LatexResource::class,
+                FilamentLatexResource::class,
             ]);
     }
 

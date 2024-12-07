@@ -4,7 +4,7 @@ namespace TheThunderTurner\FilamentLatex\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Latex extends Model
+class FilamentLatex extends Model
 {
     protected $fillable = ['name', 'content'];
 

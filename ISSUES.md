@@ -14,3 +14,4 @@ All issues and features to be added in `filament-latex` will be documented in th
 - When typing a latex command (ex `$...$`) the preview is disabled until the command is syntactically correct
 - Add an error icon that shows the error message when hovering over it
 - Make a codemirror language mode for latex [here](https://codemirror.net/examples/lang-package/)
+- Allow resource to be publishable
