@@ -17,8 +17,6 @@ class CreateFilamentLatex extends CreateRecord
 
     /**
      * Redirect to the document page after creating a new record.
-     *
-     * @return string
      */
     protected function getRedirectUrl(): string
     {
