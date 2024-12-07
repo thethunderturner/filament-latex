@@ -2,12 +2,15 @@
 
 namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
+use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
@@ -51,8 +54,16 @@ class FilamentLatexResource extends Resource
                             ->native(false)
                             ->placeholder('DD-MM-YYYY HH:MM')
                             ->suffixIcon('heroicon-m-calendar')
-                            ->format('d-m-Y H:i')
+                            ->format('Y-m-d H:i:s')
                             ->displayFormat('d-m-Y H:i'),
+                        Select::make('author')
+                            ->options(User::all()->pluck('name', 'id'))
+                            ->default(auth()->id())
+                            ->required(),
+                        Select::make('collaborators')
+                            ->multiple()
+                            ->options(User::all()->pluck('name', 'id'))
+                            ->searchable(),
                     ])->columns(2),
             ]);
     }
@@ -68,6 +79,20 @@ class FilamentLatexResource extends Resource
                     ->dateTime(),
                 TextColumn::make('created_at')
                     ->dateTime(),
+                ImageColumn::make('author')
+                    ->label('Author')
+                    ->circular()
+                    ->getStateUsing(function ($record) {
+                        return $record->getAuthorAvatar();
+                    }),
+                ImageColumn::make('collaborators')
+                    ->circular()
+                    ->stacked()
+                    ->limit(3)
+                    ->limitedRemainingText()
+                    ->getStateUsing(function ($record) {
+                        return $record->getCollaboratorsAvatars();
+                    }),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
                     ->dateTime()

@@ -20,7 +20,7 @@ class CreateFilamentLatex extends CreateRecord
      */
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('document');
+        return $this->getResource()::getUrl('document', ['record' => $this->record]);
     }
 
     protected function getCreatedNotificationTitle(): ?string

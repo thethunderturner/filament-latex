@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('content')->nullable();
             $table->dateTime('deadline');
+            $table->bigInteger('author');
+            $table->json('collaborators')->nullable();
             $table->timestamps();
         });
     }
