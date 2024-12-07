@@ -16,6 +16,8 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
     {
         $package->name(static::$name)
             ->hasViews()
+            ->hasConfigFile()
+            ->hasMigrations($this->getMigrations())
             ->hasTranslations();
     }
 
@@ -29,5 +31,12 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
             ],
             package: 'thethunderturner/filament-latex'
         );
+    }
+
+    protected function getMigrations(): array
+    {
+        return [
+            'create_filament_latex_table',
+        ];
     }
 }

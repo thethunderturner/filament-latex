@@ -4,6 +4,7 @@ namespace TheThunderTurner\FilamentLatex;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use TheThunderTurner\FilamentLatex\Resources\LatexResource\LatexResource;
 
 class FilamentLatexPlugin implements Plugin
 {
@@ -14,7 +15,10 @@ class FilamentLatexPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel
+            ->resources([
+                LatexResource::class,
+            ]);
     }
 
     public function boot(Panel $panel): void
