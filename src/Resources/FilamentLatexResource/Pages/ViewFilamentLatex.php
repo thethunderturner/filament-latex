@@ -12,6 +12,7 @@ use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\FilamentLatex
 class ViewFilamentLatex extends Page
 {
     use InteractsWithRecord;
+
     protected static string $resource = FilamentLatexResource::class;
 
     public function mount(int | string $record): void
