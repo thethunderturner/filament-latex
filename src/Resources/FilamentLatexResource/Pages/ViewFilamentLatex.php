@@ -1,14 +1,24 @@
 <?php
 
-namespace TheThunderTurner\FilamentLatex;
+namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 
 use Filament\Actions\Action;
-use Filament\Pages\Page;
+use Filament\Resources\Pages\Concerns\InteractsWithRecord;
+use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\Support\Htmlable;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\FilamentLatexResource;
 
-class FilamentLatex extends Page
+class ViewFilamentLatex extends Page
 {
+    use InteractsWithRecord;
+    protected static string $resource = FilamentLatexResource::class;
+
+    public function mount(int | string $record): void
+    {
+        $this->record = $this->resolveRecord($record);
+    }
+
     protected static string $view = 'filament-latex::page';
 
     public string $latexContent = '';

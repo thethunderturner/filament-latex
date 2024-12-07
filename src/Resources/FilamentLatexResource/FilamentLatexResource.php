@@ -11,6 +11,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\CreateFilamentLatex;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\EditFilamentLatex;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\ListFilamentLatexes;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\ViewFilamentLatex;
 
 class FilamentLatexResource extends Resource
 {
@@ -69,9 +73,10 @@ class FilamentLatexResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\ListFilamentLatexes::route('/'),
-            'create' => \TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\CreateFilamentLatex::route('/create'),
-            'edit' => \TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\EditFilamentLatex::route('/{record}/edit'),
+            'index' => ListFilamentLatexes::route('/'),
+            'create' => CreateFilamentLatex::route('/create'),
+            'edit' => EditFilamentLatex::route('/{record}/edit'),
+            'manage' => ViewFilamentLatex::route('/{record}/view-document'),
         ];
     }
 }
