@@ -2,18 +2,20 @@
 
 namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
-use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\CreateFilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\EditFilamentLatex;
@@ -48,6 +50,7 @@ class FilamentLatexResource extends Resource
                 Section::make()
                     ->schema([
                         TextInput::make('name')
+                            ->label('Document Title')
                             ->required(),
                         DateTimePicker::make('deadline')
                             ->required()
@@ -56,14 +59,18 @@ class FilamentLatexResource extends Resource
                             ->suffixIcon('heroicon-m-calendar')
                             ->format('Y-m-d H:i:s')
                             ->displayFormat('d-m-Y H:i'),
-                        Select::make('author')
-                            ->options(User::all()->pluck('name', 'id'))
-                            ->default(auth()->id())
+                        TextInput::make('author_name')
+                            ->disabled()
+                            ->default(auth()->user()->name)
                             ->required(),
-                        Select::make('collaborators')
+                        Select::make('collaborators_id')
                             ->multiple()
-                            ->options(User::all()->pluck('name', 'id'))
+                            ->options(config('filament-latex.user-model')::all()->pluck('name', 'id'))
                             ->searchable(),
+                        Hidden::make('author_id')
+                            ->default(auth()->user()->id)
+                            ->dehydrated()
+                            ->required(),
                     ])->columns(2),
             ]);
     }
