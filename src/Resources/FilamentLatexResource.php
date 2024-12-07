@@ -14,6 +14,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\CreateFilamentLatex;
@@ -83,6 +84,9 @@ class FilamentLatexResource extends Resource
         $userModel = app(FilamentLatex::class)->getUserModel();
 
         return $table
+            ->recordUrl(
+                fn (Model $record): string => FilamentLatexResource::getUrl('document', ['record' => $record])
+            )
             ->columns([
                 TextColumn::make('id')
                     ->label('ID'),
