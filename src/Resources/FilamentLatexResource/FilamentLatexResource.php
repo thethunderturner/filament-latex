@@ -45,6 +45,8 @@ class FilamentLatexResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $userModel = app(FilamentLatex::class)->getUserModel();
+
         return $form
             ->schema([
                 Section::make()
@@ -60,12 +62,14 @@ class FilamentLatexResource extends Resource
                             ->format('Y-m-d H:i:s')
                             ->displayFormat('d-m-Y H:i'),
                         TextInput::make('author_name')
+                            ->label('Author')
                             ->disabled()
                             ->default(auth()->user()->name)
                             ->required(),
                         Select::make('collaborators_id')
+                            ->label('Collaborators')
                             ->multiple()
-                            ->options(config('filament-latex.user-model')::all()->pluck('name', 'id'))
+                            ->options(fn () => $userModel::all()->pluck('name', 'id'))
                             ->searchable(),
                         Hidden::make('author_id')
                             ->default(auth()->user()->id)

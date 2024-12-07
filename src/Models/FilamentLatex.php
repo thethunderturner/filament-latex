@@ -54,11 +54,11 @@ class FilamentLatex extends Model
     /**
      * @throws Exception
      */
-    private function getUserModel(): string
+    public function getUserModel(): string
     {
         $userModel = config('filament-latex.user-model');
 
-        if (!$userModel || !class_exists($userModel) || !is_subclass_of($userModel, Model::class)) {
+        if (! $userModel || ! class_exists($userModel) || ! is_subclass_of($userModel, Model::class)) {
             throw new Exception('User model is not set or is not a valid Eloquent model class');
         }
 
