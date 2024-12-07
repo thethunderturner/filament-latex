@@ -82,6 +82,9 @@ class FilamentLatexResource extends Resource
                 ImageColumn::make('author')
                     ->label('Author')
                     ->circular()
+                    ->tooltip(function ($record) {
+                        return $record->getAuthorName();
+                    })
                     ->getStateUsing(function ($record) {
                         return $record->getAuthorAvatar();
                     }),

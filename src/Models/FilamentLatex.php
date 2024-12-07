@@ -21,6 +21,12 @@ class FilamentLatex extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function getAuthorName()
+    {
+        $userID = $this->author;
+        return $userID ? User::find($userID)->name : null;
+    }
+
     public function getCollaboratorsAvatars()
     {
         $userIds = $this->collaborators;
