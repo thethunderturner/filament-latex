@@ -2,13 +2,10 @@
 
 namespace TheThunderTurner\FilamentLatex;
 
-use Abiturma\LaravelLatex\Facades\Latex;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\Support\Htmlable;
-use PhpLatex_PdfLatex;
 
 class FilamentLatex extends Page
 {
