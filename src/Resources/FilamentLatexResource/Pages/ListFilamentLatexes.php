@@ -5,7 +5,7 @@ namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class ListFilamentLatexes extends ListRecords
 {

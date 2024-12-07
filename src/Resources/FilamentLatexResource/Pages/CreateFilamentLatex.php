@@ -4,7 +4,7 @@ namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class CreateFilamentLatex extends CreateRecord
 {

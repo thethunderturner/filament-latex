@@ -7,7 +7,7 @@ use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\Support\Htmlable;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class ViewFilamentLatex extends Page
 {
