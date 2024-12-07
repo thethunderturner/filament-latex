@@ -54,7 +54,8 @@ class FilamentLatexResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->color('warning'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -76,7 +77,7 @@ class FilamentLatexResource extends Resource
             'index' => ListFilamentLatexes::route('/'),
             'create' => CreateFilamentLatex::route('/create'),
             'edit' => EditFilamentLatex::route('/{record}/edit'),
-            'manage' => ViewFilamentLatex::route('/{record}/view-document'),
+            'document' => ViewFilamentLatex::route('/{record}/view-document'),
         ];
     }
 }

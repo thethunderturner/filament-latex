@@ -14,4 +14,19 @@ class CreateFilamentLatex extends CreateRecord
     {
         return config('filament-latex.create-page-title') ?? parent::getTitle();
     }
+
+    /**
+     * Redirect to the document page after creating a new record.
+     *
+     * @return string
+     */
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('document');
+    }
+
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        return 'Created Document';
+    }
 }
