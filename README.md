@@ -28,7 +28,7 @@ You can install the package via composer:
 composer require thethunderturner/filament-latex
 ```
 
-Publish the svg assets with:
+Publish the svg assets with: (In the end we will remove this command, import the svg in the nav icon using view())
 ```bash
 php artisan vendor:publish --tag="filament-latex-svg"
 ```
