@@ -21,7 +21,7 @@
             })"
         >
             <div
-                class="w-full"
+                class="w-full border border-gray-200 rounded-lg dark:border-gray-700"
                 x-model="message"
                 x-ignore
                 ax-load
@@ -29,7 +29,12 @@
                 x-data="codeEditor()"
             >
             </div>
-            <div x-ref="latexContainer"></div>
+            <div
+                class="border border-gray-200 rounded-lg dark:border-gray-700"
+                x-ref="latexContainer"
+            >
+
+            </div>
         </div>
     </x-filament::section>
 </x-filament-panels::page>

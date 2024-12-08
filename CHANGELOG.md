@@ -4,7 +4,7 @@ All notable changes to `filament-latex` will be documented in this file.
 
 ## 0.0.6 - 08-12-2024
 
-- TBA
+- added border around the editor and preview
 
 ## 0.0.5 - 07-12-2024
 - Research on other compilers that support more latex packages and also allow for pdf generation

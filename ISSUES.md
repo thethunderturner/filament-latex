@@ -4,7 +4,7 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 
 -[x] Make the plugin a resource with a schema
 -[x] Fix navigation icon that is crashing the github actions
--[ ] Allow resource to be publishable
+-[x] Allow resource to be publishable
 -[ ] Add border around the editor and preview
 -[ ] Typing `ctrl + f` on codemirror, sends the state of the word you are searching, and thus latex parses it.
 -[ ] Switch from latexjs to textlive compiler
