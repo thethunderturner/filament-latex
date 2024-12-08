@@ -26,9 +26,14 @@ class FilamentLatexResource extends Resource
 {
     protected static ?string $model = FilamentLatex::class;
 
+    /**
+     * The view(...) in this case is the default view for the navigation icon.
+     *
+     * @return string|Htmlable|null
+     */
     public static function getNavigationIcon(): string | Htmlable | null
     {
-        return view('filament-latex::svg.latex') ?? 'heroicon-o-document-text';
+        return view('filament-latex::svg.latex') ?? config('filament-latex.navigation-icon');
     }
 
     public static function getNavigationLabel(): string
