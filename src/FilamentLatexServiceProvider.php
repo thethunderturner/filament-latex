@@ -4,7 +4,6 @@ namespace TheThunderTurner\FilamentLatex;
 
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Facades\FilamentAsset;
-use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -16,18 +15,35 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
     {
         $package->name(static::$name)
             ->hasViews()
+            ->hasConfigFile()
+            ->hasMigrations($this->getMigrations())
             ->hasTranslations();
     }
 
     public function packageBooted(): void
     {
-        Livewire::component('filament-latex', FilamentLatex::class);
-
         FilamentAsset::register(
             assets: [
                 AlpineComponent::make('filament-latex', __DIR__ . '/../resources/dist/filament-latex.js'),
             ],
             package: 'thethunderturner/filament-latex'
         );
+    }
+
+    /**
+     * Publish the package's SVG assets.
+     */
+    public function bootingPackage(): void
+    {
+        $this->publishes([
+            $this->package->basePath('/../resources/svg') => base_path("resources/svg/vendor/{$this->packageView($this->package->viewNamespace)}"),
+        ], "{$this->packageView($this->package->viewNamespace)}-svg");
+    }
+
+    protected function getMigrations(): array
+    {
+        return [
+            'create_filament_latex_table',
+        ];
     }
 }

@@ -2,9 +2,18 @@
 
 All notable changes to `filament-latex` will be documented in this file.
 
+## 0.0.6 - 08-12-2024
+
+- TBA
+
 ## 0.0.5 - 07-12-2024
 - Research on other compilers that support more latex packages and also allow for pdf generation
 - latex-pdf template file
+-  No longer using page, uses resource instead
+-  Added schema, config
+-  You can have multiple collaborators and 1 author (who created the document)
+-  fixed github actions that were failing
+-  fixed navigation icon that was crashing the github actions
 
 ## 0.0.4 - 05-12-2024
 

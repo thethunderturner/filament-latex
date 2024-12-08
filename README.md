@@ -11,10 +11,26 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 
 ## Installation
 
+Before you start, make sure you have `textlive-full` or `textlive-base` installed on your system. At the moment the plugin is available only on Unix systems (Linux/MacOS). <br>
+You can install `textlive` by running the following command:
+```bash
+sudo apt-get install texlive-full # for debian based systems
+sudo pacman -S texlive-full # for arch based systems
+brew install texlive-full # for MacOS
+```
+After you have installed `textlive`, find where the `pdflatex` binary is located by running:
+```bash
+which pdflatex
+```
+Copy and paste the path on the plugin configuration file. <br>
 You can install the package via composer:
-
 ```bash
 composer require thethunderturner/filament-latex
+```
+
+Publish the svg assets with:
+```bash
+php artisan vendor:publish --tag="filament-latex-svg"
 ```
 
 You can publish and run the migrations with:
