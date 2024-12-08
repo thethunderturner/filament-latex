@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
@@ -25,9 +26,12 @@ class FilamentLatexResource extends Resource
 {
     protected static ?string $model = FilamentLatex::class;
 
-    public static function getNavigationIcon(): ?string
+    /**
+     * The view(...) in this case is the default view for the navigation icon.
+     */
+    public static function getNavigationIcon(): string | Htmlable | null
     {
-        return config('filament-latex.navigation-icon') ?? 'heroicon-o-document-text';
+        return view('filament-latex::svg.latex') ?? config('filament-latex.navigation-icon');
     }
 
     public static function getNavigationLabel(): string

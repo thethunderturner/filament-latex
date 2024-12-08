@@ -28,11 +28,6 @@ You can install the package via composer:
 composer require thethunderturner/filament-latex
 ```
 
-Publish the svg assets with:
-```bash
-php artisan vendor:publish --tag="filament-latex-svg"
-```
-
 You can publish and run the migrations with:
 
 ```bash
