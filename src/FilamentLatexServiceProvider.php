@@ -33,12 +33,12 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
     /**
      * Publish the package's SVG assets.
      */
-//    public function bootingPackage(): void
-//    {
-//        $this->publishes([
-//            $this->package->basePath('/../resources/svg') => base_path("resources/svg/vendor/{$this->packageView($this->package->viewNamespace)}"),
-//        ], "{$this->packageView($this->package->viewNamespace)}-svg");
-//    }
+    //    public function bootingPackage(): void
+    //    {
+    //        $this->publishes([
+    //            $this->package->basePath('/../resources/svg') => base_path("resources/svg/vendor/{$this->packageView($this->package->viewNamespace)}"),
+    //        ], "{$this->packageView($this->package->viewNamespace)}-svg");
+    //    }
 
     protected function getMigrations(): array
     {
