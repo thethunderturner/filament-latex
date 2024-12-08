@@ -31,7 +31,7 @@ class FilamentLatexResource extends Resource
      */
     public static function getNavigationIcon(): string | Htmlable | null
     {
-        return view('filament-latex::svg.latex') ?? config('filament-latex.navigation-icon');
+        return config('filament-latex.navigation-icon') ?? view('filament-latex::svg.latex');
     }
 
     public static function getNavigationLabel(): string
