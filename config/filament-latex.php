@@ -8,4 +8,5 @@ return [
     'create-button-label' => 'Create Document',
     'create-page-title' => 'Create Latex Document',
     'user-model' => 'App\Models\User',
+    'storage' => 'private',  // If you want to change the storage, you have to create a filesystem disk in config/filesystems.php
 ];
