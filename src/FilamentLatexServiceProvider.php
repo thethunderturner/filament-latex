@@ -32,8 +32,6 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
 
     /**
      * Publish the package's SVG assets.
-     *
-     * @return void
      */
     public function bootingPackage(): void
     {
