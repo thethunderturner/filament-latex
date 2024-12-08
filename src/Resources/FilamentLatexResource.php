@@ -28,8 +28,6 @@ class FilamentLatexResource extends Resource
 
     /**
      * The view(...) in this case is the default view for the navigation icon.
-     *
-     * @return string|Htmlable|null
      */
     public static function getNavigationIcon(): string | Htmlable | null
     {
