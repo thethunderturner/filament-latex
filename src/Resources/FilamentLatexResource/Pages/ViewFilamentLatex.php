@@ -6,7 +6,6 @@ use Filament\Actions\Action;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
-use Illuminate\Contracts\Support\Htmlable;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class ViewFilamentLatex extends Page
@@ -23,11 +22,6 @@ class ViewFilamentLatex extends Page
     protected static string $view = 'filament-latex::page';
 
     public string $latexContent = '';
-
-    public static function getNavigationIcon(): string | Htmlable | null
-    {
-        return view('filament-latex::svg.latex');
-    }
 
     public function getMaxContentWidth(): MaxWidth
     {

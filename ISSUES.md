@@ -18,3 +18,4 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[ ] Add an error icon that shows the error message when hovering over it
 -[ ] Make a codemirror language mode for latex [here](https://codemirror.net/examples/lang-package/)
 -[ ] Add translations
+-[ ] Add Prettier for js, blade, tailwindcss
