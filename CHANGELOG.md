@@ -5,6 +5,8 @@ All notable changes to `filament-latex` will be documented in this file.
 ## 0.0.6 - 08-12-2024
 
 - added border around the editor and preview
+- Added file upload component (with no functionality)
+- Added rounded and not rounded corners for the file upload and latex containers
 
 ## 0.0.5 - 07-12-2024
 - Research on other compilers that support more latex packages and also allow for pdf generation
