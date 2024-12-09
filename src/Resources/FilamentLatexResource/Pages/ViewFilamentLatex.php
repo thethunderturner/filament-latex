@@ -20,6 +20,7 @@ class ViewFilamentLatex extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->latexContent = $this->record->content;
     }
 
     protected static string $view = 'filament-latex::page';

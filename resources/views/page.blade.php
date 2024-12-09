@@ -20,15 +20,15 @@
                 class="grid grid-cols-2 gap-4"
                 x-data="{ message: '' }"
                 x-init="$watch('message', value => {
-                const container = $refs.latexContainer;
-                container.innerHTML = '';
-                const latex = document.createElement('latex-js');
-                latex.textContent = value;
-                container.appendChild(latex);
+                    const container = $refs.latexContainer;
+                    container.innerHTML = '';
+                    const latex = document.createElement('latex-js');
+                    latex.textContent = value;
+                    container.appendChild(latex);
 
-                // Sync with Livewire component
-                @this.latexContent = value;
-            })"
+                    // Sync with Livewire component
+                    @this.latexContent = value;
+                })"
             >
                 {{-- Latex Editor --}}
                 <div
@@ -37,7 +37,9 @@
                     x-ignore
                     ax-load
                     ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
-                    x-data="codeEditor()"
+                    x-data="codeEditor({
+                        content: @js($this->latexContent),
+                    })"
                 >
                 </div>
 

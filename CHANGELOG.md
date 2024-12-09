@@ -11,6 +11,7 @@ All notable changes to `filament-latex` will be documented in this file.
 - Creating a record, automatically creates a default .tex file
 - Fixed the author component in the form
 - Save content in the DB
+- code mirror uses content record instead of a template text
 
 ## 0.0.5 - 07-12-2024
 - Research on other compilers that support more latex packages and also allow for pdf generation

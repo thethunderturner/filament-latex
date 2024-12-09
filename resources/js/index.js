@@ -5,13 +5,12 @@ import { defaultKeymap } from "@codemirror/commands";
 import { keymap } from '@codemirror/view';
 import { HtmlGenerator } from 'latex.js';
 
-export default function codeEditor() {
+export default function codeEditor({content}) {
     return {
-        content: '\\documentclass{article}\n\\begin{document}\n\n\n\\end{document}',
         init() {
             const editor = new EditorView({
                 state: EditorState.create({
-                    doc: this.content,
+                    doc: content,
                     extensions: [
                         basicSetup,
                         keymap.of(defaultKeymap),
