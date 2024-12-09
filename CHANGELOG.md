@@ -2,13 +2,14 @@
 
 All notable changes to `filament-latex` will be documented in this file.
 
-## 0.0.6 - 08-12-2024
+## 0.0.6 - TBD
 
 - added border around the editor and preview
 - Added file upload component (with no functionality)
 - Added rounded and not rounded corners for the file upload and latex containers
 - Added noted to the NOTES.md
 - Creating a record, automatically creates a default .tex file
+- Fixed the author component in the form
 
 ## 0.0.5 - 07-12-2024
 - Research on other compilers that support more latex packages and also allow for pdf generation

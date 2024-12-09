@@ -8,6 +8,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
@@ -52,6 +53,10 @@ class FilamentLatexResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
+                        Hidden::make('author_id')
+                            ->label('Author')
+                            ->default(fn () => Auth::id())
+                            ->required(),
                         TextInput::make('name')
                             ->label('Document Title')
                             ->required(),
@@ -65,17 +70,14 @@ class FilamentLatexResource extends Resource
                         TextInput::make('author_name')
                             ->label('Author')
                             ->disabled()
-                            ->default(Auth::getName())
+                            ->dehydrated()
+                            ->formatStateUsing(fn (Get $get) => $userModel::find($get('author_id'))->name)
                             ->required(),
                         Select::make('collaborators_id')
                             ->label('Collaborators')
                             ->multiple()
                             ->options(fn () => $userModel::all()->pluck('name', 'id'))
                             ->searchable(),
-                        Hidden::make('author_id')
-                            ->default(auth()->user()->id)
-                            ->dehydrated()
-                            ->required(),
                     ])->columns(2),
             ]);
     }
