@@ -69,7 +69,7 @@ class ViewFilamentLatex extends Page
     protected function downloadDocument(): void
     {
         // Get the file from storage, and then use pdf latex binary to generate the pdf.
- 
+
     }
 
     /**
