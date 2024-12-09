@@ -21,3 +21,4 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[ ] Add Prettier for js, blade, tailwindcss
 -[ ] Connect the 2 header actions similar to the inline grouped toggle buttons. You have the pdf icon on the left and on the right the compile button.
 -[x] FIx the author component in the form
+-[ ] Add option to display either avatar or names in the author and collaborator columns
