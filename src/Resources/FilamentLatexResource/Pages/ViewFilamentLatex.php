@@ -8,11 +8,12 @@ use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Storage;
+use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class ViewFilamentLatex extends Page
 {
+    use CanUseDocument;
     use InteractsWithRecord;
 
     protected static string $resource = FilamentLatexResource::class;
@@ -62,45 +63,5 @@ class ViewFilamentLatex extends Page
                     //                    $this->generateAndDownloadPDF($this->latexContent);
                 }),
         ];
-    }
-
-    /**
-     * Generate and download a PDF of the document.
-     */
-    protected function downloadDocument(): void
-    {
-        // Get the file from storage, and then use pdf latex binary to generate the pdf.
-
-    }
-
-    /**
-     * We pass the content as an argument.
-     *
-     * @param  $content  string The content of the document.
-     *
-     * @returns void
-     */
-    public function updateDocument(string $content): void
-    {
-        Storage::disk(config('filament-latex.storage'))->put($this->record->id . '/main.tex', $content);
-    }
-
-    /**
-     * Compile the document.
-     *
-     * STRATEGY:
-     * When compiles, we create a .tex file at the
-     * /storage/storage_name/filament-latex/{record-id} directory.
-     *
-     * Then we use the pdflatex binary command to compile the .tex file.
-     * and we store the .pdf file at the same directory, or we find a way to stream
-     * it to the preview div.
-     *
-     * If the user presses download, then we compile, generate the pdf and download it.
-     */
-    protected function compileDocument(): void
-    {
-        $this->updateDocument($this->latexContent);
-        // ...
     }
 }

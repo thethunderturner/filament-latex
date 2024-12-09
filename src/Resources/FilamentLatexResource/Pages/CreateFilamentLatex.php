@@ -5,10 +5,12 @@ namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Storage;
+use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class CreateFilamentLatex extends CreateRecord
 {
+    use CanUseDocument;
     protected static string $resource = FilamentLatexResource::class;
 
     public function getTitle(): string | Htmlable
@@ -38,11 +40,7 @@ class CreateFilamentLatex extends CreateRecord
             \end{document}
             LATEX;
 
-        // Update the record
-        $this->record->content = $defaultContent;
-        $this->record->save();
-
-        // Create file
-        Storage::disk(config('filament-latex.storage'))->put($this->record->id . '/main.tex', $defaultContent);
+        $this->updateDocument($defaultContent);
+        $this->updateRecord($this->record, $defaultContent);
     }
 }

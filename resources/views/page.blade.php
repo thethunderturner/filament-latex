@@ -17,12 +17,18 @@ $latexContent = $this->latexContent;
             <x-slot name="heading">Filament Latex</x-slot>
             <div
                 class="grid grid-cols-2 gap-4"
+                x-data="{ message: '' }"
+                x-init="$watch('message', value => {
+                    // Sync with Livewire component
+                    @this.latexContent = value;
+                })"
             >
                 {{-- Latex Editor --}}
                 <div
                     class="w-full border border-gray-200 rounded-lg dark:border-gray-700"
                     x-ignore
                     ax-load
+                    x-model="message"
                     ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
                     x-data="codeEditor({
                         content: @js($latexContent),
