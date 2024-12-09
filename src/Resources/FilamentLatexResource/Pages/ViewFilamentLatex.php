@@ -74,6 +74,18 @@ class ViewFilamentLatex extends Page
     }
 
     /**
+     * We pass the content as an argument.
+     *
+     * @param  $content  string The content of the document.
+     *
+     * @returns void
+     */
+    public function updateDocument(string $content): void
+    {
+        Storage::disk(config('filament-latex.storage'))->put($this->record->id . '/main.tex', $content);
+    }
+
+    /**
      * Compile the document.
      *
      * STRATEGY:
@@ -88,7 +100,7 @@ class ViewFilamentLatex extends Page
      */
     protected function compileDocument(): void
     {
-        Storage::disk(config('filament-latex.storage.disk'))->put($this->record->id . '/main.tex', $this->latexContent);
+        $this->updateDocument($this->latexContent);
         // ...
     }
 }

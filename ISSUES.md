@@ -23,3 +23,4 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[x] FIx the author component in the form
 -[ ] Add option to display either avatar or names in the author and collaborator columns
 -[ ] Collaborative editing for codemirror [here](https://codemirror.net/examples/collab/)
+-[x] Fix disappearing editor after livewire update
