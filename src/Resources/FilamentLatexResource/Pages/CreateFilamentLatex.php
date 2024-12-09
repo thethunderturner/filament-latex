@@ -31,7 +31,13 @@ class CreateFilamentLatex extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $defaultContent = '\\documentclass{article}\n\\begin{document}\n% Your content here\n\\end{document}';
+        $defaultContent = <<<'LATEX'
+            \documentclass{article}
+            \begin{document}
+            % Your content here
+            \end{document}
+            LATEX;
+
         Storage::disk(config('filament-latex.storage'))->put($this->record->id . '/main.tex', $defaultContent);
     }
 }
