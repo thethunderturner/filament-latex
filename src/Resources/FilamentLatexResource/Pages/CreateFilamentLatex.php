@@ -38,6 +38,11 @@ class CreateFilamentLatex extends CreateRecord
             \end{document}
             LATEX;
 
+        // Update the record
+        $this->record->content = $defaultContent;
+        $this->record->save();
+
+        // Create file
         Storage::disk(config('filament-latex.storage'))->put($this->record->id . '/main.tex', $defaultContent);
     }
 }
