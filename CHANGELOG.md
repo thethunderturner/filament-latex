@@ -2,6 +2,22 @@
 
 All notable changes to `filament-latex` will be documented in this file.
 
+## v1.0.0 - 2024-12-12
+
+This is the first big release for filament latex. You can generate different latex files, compile them and even download them. You can also preview the pdf! This is just a taste of what is possible, and more features are coming in the near future!
+
+### What's Changed
+
+* Feature/resources by @thethunderturner in https://github.com/thethunderturner/filament-latex/pull/1
+* Feature/main test by @thethunderturner in https://github.com/thethunderturner/filament-latex/pull/2
+* Feature: Textlive by @thethunderturner in https://github.com/thethunderturner/filament-latex/pull/3
+
+### New Contributors
+
+* @thethunderturner made their first contribution in https://github.com/thethunderturner/filament-latex/pull/1
+
+**Full Changelog**: https://github.com/thethunderturner/filament-latex/commits/1.0.0
+
 ## 0.0.7 - 12/12/2024
 
 - Remove useless page
@@ -26,6 +42,7 @@ All notable changes to `filament-latex` will be documented in this file.
 - Connected 2 header actions similar to the inline grouped toggle buttons.
 
 ## 0.0.5 - 07-12-2024
+
 - Research on other compilers that support more latex packages and also allow for pdf generation
 - latex-pdf template file
 - No longer using page, uses resource instead
