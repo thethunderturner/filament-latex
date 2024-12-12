@@ -2,16 +2,14 @@ import { EditorView, basicSetup } from 'codemirror';
 import { markdown } from '@codemirror/lang-markdown';
 import { EditorState } from '@codemirror/state';
 import { defaultKeymap } from "@codemirror/commands";
-import { keymap } from '@codemirror/view';
-import { HtmlGenerator } from 'latex.js';
+import { keymap } from '@codemirror/view'
 
-export default function codeEditor() {
+export default function codeEditor({content}) {
     return {
-        content: '\\documentclass{article}\n\\begin{document}\n\n\n\\end{document}',
         init() {
             const editor = new EditorView({
                 state: EditorState.create({
-                    doc: this.content,
+                    doc: content,
                     extensions: [
                         basicSetup,
                         keymap.of(defaultKeymap),

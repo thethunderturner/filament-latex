@@ -6,10 +6,12 @@ use Filament\Actions\Action;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
+use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class ViewFilamentLatex extends Page
 {
+    use CanUseDocument;
     use InteractsWithRecord;
 
     protected static string $resource = FilamentLatexResource::class;
@@ -17,6 +19,7 @@ class ViewFilamentLatex extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->latexContent = $this->record->content;
     }
 
     protected static string $view = 'filament-latex::page';
@@ -32,16 +35,25 @@ class ViewFilamentLatex extends Page
     {
         return [
             Action::make('downloadAction')
-                ->label('Download PDF')
+                ->hiddenLabel()
                 ->color('info')
+                ->extraAttributes([
+                    'class' => 'rounded-r-none -mr-3',
+                ])
+                ->tooltip('Download PDF')
+                ->icon('heroicon-o-document-arrow-down')
                 ->action(function () {
-                    $this->generateAndDownloadPDF($this->latexContent);
+                    return $this->downloadDocument();
+                }),
+            Action::make('compileAction')
+                ->label('Compile')
+                ->color('success')
+                ->extraAttributes([
+                    'class' => 'rounded-l-none',
+                ])
+                ->action(function () {
+                    $this->compileDocument();
                 }),
         ];
-    }
-
-    protected function generateAndDownloadPDF(string $content): void
-    {
-        // ...
     }
 }

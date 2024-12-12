@@ -4,10 +4,13 @@ namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
+use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class CreateFilamentLatex extends CreateRecord
 {
+    use CanUseDocument;
+
     protected static string $resource = FilamentLatexResource::class;
 
     public function getTitle(): string | Htmlable
@@ -26,5 +29,18 @@ class CreateFilamentLatex extends CreateRecord
     protected function getCreatedNotificationTitle(): ?string
     {
         return 'Created Document';
+    }
+
+    protected function afterCreate(): void
+    {
+        $defaultContent = <<<'LATEX'
+            \documentclass{article}
+            \begin{document}
+            % Your content here
+            \end{document}
+            LATEX;
+
+        $this->updateDocument($this->record->id ?? null, $defaultContent);
+        $this->updateRecord($this->record);
     }
 }
