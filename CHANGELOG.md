@@ -5,6 +5,7 @@ All notable changes to `filament-latex` will be documented in this file.
 ## 0.0.7 - 12/12/2024
 
 - Remove useless page
+- Moved the pdf compilation from the download action to the compile action
 
 ## 0.0.6 - 12/12/2024
 

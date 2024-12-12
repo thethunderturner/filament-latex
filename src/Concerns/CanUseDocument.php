@@ -34,34 +34,24 @@ trait CanUseDocument
      * Compile the document.
      *
      * STRATEGY:
-     * When compiles, we create a .tex file at the
-     * /storage/storage_name/filament-latex/{record-id} directory.
+     * When compiles, we overwrite .tex file at the
+     * /storage/storage_name/filament-latex/{record-id} with the new content.
+     *
+     * We will update the content of the record with the new content.
      *
      * Then we use the pdflatex binary command to compile the .tex file.
-     * and we store the .pdf file at the same directory, or we find a way to stream
-     * it to the preview div.
-     *
-     * If the user presses download, then we compile, generate the pdf and download it.
+     * and we store the .pdf file at compiled subdirectory.
      */
     public function compileDocument(): void
     {
         $this->updateDocument($this->record->id, $this->latexContent);
         $this->updateRecord($this->record);
-        // ...
-    }
 
-    /**
-     * Generate and download a PDF of the document.
-     */
-    public function downloadDocument(): StreamedResponse
-    {
-        $this->compileDocument();
         $recordID = $this->record->id;
         $storage = Storage::disk(config('filament-latex.storage'));
 
         $filePath = $storage->path($recordID . '/main.tex');
         $pdfDir = $storage->path($recordID . '/compiled');
-        $pdfPath = $recordID . '/compiled/main.pdf';
 
         if (! $storage->exists($recordID . '/main.tex')) {
             throw new RuntimeException(sprintf(
@@ -89,6 +79,18 @@ trait CanUseDocument
         } catch (ProcessFailedException $exception) {
             throw new RuntimeException('Failed to compile the LaTeX document.', 0, $exception);
         }
+    }
+
+    /**
+     * Download the compiled document.
+     */
+    public function downloadDocument(): StreamedResponse
+    {
+        $this->compileDocument();
+
+        $recordID = $this->record->id;
+        $storage = Storage::disk(config('filament-latex.storage'));
+        $pdfPath = $recordID . '/compiled/main.pdf';
 
         if ($storage->exists($pdfPath)) {
             return $storage->download($pdfPath, 'invoice.pdf', [
