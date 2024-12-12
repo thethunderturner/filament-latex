@@ -10,6 +10,7 @@ use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 class CreateFilamentLatex extends CreateRecord
 {
     use CanUseDocument;
+
     protected static string $resource = FilamentLatexResource::class;
 
     public function getTitle(): string | Htmlable
@@ -39,7 +40,7 @@ class CreateFilamentLatex extends CreateRecord
             \end{document}
             LATEX;
 
-        $this->updateDocument($this->record->id, $defaultContent);
+        $this->updateDocument($this->record->id ?? null, $defaultContent);
         $this->updateRecord($this->record);
     }
 }

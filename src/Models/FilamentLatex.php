@@ -5,6 +5,14 @@ namespace TheThunderTurner\FilamentLatex\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $content
+ * @property string $deadline
+ * @property int $author_id
+ * @property array $collaborators_id
+ */
 class FilamentLatex extends Model
 {
     protected $fillable = ['name', 'content', 'deadline', 'author_id', 'collaborators_id'];

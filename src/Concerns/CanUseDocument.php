@@ -4,7 +4,6 @@ namespace TheThunderTurner\FilamentLatex\Concerns;
 
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Process\Pipe;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
@@ -124,7 +123,7 @@ trait CanUseDocument
     {
         $this->compileDocument();
 
-        $recordID = $this->record->id;
+        $recordID = $this->record->id ?? null;
         $storage = Storage::disk(config('filament-latex.storage'));
         $pdfPath = $recordID . '/compiled/main.pdf';
 
