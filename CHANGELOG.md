@@ -2,7 +2,7 @@
 
 All notable changes to `filament-latex` will be documented in this file.
 
-## 0.0.6 - TBD
+## 0.0.6 - 12/12/2024
 
 - Added border around the editor and preview
 - Added file upload component (with no functionality)
@@ -12,6 +12,8 @@ All notable changes to `filament-latex` will be documented in this file.
 - Fixed the author component in the form
 - Save content in the DB
 - code mirror uses content record instead of a template text
+- Added download pdf button
+- Connected 2 header actions similar to the inline grouped toggle buttons.
 
 ## 0.0.5 - 07-12-2024
 - Research on other compilers that support more latex packages and also allow for pdf generation

@@ -9,7 +9,7 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[ ] Typing `ctrl + f` on codemirror, sends the state of the word you are searching, and thus latex parses it.
 -[ ] Switch from latexjs to textlive compiler
 -[ ] Investigate: Can we use https://github.com/barryvdh/laravel-dompdf instead of latex-js for live preview?
--[ ] Make download pdf button
+-[x] Make download pdf button
 -[ ] Disable live preview and add a compile button
 -[ ] Add livewire component on the left where you can upload images which can be rendered on the latex document
 -[ ] Add edit history (maybe through slide-over?)
@@ -19,7 +19,7 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[ ] Make a codemirror language mode for latex [here](https://codemirror.net/examples/lang-package/)
 -[ ] Add translations
 -[ ] Add Prettier for js, blade, tailwindcss
--[ ] Connect the 2 header actions similar to the inline grouped toggle buttons. You have the pdf icon on the left and on the right the compile button.
+-[x] Connect the 2 header actions similar to the inline grouped toggle buttons. You have the pdf icon on the left and on the right the compile button.
 -[x] FIx the author component in the form
 -[ ] Add option to display either avatar or names in the author and collaborator columns
 -[ ] Collaborative editing for codemirror [here](https://codemirror.net/examples/collab/)

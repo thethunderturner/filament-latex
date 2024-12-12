@@ -2,12 +2,10 @@
 
 namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 
-use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
-use Illuminate\Support\Facades\Blade;
 use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
@@ -37,12 +35,13 @@ class ViewFilamentLatex extends Page
     {
         return [
             Action::make('downloadAction')
-                ->label('Download PDF')
+                ->hiddenLabel()
                 ->color('info')
                 ->extraAttributes([
                     'class' => 'rounded-r-none -mr-3',
                 ])
                 ->tooltip('Download PDF')
+                ->icon('heroicon-o-document-arrow-down')
                 ->action(function () {
                     return $this->downloadDocument();
                 }),
