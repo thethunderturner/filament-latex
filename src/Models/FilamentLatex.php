@@ -18,6 +18,14 @@ class FilamentLatex extends Model
     /**
      * @throws Exception
      */
+    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->BelongsTo($this->getUserModel(), 'author_id');
+    }
+
+    /**
+     * @throws Exception
+     */
     public function getUserModel(): string
     {
         $userModel = config('filament-latex.user-model');

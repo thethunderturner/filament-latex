@@ -4,7 +4,6 @@ namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\Facades\Storage;
 use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
@@ -40,7 +39,7 @@ class CreateFilamentLatex extends CreateRecord
             \end{document}
             LATEX;
 
-        $this->updateDocument($defaultContent);
-        $this->updateRecord($this->record, $defaultContent);
+        $this->updateDocument($this->record->id, $defaultContent);
+        $this->updateRecord($this->record);
     }
 }

@@ -40,27 +40,20 @@ class ViewFilamentLatex extends Page
                 ->label('Download PDF')
                 ->color('info')
                 ->extraAttributes([
-                    'class' => 'rounded-l-lg',
+                    'class' => 'rounded-r-none -mr-3',
                 ])
+                ->tooltip('Download PDF')
                 ->action(function () {
-                    //                    return response()->streamDownload(function () {
-                    //                        echo Pdf::loadHtml(
-                    //                            Blade::render('filament-latex::latex-pdf')
-                    //                        )->stream();
-                    //                    }, 'test.pdf');
-                    //                    $this->downloadDocument($this->latexContent);
+                    return $this->downloadDocument();
                 }),
             Action::make('compileAction')
                 ->label('Compile')
                 ->color('success')
+                ->extraAttributes([
+                    'class' => 'rounded-l-none',
+                ])
                 ->action(function () {
                     $this->compileDocument();
-                    //                    return response()->streamDownload(function () {
-                    //                        echo Pdf::loadHtml(
-                    //                            Blade::render('filament-latex::latex-pdf')
-                    //                        )->stream();
-                    //                    }, 'test.pdf');
-                    //                    $this->generateAndDownloadPDF($this->latexContent);
                 }),
         ];
     }

@@ -24,3 +24,5 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[ ] Add option to display either avatar or names in the author and collaborator columns
 -[ ] Collaborative editing for codemirror [here](https://codemirror.net/examples/collab/)
 -[x] Fix disappearing editor after livewire update
+-[ ] Add hasinstallcommand in the service provider [see here](https://github.com/awcodes/filament-curator/blob/3.x/src/CuratorServiceProvider.php)
+-[ ] Dont use `Hidden` form component as that is a security risk. Just use `Select` instead.

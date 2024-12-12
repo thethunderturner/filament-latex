@@ -23,7 +23,8 @@
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^3.0",
         "filament/filament": "^3.2.43",
-        "spatie/laravel-package-tools": "^1.15.0"
+        "spatie/laravel-package-tools": "^1.15.0",
+        "ext-mysql_xdevapi": "*"
     },
     "require-dev": {
         "larastan/larastan": "^2.0",
