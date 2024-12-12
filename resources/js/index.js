@@ -2,8 +2,7 @@ import { EditorView, basicSetup } from 'codemirror';
 import { markdown } from '@codemirror/lang-markdown';
 import { EditorState } from '@codemirror/state';
 import { defaultKeymap } from "@codemirror/commands";
-import { keymap } from '@codemirror/view';
-import { HtmlGenerator } from 'latex.js';
+import { keymap } from '@codemirror/view'
 
 export default function codeEditor({content}) {
     return {

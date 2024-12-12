@@ -2,12 +2,15 @@
 
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Process\Pipe;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use RuntimeException;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 trait CanUseDocument
 {
@@ -44,10 +47,11 @@ trait CanUseDocument
      */
     public function compileDocument(): void
     {
-        $this->updateDocument($this->record->id, $this->latexContent);
+        $recordID = $this->record->id;
+
+        $this->updateDocument($recordID, $this->latexContent);
         $this->updateRecord($this->record);
 
-        $recordID = $this->record->id;
         $storage = Storage::disk(config('filament-latex.storage'));
 
         $filePath = $storage->path($recordID . '/main.tex');
@@ -67,24 +71,56 @@ trait CanUseDocument
         // Build the pdflatex command
         $command = [
             config('filament-latex.parser'),
-            '-interaction=nonstopmode',
+            '-halt-on-error',
             '-output-directory=' . $pdfDir,
             $filePath,
         ];
 
-        try {
-            $process = new Process($command);
-            $process->setTimeout(config('filament-latex.compilation-timeout'));
-            $process->mustRun();
-        } catch (ProcessFailedException $exception) {
-            throw new RuntimeException('Failed to compile the LaTeX document.', 0, $exception);
+        // Run the pdflatex command
+        $result = Process::run($command);
+
+        if ($result->failed()) {
+            Notification::make()
+                ->title('Compilation Error')
+                ->color('danger')
+                ->body('There was an error compiling the document.')
+                ->send();
+
+            Log::error('LaTeX compilation failed:', [
+                'output' => $result->output(),
+                'error' => $result->errorOutput(),
+            ]);
+
+            return;
+        }
+
+        // Mimic grep behavior to check for specific LaTeX errors
+        $output = $result->output();
+        $errorPattern = '/^!.*$/m'; // Match lines starting with '!'
+        if (preg_match($errorPattern, $output)) {
+            Notification::make()
+                ->title('Compilation Error')
+                ->color('danger')
+                ->body('Errors were found in the LaTeX compilation output.')
+                ->send();
+
+            Log::info('Filtered LaTeX errors:', ['errors' => $output]);
+        } else {
+            Notification::make()
+                ->title('Compilation Success')
+                ->color('success')
+                ->body('The document was compiled successfully.')
+                ->send();
+
+            $this->dispatch('document-compiled');
+
         }
     }
 
     /**
      * Download the compiled document.
      */
-    public function downloadDocument(): StreamedResponse
+    public function downloadDocument(): BinaryFileResponse
     {
         $this->compileDocument();
 
@@ -93,11 +129,17 @@ trait CanUseDocument
         $pdfPath = $recordID . '/compiled/main.pdf';
 
         if ($storage->exists($pdfPath)) {
-            return $storage->download($pdfPath, 'invoice.pdf', [
+            return response()->download($storage->path($pdfPath), 'invoice.pdf', [
                 'Content-Type' => 'application/pdf',
             ]);
         } else {
             throw new RuntimeException('PDF file does not exist after compilation.');
         }
+    }
+
+    #[On('document-compiled')]
+    public function getPdfUrl(): string
+    {
+        return route('pdf.download', ['recordID' => $this->record->id]);
     }
 }

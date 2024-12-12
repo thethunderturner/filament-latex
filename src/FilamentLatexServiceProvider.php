@@ -16,6 +16,7 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
         $package->name(static::$name)
             ->hasViews()
             ->hasConfigFile()
+            ->hasRoute('web')
             ->hasMigrations($this->getMigrations())
             ->hasTranslations();
     }

@@ -6,6 +6,11 @@ All notable changes to `filament-latex` will be documented in this file.
 
 - Remove useless page
 - Moved the pdf compilation from the download action to the compile action
+- latex now compiles
+- you can download pdf
+- now we use pdflatex
+- no more live preview
+- you can preview the pdf on the right
 
 ## 0.0.6 - 12/12/2024
 
