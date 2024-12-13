@@ -12,6 +12,7 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[x] Make download pdf button
 -[x] Disable live preview and add a compile button
 -[ ] Add livewire component on the left where you can upload images which can be rendered on the latex document
+-[ ] Dont allow to upload multiple files with the same name.
 -[ ] Add edit history (maybe through slide-over?)
 -[x] Can we add more latex packages (on top of the default ones)? -> fixed with textlive compiler
 -[x] When typing a latex command (ex `$...$`) the preview is disabled until the command is syntactically correct
@@ -29,3 +30,4 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[ ] The file controller should be authenticated with ->middleware('auth'). For some reason it doesnt work. Needs investigation.
 -[ ] Change how the pdf gets the name. Instead of default "main" it gets the slug of the record name.
 -[x] Error when compiling. But it actually compiles fine.
+-[ ] Change how includegraphiocs works. Instead of using the directory from home, use the name of the file. We still havent implemented folders, so just the file name is enough.
