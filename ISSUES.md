@@ -31,3 +31,4 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[ ] Change how the pdf gets the name. Instead of default "main" it gets the slug of the record name.
 -[x] Error when compiling. But it actually compiles fine.
 -[ ] Change how includegraphiocs works. Instead of using the directory from home, use the name of the file. We still havent implemented folders, so just the file name is enough.
+-[ ] Add ability to have multiple .tex files. This could be tricky. Leave for last!
