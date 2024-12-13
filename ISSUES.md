@@ -6,7 +6,7 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[x] Fix navigation icon that is crashing the github actions
 -[ ] Allow resource to be publishable
 -[x] Add border around the editor and preview
--[ ] Typing `ctrl + f` on codemirror, sends the state of the word you are searching, and thus latex parses it.
+-[x] Typing `ctrl + f` on codemirror, sends the state of the word you are searching, and thus latex parses it.
 -[x] Switch from latexjs to textlive compiler
 -[x] Investigate: Can we use https://github.com/barryvdh/laravel-dompdf instead of latex-js for live preview?
 -[x] Make download pdf button
