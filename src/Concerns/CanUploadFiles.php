@@ -6,6 +6,11 @@ use Filament\Actions\Action;
 
 trait CanUploadFiles
 {
+    /**
+     * Uploads a file.
+     *
+     * @return Action
+     */
     public function uploadAction(): Action
     {
         return Action::make('upload')
@@ -17,5 +22,20 @@ trait CanUploadFiles
                 'class' => 'w-full',
             ])
             ->action(fn () => dd($this->filamentLatex));
+    }
+
+    /**
+     * Deletes a file.
+     *
+     * @return Action
+     */
+    public function deleteAction(): Action
+    {
+        return Action::make('delete')
+            ->iconButton()
+            ->icon('heroicon-o-trash')
+            ->color('danger')
+            ->requiresConfirmation()
+            ->action(fn () => dd('delete'));
     }
 }
