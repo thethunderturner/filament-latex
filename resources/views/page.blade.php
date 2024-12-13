@@ -1,7 +1,7 @@
 @php
     $latexContent = $this->latexContent;
     $pdfUrl = $this->getPdfUrl();
-    $files = ['name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name', 'name'];
+    $files = $this->getFiles();
 @endphp
 
 <x-filament-panels::page>

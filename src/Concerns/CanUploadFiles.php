@@ -3,6 +3,7 @@
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
 use Filament\Actions\Action;
+use Illuminate\Support\Facades\Storage;
 
 trait CanUploadFiles
 {
@@ -37,5 +38,16 @@ trait CanUploadFiles
             ->color('danger')
             ->requiresConfirmation()
             ->action(fn () => dd('delete'));
+    }
+
+    /**
+     * Returns an array of files that have been
+     * uploaded to the record.
+     *
+     * @return array
+     */
+    public function getFiles(): array
+    {
+        return Storage::disk(config('filament-latex.storage'))->files($this->filamentLatex->id . '/files');
     }
 }
