@@ -46,10 +46,10 @@ trait CanUseDocument
      */
     public function compileDocument(): void
     {
-        $recordID = $this->record->id;
+        $recordID = $this->filamentLatex->id;
 
         $this->updateDocument($recordID, $this->latexContent);
-        $this->updateRecord($this->record);
+        $this->updateRecord($this->filamentLatex);
 
         $storage = Storage::disk(config('filament-latex.storage'));
 
@@ -123,7 +123,7 @@ trait CanUseDocument
     {
         $this->compileDocument();
 
-        $recordID = $this->record->id ?? null;
+        $recordID = $this->filamentLatex->id ?? null;
         $storage = Storage::disk(config('filament-latex.storage'));
         $pdfPath = $recordID . '/compiled/main.pdf';
 
@@ -139,6 +139,6 @@ trait CanUseDocument
     #[On('document-compiled')]
     public function getPdfUrl(): string
     {
-        return route('pdf.download', ['recordID' => $this->record->id]);
+        return route('pdf.download', ['recordID' => $this->filamentLatex->id]);
     }
 }

@@ -10,7 +10,11 @@
         <x-filament::section class="w-64 rounded-r-none">
             <x-slot name="heading">File Upload</x-slot>
 
-            TBA
+            <div>
+                {{ $this->uploadAction }}
+
+                <x-filament-actions::modals />
+            </div>
         </x-filament::section>
 
         {{-- Latex Container --}}
