@@ -11,6 +11,7 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[x] Investigate: Can we use https://github.com/barryvdh/laravel-dompdf instead of latex-js for live preview?
 -[x] Make download pdf button
 -[x] Disable live preview and add a compile button
+-[x] Split the upload section and the latex section into 2 views.
 -[ ] Add livewire component on the left where you can upload images which can be rendered on the latex document
 -[ ] Dont allow to upload multiple files with the same name.
 -[ ] Add edit history (maybe through slide-over?)
