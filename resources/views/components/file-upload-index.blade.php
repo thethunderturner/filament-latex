@@ -8,7 +8,7 @@
         <x-filament-actions::modals />
     </div>
 
-    <div class="mt-6 border-t border-gray-200 dark:border-white/10 h-[79rem] overflow-auto space-y-2">
+    <div class="mt-6 h-[79rem] overflow-auto space-y-2">
         @forelse($files as $file)
             @include('filament-latex::components.file-upload', ['file' => $file])
         @empty
