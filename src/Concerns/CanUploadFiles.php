@@ -3,14 +3,13 @@
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 
 trait CanUploadFiles
 {
     /**
      * Uploads a file.
-     *
-     * @return Action
      */
     public function uploadAction(): Action
     {
@@ -22,13 +21,17 @@ trait CanUploadFiles
             ->extraAttributes([
                 'class' => 'w-full',
             ])
-            ->action(fn () => dd($this->filamentLatex));
+            ->form([
+                FileUpload::make('upload')
+                    ->disk(config('filament-latex.storage'))
+                    ->unique()
+                    ->preserveFilenames()
+                    ->directory($this->filamentLatex->id . '/files'),
+            ]);
     }
 
     /**
      * Deletes a file.
-     *
-     * @return Action
      */
     public function deleteAction(): Action
     {
@@ -43,8 +46,6 @@ trait CanUploadFiles
     /**
      * Returns an array of files that have been
      * uploaded to the record.
-     *
-     * @return array
      */
     public function getFiles(): array
     {
