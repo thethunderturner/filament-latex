@@ -4,7 +4,7 @@ namespace TheThunderTurner\FilamentLatex\Concerns;
 
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Support\Facades\Storage;
+use Filament\Notifications\Notification;
 
 trait CanUploadFiles
 {
@@ -22,12 +22,12 @@ trait CanUploadFiles
                 'class' => 'w-full',
             ])
             ->form([
-                FileUpload::make('upload')
+                FileUpload::make('attachment')
+                    ->required()
                     ->disk(config('filament-latex.storage'))
-                    ->unique()
+                    ->directory($this->filamentLatex->id . '/files')
                     ->visibility('private')
-                    ->preserveFilenames()
-                    ->directory($this->filamentLatex->id . '/files'),
+                    ->preserveFilenames(),
             ]);
     }
 

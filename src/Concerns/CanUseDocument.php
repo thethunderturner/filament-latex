@@ -81,7 +81,7 @@ trait CanUseDocument
         ];
 
         // Run the pdflatex command
-        $result = Process::run($command);
+        $result = Process::timeout(config('filament-latex.compilation-timeout'))->run($command);
 
         if ($result->failed()) {
             Notification::make()
