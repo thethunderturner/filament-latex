@@ -33,3 +33,5 @@ All issues to be fixed and features to be added in `filament-latex` will be docu
 -[x] Error when compiling. But it actually compiles fine.
 -[ ] Change how includegraphiocs works. Instead of using the directory from home, use the name of the file. We still havent implemented folders, so just the file name is enough.
 -[ ] Add ability to have multiple .tex files. This could be tricky. Leave for last!
+-[ ] MAJOR ISSUE: Errors after creating. Probably started occuring after I added HasForms, HasActions. Needs investigation.
+-[x] Create Issues on GitHub, and not here.
