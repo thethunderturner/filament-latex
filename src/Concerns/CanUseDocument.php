@@ -26,9 +26,9 @@ trait CanUseDocument
      *
      * @param  $record  Model The record to update.
      */
-    protected function updateRecord(Model $record): void
+    protected function updateRecord(Model $record, string $content): void
     {
-        $record->content = $this->latexContent;
+        $record->content = $content;
         $record->save();
     }
 
@@ -49,7 +49,7 @@ trait CanUseDocument
         $recordID = $this->filamentLatex->id;
 
         $this->updateDocument($recordID, $this->latexContent);
-        $this->updateRecord($this->filamentLatex);
+        $this->updateRecord($this->filamentLatex, $this->latexContent);
 
         $storage = Storage::disk(config('filament-latex.storage'));
 

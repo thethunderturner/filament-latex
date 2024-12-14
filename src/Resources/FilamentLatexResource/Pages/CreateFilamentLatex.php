@@ -41,6 +41,6 @@ class CreateFilamentLatex extends CreateRecord
             LATEX;
 
         $this->updateDocument($this->record->id ?? null, $defaultContent);
-        $this->updateRecord($this->record);
+        $this->updateRecord($this->record, $defaultContent);
     }
 }
