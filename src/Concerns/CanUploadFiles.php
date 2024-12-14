@@ -46,10 +46,13 @@ trait CanUploadFiles
 
     /**
      * Returns an array of files that have been
-     * uploaded to the record.
+     * uploaded.
+     *
+     * All files are uploaded in files/ directory. In the future
+     * we could add subdirectories for better organization.
      */
     public function getFiles(): array
     {
-        return Storage::disk(config('filament-latex.storage'))->files($this->filamentLatex->id . '/files');
+        return array_map('basename', Storage::disk(config('filament-latex.storage'))->files($this->filamentLatex->id . '/files'));
     }
 }
