@@ -18,7 +18,7 @@ trait CanUseDocument
      */
     protected function updateDocument(int $recordID, string $content): void
     {
-        Storage::disk(config('filament-latex.storage'))->put($recordID . '/main.tex', $content);
+        Storage::disk(config('filament-latex.storage'))->put($recordID . '/files/main.tex', $content);
     }
 
     /**
@@ -53,17 +53,17 @@ trait CanUseDocument
 
         $storage = Storage::disk(config('filament-latex.storage'));
 
-        $filePath = $storage->path($recordID . '/main.tex');
+        $filePath = $storage->path($recordID . '/files/main.tex');
         $pdfDir = $storage->path($recordID . '/compiled');
 
-        if (! $storage->exists($recordID . '/main.tex')) {
+        if (! $storage->exists($recordID . '/files/main.tex')) {
             throw new RuntimeException(sprintf(
                 'LaTeX file not found at: %s',
                 $filePath
             ));
         }
 
-        if (! $storage->exists($recordID . '/compiled')) {
+        if (! $storage->exists($recordID . '/files/compiled')) {
             $storage->makeDirectory($recordID . '/compiled');
         }
 
