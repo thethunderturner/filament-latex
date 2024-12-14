@@ -42,6 +42,8 @@ class CreateFilamentLatex extends CreateRecord
     {
         $defaultContent = <<<'LATEX'
             \documentclass{article}
+            \usepackage{graphicx}
+            \graphicspath{{../files/}}
             \begin{document}
             % Your content here
             Hello World
