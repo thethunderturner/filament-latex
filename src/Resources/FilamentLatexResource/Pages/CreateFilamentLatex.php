@@ -31,12 +31,20 @@ class CreateFilamentLatex extends CreateRecord
         return 'Created Document';
     }
 
+    /**
+     * File creation hook.
+     *
+     * Important Context: The parsers needs something to render!
+     * Having just the document class and a comment won't produce a PDF.
+     * Therefore, in the preview you will just get a 404 message.
+     */
     protected function afterCreate(): void
     {
         $defaultContent = <<<'LATEX'
             \documentclass{article}
             \begin{document}
             % Your content here
+            Hello World
             \end{document}
             LATEX;
 
