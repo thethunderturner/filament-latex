@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('deadline');
             $table->bigInteger('author_id');
             $table->json('collaborators_id')->nullable();
+            $table->json('attachment_file_names')->nullable();
             $table->timestamps();
         });
     }

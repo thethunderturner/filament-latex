@@ -25,7 +25,8 @@ trait CanUploadFiles
                 FileUpload::make('upload')
                     ->disk(config('filament-latex.storage'))
                     ->unique()
-                    ->preserveFilenames()
+                    ->visibility('private')
+                    ->storeFileNamesIn('attachment_file_names')
                     ->directory($this->filamentLatex->id . '/files'),
             ]);
     }
