@@ -42,7 +42,7 @@ trait CanUploadFiles
             ->color('danger')
             ->requiresConfirmation()
             ->action(function ($arguments) {
-                return Storage::disk(config('filament-latex.storage'))->delete($this->filamentLatex->id . '/files/' . $arguments['file']);
+                return $this->getStorage()->delete($this->filamentLatex->id . '/files/' . $arguments['file']);
             });
     }
 
@@ -55,6 +55,6 @@ trait CanUploadFiles
      */
     public function getFiles(): array
     {
-        return array_map('basename', Storage::disk(config('filament-latex.storage'))->files($this->filamentLatex->id . '/files'));
+        return array_map('basename', $this->getStorage()->files($this->filamentLatex->id . '/files'));
     }
 }

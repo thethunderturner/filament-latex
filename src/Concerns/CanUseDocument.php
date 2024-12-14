@@ -3,6 +3,7 @@
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
@@ -13,12 +14,17 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 trait CanUseDocument
 {
+    public function getStorage(): Filesystem
+    {
+        return Storage::disk(config('filament-latex.storage'));
+    }
+
     /**
      * We pass the content as an argument.
      */
     protected function updateDocument(int $recordID, string $content): void
     {
-        Storage::disk(config('filament-latex.storage'))->put($recordID . '/files/main.tex', $content);
+        $this->getStorage()->put($recordID . '/files/main.tex', $content);
     }
 
     /**
@@ -51,8 +57,7 @@ trait CanUseDocument
         $this->updateDocument($recordID, $this->latexContent);
         $this->updateRecord($this->filamentLatex, $this->latexContent);
 
-        $storage = Storage::disk(config('filament-latex.storage'));
-
+        $storage = $this->getStorage();
         $filePath = $storage->path($recordID . '/files/main.tex');
         $pdfDir = $storage->path($recordID . '/compiled');
 

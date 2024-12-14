@@ -54,18 +54,14 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                 ])
                 ->tooltip('Download PDF')
                 ->icon('heroicon-o-document-arrow-down')
-                ->action(function () {
-                    return $this->downloadDocument();
-                }),
+                ->action(fn () => $this->downloadDocument()),
             Action::make('compileAction')
                 ->label('Compile')
                 ->color('success')
                 ->extraAttributes([
                     'class' => 'rounded-l-none',
                 ])
-                ->action(function () {
-                    $this->compileDocument();
-                }),
+                ->action(fn () => $this->compileDocument()),
         ];
     }
 }
