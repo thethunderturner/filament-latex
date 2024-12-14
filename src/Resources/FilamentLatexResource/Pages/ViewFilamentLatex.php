@@ -31,6 +31,9 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
     {
         $this->filamentLatex = FilamentLatex::findOrFail($record);
         $this->latexContent = $this->filamentLatex->content;
+
+        // Compile document upon loading the page.
+        $this->compileDocument();
     }
 
     protected static string $view = 'filament-latex::page';
