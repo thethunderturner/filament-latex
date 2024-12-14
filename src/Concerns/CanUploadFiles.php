@@ -41,7 +41,7 @@ trait CanUploadFiles
             ->icon('heroicon-o-trash')
             ->color('danger')
             ->requiresConfirmation()
-            ->action(fn () => dd('delete'));
+            ->action(fn ($arguments) => Storage::disk(config('filament-latex.storage'))->delete($arguments['file']));
     }
 
     /**

@@ -3,7 +3,7 @@
         {{ $file }}
     </span>
     <div>
-        {{ $this->deleteAction }}
+        {{ ($this->deleteAction)(['file' => $file]) }}
 
         <x-filament-actions::modals />
     </div>
