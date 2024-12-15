@@ -2,6 +2,15 @@
 
 All notable changes to `filament-latex` will be documented in this file.
 
+## v1.1.0 - 2024-12-15
+
+### What's Changed
+
+* Major feature: Adds file upload section by @thethunderturner in https://github.com/thethunderturner/filament-latex/pull/43
+
+In short this release adds possibility to upload files
+**Full Changelog**: https://github.com/thethunderturner/filament-latex/compare/1.0.0...v1.1.0
+
 ## v1.0.0 - 2024-12-12
 
 This is the first big release for filament latex. You can generate different latex files, compile them and even download them. You can also preview the pdf! This is just a taste of what is possible, and more features are coming in the near future!
