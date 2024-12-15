@@ -4,7 +4,6 @@ namespace TheThunderTurner\FilamentLatex\Concerns;
 
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Notifications\Notification;
 
 trait CanUploadFiles
 {

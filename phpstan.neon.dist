@@ -10,12 +10,6 @@ parameters:
         - src
         - resources
     reportUnmatchedIgnoredErrors: false
-    excludePaths:
-        analyse:
-            - src/Resources/FilamentLatexResource.php
-            - src/Resources/FilamentLatexResource/Pages/CreateFilamentLatex.php
-            - src/Resources/FilamentLatexResource/Pages/EditFilamentLatex.php
-            - src/Resources/FilamentLatexResource/Pages/ViewFilamentLatex.php
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true

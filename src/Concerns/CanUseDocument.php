@@ -5,14 +5,18 @@ namespace TheThunderTurner\FilamentLatex\Concerns;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 
+/**
+ * @property FilamentLatex $filamentLatex
+ * @property string $latexContent
+ */
 trait CanUseDocument
 {
     public function getStorage(): Filesystem
@@ -31,9 +35,9 @@ trait CanUseDocument
     /**
      * Update the record with the new content.
      *
-     * @param  $record  Model The record to update.
+     * @param  $record  FilamentLatex The record to update.
      */
-    protected function updateRecord(Model $record, string $content): void
+    protected function updateRecord(FilamentLatex $record, string $content): void
     {
         $record->content = $content;
         $record->save();
