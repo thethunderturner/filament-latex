@@ -2,6 +2,7 @@
 
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
+use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
@@ -141,9 +142,12 @@ trait CanUseDocument
         }
     }
 
+    /**
+     * @throws Exception
+     */
     #[On('document-compiled')]
     public function getPdfUrl(): string
     {
-        return route('pdf.download', ['recordID' => $this->filamentLatex->id]);
+        return route('filament.' . filament()->getCurrentPanel()->getId() . '.auth.file', ['recordID' => $this->filamentLatex->id]);
     }
 }

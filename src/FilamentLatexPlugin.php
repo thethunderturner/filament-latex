@@ -4,6 +4,7 @@ namespace TheThunderTurner\FilamentLatex;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Illuminate\Auth\Middleware\Authenticate;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class FilamentLatexPlugin implements Plugin
@@ -19,6 +20,9 @@ class FilamentLatexPlugin implements Plugin
             ->resources([
                 FilamentLatexResource::class,
             ]);
+        $panel->authMiddleware([
+            Authenticate::class,
+        ]);
     }
 
     public function boot(Panel $panel): void
