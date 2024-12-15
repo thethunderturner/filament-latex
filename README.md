@@ -6,6 +6,10 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/thethunderturner/filament-latex.svg?style=flat-square)](https://packagist.org/packages/thethunderturner/filament-latex)
 
 Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX templates. The plugin is still in development, but the basic functionality is implemented.
+<div style="display: flex; align-items: center; justify-content: center;">
+    <img src="assets/filament-latex.png" alt="Filament LaTeX" style="margin-right: 10px; width: 45%;">
+    <img src="assets/filament-latex-upload.png" alt="Filament LaTeX Upload" style="width: 45%;">
+</div>
 
 ## Installation
 
@@ -16,7 +20,7 @@ sudo pacman -S texlive-full # for arch based systems
 brew install texlive-full # for MacOS
 ```
 If you are on Windows then please visit the [TeX Live website](https://tug.org/texlive/windows.html) and follow the instructions. \
-After you have installed `textlive`, find where the `pdflatex` binary is located by running this in your console:
+After you have installed `texlive`, find where the `pdflatex` binary is located by running this in your console:
 ```bash
 which pdflatex # for Unix based systems
 where pdflatex # for Windows

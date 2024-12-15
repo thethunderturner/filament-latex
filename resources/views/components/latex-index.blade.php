@@ -29,7 +29,7 @@
             @if($pdfUrl)
                 <iframe
                     x-data="{ pdfUrl: @js($pdfUrl) }"
-                    x-on:document-compiled.window="pdfUrl = @js($pdfUrl) + '?' + new Date().getTime()"
+                    x-on:document-compiled.window="pdfUrl"
                     class="w-full h-screen"
                     :src="pdfUrl"
                 >
