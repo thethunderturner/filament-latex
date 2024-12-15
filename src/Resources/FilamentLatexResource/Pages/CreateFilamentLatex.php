@@ -31,16 +31,26 @@ class CreateFilamentLatex extends CreateRecord
         return 'Created Document';
     }
 
+    /**
+     * File creation hook.
+     *
+     * Important Context: The parsers needs something to render!
+     * Having just the document class and a comment won't produce a PDF.
+     * Therefore, in the preview you will just get a 404 message.
+     */
     protected function afterCreate(): void
     {
         $defaultContent = <<<'LATEX'
             \documentclass{article}
+            \usepackage{graphicx}
+            \graphicspath{{../files/}}
             \begin{document}
             % Your content here
+            Hello World
             \end{document}
             LATEX;
 
         $this->updateDocument($this->record->id ?? null, $defaultContent);
-        $this->updateRecord($this->record);
+        $this->updateRecord($this->record, $defaultContent);
     }
 }

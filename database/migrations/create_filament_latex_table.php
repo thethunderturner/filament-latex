@@ -11,10 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Dont forget to delete (DEV ONLY)
-        if (Schema::hasTable('filament-latex')) {
-            Schema::dropIfExists('filament-latex');
-        }
         Schema::create('filament-latex', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -22,6 +18,8 @@ return new class extends Migration
             $table->dateTime('deadline');
             $table->bigInteger('author_id');
             $table->json('collaborators_id')->nullable();
+            $table->json('attachment')->nullable();
+            $table->json('attachment_file_names')->nullable();
             $table->timestamps();
         });
     }

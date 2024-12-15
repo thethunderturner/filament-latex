@@ -2,33 +2,44 @@
 
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
+use Exception;
 use Filament\Notifications\Notification;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 
+/**
+ * @property FilamentLatex $filamentLatex
+ * @property string $latexContent
+ */
 trait CanUseDocument
 {
+    public function getStorage(): Filesystem
+    {
+        return Storage::disk(config('filament-latex.storage'));
+    }
+
     /**
      * We pass the content as an argument.
      */
     protected function updateDocument(int $recordID, string $content): void
     {
-        Storage::disk(config('filament-latex.storage'))->put($recordID . '/main.tex', $content);
+        $this->getStorage()->put($recordID . '/files/main.tex', $content);
     }
 
     /**
      * Update the record with the new content.
      *
-     * @param  $record  Model The record to update.
+     * @param  $record  FilamentLatex The record to update.
      */
-    protected function updateRecord(Model $record): void
+    protected function updateRecord(FilamentLatex $record, string $content): void
     {
-        $record->content = $this->latexContent;
+        $record->content = $content;
         $record->save();
     }
 
@@ -46,24 +57,23 @@ trait CanUseDocument
      */
     public function compileDocument(): void
     {
-        $recordID = $this->record->id;
+        $recordID = $this->filamentLatex->id;
 
         $this->updateDocument($recordID, $this->latexContent);
-        $this->updateRecord($this->record);
+        $this->updateRecord($this->filamentLatex, $this->latexContent);
 
-        $storage = Storage::disk(config('filament-latex.storage'));
-
-        $filePath = $storage->path($recordID . '/main.tex');
+        $storage = $this->getStorage();
+        $filePath = $storage->path($recordID . '/files/main.tex');
         $pdfDir = $storage->path($recordID . '/compiled');
 
-        if (! $storage->exists($recordID . '/main.tex')) {
+        if (! $storage->exists($recordID . '/files/main.tex')) {
             throw new RuntimeException(sprintf(
                 'LaTeX file not found at: %s',
                 $filePath
             ));
         }
 
-        if (! $storage->exists($recordID . '/compiled')) {
+        if (! $storage->exists($recordID . '/files/compiled')) {
             $storage->makeDirectory($recordID . '/compiled');
         }
 
@@ -76,7 +86,7 @@ trait CanUseDocument
         ];
 
         // Run the pdflatex command
-        $result = Process::run($command);
+        $result = Process::timeout(config('filament-latex.compilation-timeout'))->run($command);
 
         if ($result->failed()) {
             Notification::make()
@@ -123,7 +133,7 @@ trait CanUseDocument
     {
         $this->compileDocument();
 
-        $recordID = $this->record->id ?? null;
+        $recordID = $this->filamentLatex->id ?? null;
         $storage = Storage::disk(config('filament-latex.storage'));
         $pdfPath = $recordID . '/compiled/main.pdf';
 
@@ -136,9 +146,12 @@ trait CanUseDocument
         }
     }
 
+    /**
+     * @throws Exception
+     */
     #[On('document-compiled')]
     public function getPdfUrl(): string
     {
-        return route('pdf.download', ['recordID' => $this->record->id]);
+        return route('filament.' . filament()->getCurrentPanel()->getId() . '.auth.file', ['recordID' => $this->filamentLatex->id]);
     }
 }

@@ -3,28 +3,40 @@
 namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 
 use Filament\Actions\Action;
-use Filament\Resources\Pages\Concerns\InteractsWithRecord;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
+use TheThunderTurner\FilamentLatex\Concerns\CanUploadFiles;
 use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
+use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
-class ViewFilamentLatex extends Page
+class ViewFilamentLatex extends Page implements HasActions, HasForms
 {
+    use CanUploadFiles;
     use CanUseDocument;
-    use InteractsWithRecord;
+    use InteractsWithActions;
+    use InteractsWithForms;
 
     protected static string $resource = FilamentLatexResource::class;
 
+    public FilamentLatex $filamentLatex;
+
+    public string $latexContent = '';
+
     public function mount(int | string $record): void
     {
-        $this->record = $this->resolveRecord($record);
-        $this->latexContent = $this->record->content;
+        $this->filamentLatex = FilamentLatex::findOrFail($record);
+        $this->latexContent = $this->filamentLatex->content;
+
+        // Compile document upon loading the page.
+        $this->compileDocument();
     }
 
     protected static string $view = 'filament-latex::page';
-
-    public string $latexContent = '';
 
     public function getMaxContentWidth(): MaxWidth
     {
@@ -42,18 +54,14 @@ class ViewFilamentLatex extends Page
                 ])
                 ->tooltip('Download PDF')
                 ->icon('heroicon-o-document-arrow-down')
-                ->action(function () {
-                    return $this->downloadDocument();
-                }),
+                ->action(fn () => $this->downloadDocument()),
             Action::make('compileAction')
                 ->label('Compile')
                 ->color('success')
                 ->extraAttributes([
                     'class' => 'rounded-l-none',
                 ])
-                ->action(function () {
-                    $this->compileDocument();
-                }),
+                ->action(fn () => $this->compileDocument()),
         ];
     }
 }

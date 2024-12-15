@@ -15,12 +15,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FilamentLatex extends Model
 {
-    protected $fillable = ['name', 'content', 'deadline', 'author_id', 'collaborators_id'];
+    protected $fillable = ['name', 'content', 'attachment', 'attachment_file_names', 'deadline', 'author_id', 'collaborators_id'];
 
     protected $table = 'filament-latex';
 
     protected $casts = [
         'collaborators_id' => 'array',
+        'attachment' => 'array',
+        'attachment_file_names' => 'array',
     ];
 
     /**
