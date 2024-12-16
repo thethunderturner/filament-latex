@@ -2,6 +2,10 @@
 
 All notable changes to `filament-latex` will be documented in this file.
 
+## 1.1.1 - 2024-12-16
+
+**Full Changelog**: https://github.com/thethunderturner/filament-latex/compare/v1.1.0...1.1.1
+
 ## v1.1.0 - 2024-12-15
 
 ### What's Changed
