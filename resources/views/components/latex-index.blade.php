@@ -12,7 +12,7 @@
     >
         {{-- Latex Editor --}}
         <div
-            class="w-full border border-gray-200 rounded-lg dark:border-gray-700 h-screen overflow-auto"
+            class="h-screen w-full overflow-auto rounded-lg border border-gray-200 dark:border-gray-700"
             x-ignore
             ax-load
             x-model="message"
@@ -24,12 +24,12 @@
         ></div>
 
         {{-- PDF Preview --}}
-        <div class="border border-gray-200 rounded-lg dark:border-gray-700">
+        <div class="rounded-lg border border-gray-200 dark:border-gray-700">
             @if ($pdfUrl)
                 <iframe
                     x-data="{ pdfUrl: @js($pdfUrl) }"
                     x-on:document-compiled.window="pdfUrl"
-                    class="w-full h-screen"
+                    class="h-screen w-full"
                     :src="pdfUrl"
                 ></iframe>
             @else

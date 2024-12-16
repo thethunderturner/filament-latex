@@ -1,7 +1,7 @@
 <div
-    class="p-2 border rounded-md bg-white dark:bg-gray-800 flex items-center justify-between shadow-sm"
+    class="flex items-center justify-between rounded-md border bg-white p-2 shadow-sm dark:bg-gray-800"
 >
-    <span class="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
+    <span class="truncate text-sm font-medium text-gray-700 dark:text-gray-300">
         {{ $file }}
     </span>
     <div>
