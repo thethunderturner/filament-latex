@@ -3,10 +3,12 @@
     <div
         class="grid grid-cols-2 gap-4"
         x-data="{ message: '' }"
-        x-init="$watch('message', value => {
-                    // Sync with Livewire component
-                    @this.latexContent = value;
-                })"
+        x-init="
+            $watch('message', (value) => {
+                // Sync with Livewire component
+                @this.latexContent = value
+            })
+        "
     >
         {{-- Latex Editor --}}
         <div
@@ -19,21 +21,17 @@
                         content: @js($latexContent),
                     })"
             wire:ignore
-        >
-        </div>
+        ></div>
 
         {{-- PDF Preview --}}
-        <div
-            class="border border-gray-200 rounded-lg dark:border-gray-700"
-        >
-            @if($pdfUrl)
+        <div class="border border-gray-200 rounded-lg dark:border-gray-700">
+            @if ($pdfUrl)
                 <iframe
                     x-data="{ pdfUrl: @js($pdfUrl) }"
                     x-on:document-compiled.window="pdfUrl"
                     class="w-full h-screen"
                     :src="pdfUrl"
-                >
-                </iframe>
+                ></iframe>
             @else
                 <p>No PDF available to preview.</p>
             @endif
