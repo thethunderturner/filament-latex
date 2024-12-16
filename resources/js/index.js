@@ -1,10 +1,10 @@
-import { EditorView, basicSetup } from 'codemirror';
-import { markdown } from '@codemirror/lang-markdown';
-import { EditorState } from '@codemirror/state';
-import { defaultKeymap } from "@codemirror/commands";
+import { EditorView, basicSetup } from 'codemirror'
+import { markdown } from '@codemirror/lang-markdown'
+import { EditorState } from '@codemirror/state'
+import { defaultKeymap } from '@codemirror/commands'
 import { keymap } from '@codemirror/view'
 
-export default function codeEditor({content}) {
+export default function codeEditor({ content }) {
     return {
         init() {
             const editor = new EditorView({
@@ -18,13 +18,16 @@ export default function codeEditor({content}) {
                         // Add an update listener to track changes
                         EditorView.updateListener.of((update) => {
                             if (update.docChanged) {
-                                this.$dispatch('input', update.state.doc.toString());
+                                this.$dispatch(
+                                    'input',
+                                    update.state.doc.toString(),
+                                )
                             }
                         }),
-                    ]
+                    ],
                 }),
-                parent: this.$el
-            });
-        }
-    };
+                parent: this.$el,
+            })
+        },
+    }
 }

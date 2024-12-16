@@ -8,11 +8,11 @@
         <x-filament-actions::modals />
     </div>
 
-    <div class="mt-6 h-[79rem] overflow-auto space-y-2">
-        @forelse($files as $file)
+    <div class="mt-6 h-[79rem] space-y-2 overflow-auto">
+        @forelse ($files as $file)
             @include('filament-latex::components.file-upload', ['file' => $file])
         @empty
-            <div class="text-gray-500 dark:text-gray-400 text-center">
+            <div class="text-center text-gray-500 dark:text-gray-400">
                 No files uploaded.
             </div>
         @endforelse

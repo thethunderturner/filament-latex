@@ -6,7 +6,6 @@
 
 <x-filament-panels::page>
     <div class="inline-flex w-full justify-stretch rounded-md" role="group">
-
         {{-- File Upload Container --}}
         @include('filament-latex::components.file-upload-index', ['files' => $files])
 

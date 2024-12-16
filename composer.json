@@ -46,7 +46,12 @@
         "test": "vendor/bin/pest --no-coverage",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint",
-        "finalize": "composer format && composer analyse && composer test"
+        "finalize": [
+            "@composer format",
+            "@composer analyse",
+            "@composer test",
+            "npm run prettier"
+        ]
     },
     "config": {
         "sort-packages": true,
