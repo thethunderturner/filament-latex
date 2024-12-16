@@ -12,12 +12,6 @@
         "source": "https://github.com/thethunderturner/filament-latex"
     },
     "license": "MIT",
-    "authors": [
-        {
-            "name": "TheThunderTurner",
-            "email": ""
-        }
-    ],
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.2.43",
