@@ -2,11 +2,16 @@
 
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
+use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Notifications\Notification;
+use Illuminate\Support\Str;
 
 trait CanUploadFiles
 {
+    use Utils;
+
     /**
      * Uploads a file.
      */
@@ -41,19 +46,7 @@ trait CanUploadFiles
             ->color('danger')
             ->requiresConfirmation()
             ->action(function ($arguments) {
-                return $this->getStorage()->delete($this->filamentLatex->id . '/files/' . $arguments['file']);
+                return $this->canDeleteFile($arguments);
             });
-    }
-
-    /**
-     * Returns an array of files that have been
-     * uploaded.
-     *
-     * All files are uploaded in files/ directory. In the future
-     * we could add subdirectories for better organization.
-     */
-    public function getFiles(): array
-    {
-        return array_map('basename', $this->getStorage()->files($this->filamentLatex->id . '/files'));
     }
 }
