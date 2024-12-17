@@ -33,7 +33,12 @@ You can install the package via composer:
 composer require thethunderturner/filament-latex
 ```
 
-You can publish and run the migrations with:
+With the install command, the package will automatically publish the migrations and the config file.
+```bash
+php artisan filament-latex:install
+```
+
+Optionally, you can publish them individually:
 
 ```bash
 php artisan vendor:publish --tag="filament-latex-migrations"
