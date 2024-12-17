@@ -2,11 +2,18 @@
 
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
+use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 
+/**
+ * @property FilamentLatex $filamentLatex
+ * @property string $latexContent
+ */
 trait Utils
 {
     /**
@@ -47,5 +54,19 @@ trait Utils
         } else {
             return $this->getStorage()->delete($this->filamentLatex->id . '/files/' . $arguments['file']);
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getUserModel(): string
+    {
+        $userModel = config('filament-latex.user-model');
+
+        if (! $userModel || ! class_exists($userModel) || ! is_subclass_of($userModel, Model::class)) {
+            throw new Exception('User model is not set or is not a valid Eloquent model class');
+        }
+
+        return $userModel;
     }
 }
