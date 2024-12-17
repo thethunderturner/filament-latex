@@ -7,39 +7,43 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'field.name' => 'Document Title',
-    'field.deadline' => 'Deadline',
-    'field.author_id' => 'Author',
-    'field.collaborators_id' => 'Collaborators',
-
+    'field' => [
+        'name' => 'Document Title',
+        'deadline' => 'Deadline',
+        'author_id' => 'Author',
+        'collaborators_id' => 'Collaborators',
+    ],
 
     /*
     |--------------------------------------------------------------------------
     | Table Columns
     |--------------------------------------------------------------------------
     */
-    'column.id' => 'ID',
-    'column.name' => 'Document1 Title',
-    'column.deadline' => 'Deadline',
-    'column.created_at' => 'Created At',
-    'column.author_avatar' => 'Author',
-    'column.collaborators_avatars' => 'Collaborators',
-    'column.author.name' => 'Author',
-    'column.collaborators' => 'Collaborators',
-    'column.updated_at' => 'Last Updated',
-
+    'columns' => [
+        'id' => 'ID',
+        'name' => 'Document1 Title',
+        'deadline' => 'Deadline',
+        'created_at' => 'Created At',
+        'author_avatar' => 'Author',
+        'collaborators_avatars' => 'Collaborators',
+        'author.name' => 'Author',
+        'collaborators' => 'Collaborators',
+        'updated_at' => 'Last Updated',
+    ],
 
     /*
     |--------------------------------------------------------------------------
     | LaTeX Page Labels
     |--------------------------------------------------------------------------
     */
-    'page.download.tooltip' => 'Download PDF',
-    'page.compile.action' => 'Compile LaTeX',
-    'page.create-button-label' => 'Create Document',
-    'page.list-page-title' => 'LaTeX Documents',
-    'page.view-page-title' => 'View Document',
-    'page.edit-page-title' => 'Edit Document',
-    'page.create-page-title' => 'Create Document',
-    'page.create-page-notification-title' => 'Document created successfully!',
+    'page' => [
+        'download.tooltip' => 'Download PDF',
+        'compile.action' => 'Compile LaTeX',
+        'create-button-label' => 'Create Document',
+        'list-page-title' => 'LaTeX Documents',
+        'view-page-title' => 'View Document',
+        'edit-page-title' => 'Edit Document',
+        'create-page-title' => 'Create Document',
+        'create-page-notification-title' => 'Document created successfully!',
+    ],
 ];
