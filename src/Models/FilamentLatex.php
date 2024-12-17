@@ -5,6 +5,7 @@ namespace TheThunderTurner\FilamentLatex\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use TheThunderTurner\FilamentLatex\Concerns\Utils;
 
 /**
  * @property int $id
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class FilamentLatex extends Model
 {
+    use Utils;
+
     protected $fillable = ['name', 'content', 'attachment', 'attachment_file_names', 'deadline', 'author_id', 'collaborators_id'];
 
     protected $table = 'filament-latex';
@@ -32,19 +35,5 @@ class FilamentLatex extends Model
     public function author(): BelongsTo
     {
         return $this->BelongsTo($this->getUserModel(), 'author_id');
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getUserModel(): string
-    {
-        $userModel = config('filament-latex.user-model');
-
-        if (! $userModel || ! class_exists($userModel) || ! is_subclass_of($userModel, Model::class)) {
-            throw new Exception('User model is not set or is not a valid Eloquent model class');
-        }
-
-        return $userModel;
     }
 }

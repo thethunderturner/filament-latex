@@ -4,7 +4,6 @@ namespace TheThunderTurner\FilamentLatex\Concerns;
 
 use Exception;
 use Filament\Notifications\Notification;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
@@ -19,10 +18,7 @@ use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
  */
 trait CanUseDocument
 {
-    public function getStorage(): Filesystem
-    {
-        return Storage::disk(config('filament-latex.storage'));
-    }
+    use Utils;
 
     /**
      * We pass the content as an argument.

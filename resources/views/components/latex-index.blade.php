@@ -28,7 +28,9 @@
             @if ($pdfUrl)
                 <iframe
                     x-data="{ pdfUrl: @js($pdfUrl) }"
-                    x-on:document-compiled.window="pdfUrl"
+                    {{-- '?' + new Date().getTime() is a hack that allows for refresh upon compilation --}}
+                    {{-- New timestamp forces broswer to listen to new query, bypassing caching issues (Not sure if there is a better way) --}}
+                    x-on:document-compiled.window="pdfUrl = @js($pdfUrl) + '?' + new Date().getTime()"
                     class="h-screen w-full"
                     :src="pdfUrl"
                 ></iframe>
