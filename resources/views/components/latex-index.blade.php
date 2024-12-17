@@ -28,7 +28,8 @@
             @if ($pdfUrl)
                 <iframe
                     x-data="{ pdfUrl: @js($pdfUrl) }"
-                    x-on:document-compiled.window="pdfUrl"
+                    {{-- '?' + new Date().getTime() is a hack that allows for refresh upon compilation --}}
+                    x-on:document-compiled.window="pdfUrl = @js($pdfUrl) + '?' + new Date().getTime()"
                     class="h-screen w-full"
                     :src="pdfUrl"
                 ></iframe>
