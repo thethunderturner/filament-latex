@@ -20,7 +20,6 @@ use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\CreateF
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\EditFilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\ListFilamentLatexes;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\ViewFilamentLatex;
-use const _PHPStan_e6dc705b2\__;
 
 class FilamentLatexResource extends Resource
 {

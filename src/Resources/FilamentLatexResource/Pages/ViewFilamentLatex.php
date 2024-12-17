@@ -25,6 +25,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
     protected static string $resource = FilamentLatexResource::class;
 
     protected static string $view = 'filament-latex::page';
+
     public FilamentLatex $filamentLatex;
 
     public string $latexContent = '';
