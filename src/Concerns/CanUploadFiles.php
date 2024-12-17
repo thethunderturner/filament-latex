@@ -2,11 +2,8 @@
 
 namespace TheThunderTurner\FilamentLatex\Concerns;
 
-use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Notifications\Notification;
-use Illuminate\Support\Str;
 
 trait CanUploadFiles
 {
