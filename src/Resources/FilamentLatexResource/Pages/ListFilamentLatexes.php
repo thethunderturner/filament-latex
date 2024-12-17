@@ -20,7 +20,7 @@ class ListFilamentLatexes extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label(__('filament-latex::filament-latex.page.create-button-label')),
+                ->label(__('filament-latex::filament-latex.page.create.button')),
         ];
     }
 }

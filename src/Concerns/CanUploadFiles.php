@@ -15,10 +15,14 @@ trait CanUploadFiles
     public function uploadAction(): Action
     {
         return Action::make('upload')
-            ->color('success')
-            ->label('Upload Files')
-            ->icon('heroicon-o-document-arrow-up')
             ->requiresConfirmation()
+            ->label(__('filament-latex::filament-latex.page.file-upload.title'))
+            ->modalIcon(__('filament-latex::filament-latex.page.file-upload.icon'))
+            ->modalHeading(__('filament-latex::filament-latex.page.file-upload.heading'))
+            ->modalDescription(__('filament-latex::filament-latex.page.file-upload.description'))
+            ->modalSubmitActionLabel(__('filament-latex::filament-latex.page.file-upload.submit'))
+            ->color('success')
+            ->icon('heroicon-o-document-arrow-up')
             ->extraAttributes([
                 'class' => 'w-full',
             ])
