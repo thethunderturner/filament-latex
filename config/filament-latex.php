@@ -2,16 +2,6 @@
 
 return [
     /**
-     * UI customizations
-     */
-    'navigation-label' => 'Filament Latex',
-    'navigation-icon' => null, // Override the navigation icon with a heroicon
-    'navigation-group' => null,
-    'list-page-title' => 'Latex Documents',
-    'create-button-label' => 'Create Document',
-    'create-page-title' => 'Create Latex Document',
-
-    /**
      * Parser Settings
      *
      * The parser to use. Options: pdflatex, xelatex, lualatex (pdflatex is the default). The parser must be installed on the server.

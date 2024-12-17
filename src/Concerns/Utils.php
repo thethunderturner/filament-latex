@@ -43,16 +43,20 @@ trait Utils
      */
     public function canDeleteFile(array $arguments): bool
     {
-        $texFiles = collect($this->getFiles())->filter(fn ($file) => Str::endsWith($file, '.tex'));
-        if ($texFiles->count() === 1) {
-            Notification::make()
-                ->title('You cannot delete the only ".tex" file in the project.')
-                ->color('danger')
-                ->send();
-
-            return false;
-        } else {
+        if (! Str::endsWith($arguments['file'], '.tex')) {
             return $this->getStorage()->delete($this->filamentLatex->id . '/files/' . $arguments['file']);
+        } else {
+            $texFiles = collect($this->getFiles())->filter(fn ($file) => Str::endsWith($file, '.tex'));
+            if ($texFiles->count() === 1) {
+                Notification::make()
+                    ->title('You cannot delete the only ".tex" file in the project.')
+                    ->color('danger')
+                    ->send();
+
+                return false;
+            } else {
+                return $this->getStorage()->delete($this->filamentLatex->id . '/files/' . $arguments['file']);
+            }
         }
     }
 

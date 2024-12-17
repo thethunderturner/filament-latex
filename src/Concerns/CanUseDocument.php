@@ -84,37 +84,25 @@ trait CanUseDocument
         // Run the pdflatex command
         $result = Process::timeout(config('filament-latex.compilation-timeout'))->run($command);
 
-        if ($result->failed()) {
+        // Mimic grep behavior to check for specific LaTeX errors
+        $output = $result->output();
+        $errorPattern = '/^!.*$/m'; // Match lines starting with '!'
+        if (preg_match($errorPattern, $output) || $result->failed()) {
             Notification::make()
-                ->title('Compilation Error')
+                ->title(__('filament-latex::filament-latex.page.compile.error-title'))
                 ->color('danger')
-                ->body('There was an error compiling the document.')
+                ->body(__('filament-latex::filament-latex.page.compile.error-body'))
                 ->send();
 
             Log::error('LaTeX compilation failed:', [
                 'output' => $result->output(),
                 'error' => $result->errorOutput(),
             ]);
-
-            return;
-        }
-
-        // Mimic grep behavior to check for specific LaTeX errors
-        $output = $result->output();
-        $errorPattern = '/^!.*$/m'; // Match lines starting with '!'
-        if (preg_match($errorPattern, $output)) {
-            Notification::make()
-                ->title('Compilation Error')
-                ->color('danger')
-                ->body('Errors were found in the LaTeX compilation output.')
-                ->send();
-
-            Log::info('Filtered LaTeX errors:', ['errors' => $output]);
         } else {
             Notification::make()
-                ->title('Compilation Success')
+                ->title(__('filament-latex::filament-latex.page.compile.success-title'))
                 ->color('success')
-                ->body('The document was compiled successfully.')
+                ->body(__('filament-latex::filament-latex.page.compile.success-body'))
                 ->send();
 
             $this->dispatch('document-compiled');
