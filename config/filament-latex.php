@@ -22,4 +22,5 @@ return [
     'parser' => '/usr/bin/pdflatex', // The latex parser to use. Options: pdflatex, xelatex, lualatex (pdflatex is the default).
     'compilation-timeout' => 60, // The maximum time in seconds to wait for the compilation to finish.
     'strict-compilation' => false, // Options: strict, non-strict. Strict mode will throw exceptions on compilation errors, otherwise it will not.
+    'avatar-columns' => false, // If true, the avatar columns will be shown instead of the names of the author and collaborators.
 ];
