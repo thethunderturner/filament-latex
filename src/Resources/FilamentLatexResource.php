@@ -98,8 +98,9 @@ class FilamentLatexResource extends Resource
                     ->dateTime(),
                 TextColumn::make('created_at')
                     ->dateTime(),
-                ImageColumn::make('author')
+                ImageColumn::make('author_avatar')
                     ->label('Author')
+                    ->visible(config('filament-latex.avatar-columns'))
                     ->circular()
                     ->tooltip(function ($record) use ($userModel) {
                         return $userModel::find($record->author_id)->name;
@@ -107,13 +108,28 @@ class FilamentLatexResource extends Resource
                     ->getStateUsing(function ($record) use ($userModel) {
                         return $userModel::find($record->author_id)->avatar_url;
                     }),
-                ImageColumn::make('collaborators')
+                ImageColumn::make('collaborators_avatars')
+                    ->label('Collaborators')
+                    ->visible(config('filament-latex.avatar-columns'))
                     ->circular()
                     ->stacked()
                     ->limit(3)
                     ->limitedRemainingText()
                     ->getStateUsing(function ($record) use ($userModel) {
                         return $userModel::whereIn('id', $record->collaborators_id)->pluck('avatar_url')->toArray();
+                    }),
+                TextColumn::make('author.name')
+                    ->label('Author')
+                    ->visible(! config('filament-latex.avatar-columns'))
+                    ->badge()
+                    ->color('info'),
+                TextColumn::make('collaborators')
+                    ->label('Collaborators')
+                    ->visible(! config('filament-latex.avatar-columns'))
+                    ->badge()
+                    ->color('info')
+                    ->getStateUsing(function ($record) use ($userModel) {
+                        return $userModel::whereIn('id', $record->collaborators_id)->pluck('name')->toArray();
                     }),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')

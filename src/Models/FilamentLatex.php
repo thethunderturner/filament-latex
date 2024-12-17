@@ -4,6 +4,7 @@ namespace TheThunderTurner\FilamentLatex\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -28,7 +29,7 @@ class FilamentLatex extends Model
     /**
      * @throws Exception
      */
-    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function author(): BelongsTo
     {
         return $this->BelongsTo($this->getUserModel(), 'author_id');
     }
