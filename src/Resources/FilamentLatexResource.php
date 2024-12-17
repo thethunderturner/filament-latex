@@ -20,6 +20,7 @@ use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\CreateF
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\EditFilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\ListFilamentLatexes;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages\ViewFilamentLatex;
+use const _PHPStan_e6dc705b2\__;
 
 class FilamentLatexResource extends Resource
 {
@@ -52,9 +53,11 @@ class FilamentLatexResource extends Resource
                 Section::make()
                     ->schema([
                         TextInput::make('name')
-                            ->label('Document Title')
+                            ->label(__('filament-latex::filament-latex.field.name'))
+                            ->translateLabel()
                             ->required(),
                         DateTimePicker::make('deadline')
+                            ->label(__('filament-latex::filament-latex.field.deadline'))
                             ->required()
                             ->native(false)
                             ->placeholder('DD-MM-YYYY HH:MM')
@@ -62,14 +65,14 @@ class FilamentLatexResource extends Resource
                             ->format('Y-m-d H:i:s')
                             ->displayFormat('d-m-Y H:i'),
                         Select::make('author_id')
-                            ->label('Author')
+                            ->label(__('filament-latex::filament-latex.field.author_id'))
                             ->default(fn () => Auth::id())
                             ->options(fn () => $userModel::all()->pluck('name', 'id'))
                             ->disabled()
                             ->dehydrated()
                             ->required(),
                         Select::make('collaborators_id')
-                            ->label('Collaborators')
+                            ->label(__('filament-latex::filament-latex.field.collaborators_id'))
                             ->multiple()
                             ->options(fn () => $userModel::all()->pluck('name', 'id'))
                             ->searchable(),
@@ -87,14 +90,11 @@ class FilamentLatexResource extends Resource
             )
             ->columns([
                 TextColumn::make('id')
-                    ->label('ID'),
-                TextColumn::make('name'),
-                TextColumn::make('deadline')
-                    ->dateTime(),
-                TextColumn::make('created_at')
-                    ->dateTime(),
+                    ->label(__('filament-latex::filament-latex.column.id')),
+                TextColumn::make('name')
+                    ->label(__('filament-latex::filament-latex.column.name')),
                 ImageColumn::make('author_avatar')
-                    ->label('Author')
+                    ->label(__('filament-latex::filament-latex.column.author_avatar'))
                     ->visible(config('filament-latex.avatar-columns'))
                     ->circular()
                     ->tooltip(function ($record) use ($userModel) {
@@ -104,7 +104,7 @@ class FilamentLatexResource extends Resource
                         return $userModel::find($record->author_id)->avatar_url;
                     }),
                 ImageColumn::make('collaborators_avatars')
-                    ->label('Collaborators')
+                    ->label(__('filament-latex::filament-latex.column.collaborators_avatars'))
                     ->visible(config('filament-latex.avatar-columns'))
                     ->circular()
                     ->stacked()
@@ -114,20 +114,26 @@ class FilamentLatexResource extends Resource
                         return $userModel::whereIn('id', $record->collaborators_id)->pluck('avatar_url')->toArray();
                     }),
                 TextColumn::make('author.name')
-                    ->label('Author')
+                    ->label(__('filament-latex::filament-latex.column.author.name'))
                     ->visible(! config('filament-latex.avatar-columns'))
                     ->badge()
                     ->color('info'),
                 TextColumn::make('collaborators')
-                    ->label('Collaborators')
+                    ->label(__('filament-latex::filament-latex.column.collaborators'))
                     ->visible(! config('filament-latex.avatar-columns'))
                     ->badge()
                     ->color('info')
                     ->getStateUsing(function ($record) use ($userModel) {
                         return $userModel::whereIn('id', $record->collaborators_id)->pluck('name')->toArray();
                     }),
+                TextColumn::make('deadline')
+                    ->label(__('filament-latex::filament-latex.column.deadline'))
+                    ->dateTime(),
+                TextColumn::make('created_at')
+                    ->label(__('filament-latex::filament-latex.column.created_at'))
+                    ->dateTime(),
                 TextColumn::make('updated_at')
-                    ->label('Last Updated')
+                    ->label(__('filament-latex::filament-latex.column.updated_at'))
                     ->dateTime()
                     ->since(),
             ])

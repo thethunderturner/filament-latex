@@ -13,14 +13,14 @@ class ListFilamentLatexes extends ListRecords
 
     public function getTitle(): string | Htmlable
     {
-        return config('filament-latex.list-page-title') ?? parent::getTitle();
+        return __('filament-latex::filament-latex.page.list-page-title');
     }
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make()
-                ->label(config('filament-latex.create-button-label') ?? 'Create'),
+                ->label(__('filament-latex::filament-latex.page.create-button-label')),
         ];
     }
 }

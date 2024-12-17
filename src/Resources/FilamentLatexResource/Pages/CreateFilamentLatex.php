@@ -15,7 +15,7 @@ class CreateFilamentLatex extends CreateRecord
 
     public function getTitle(): string | Htmlable
     {
-        return config('filament-latex.create-page-title') ?? parent::getTitle();
+        return __('filament-latex::filament-latex.page.create-page-title');
     }
 
     /**
@@ -28,7 +28,7 @@ class CreateFilamentLatex extends CreateRecord
 
     protected function getCreatedNotificationTitle(): ?string
     {
-        return 'Created Document';
+        return __('filament-latex::filament-latex.page.create-page-notification-title');
     }
 
     /**
