@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'navigation-icon' => null,
+
     /**
      * Parser Settings
      *

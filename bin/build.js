@@ -1,4 +1,5 @@
 import esbuild from 'esbuild'
+import copy from 'esbuild-plugin-copy'
 
 const isDev = process.argv.includes('--dev')
 
@@ -56,4 +57,12 @@ compile({
     ...defaultOptions,
     entryPoints: ['./resources/js/index.js'],
     outfile: './resources/dist/filament-latex.js',
+    plugins: [
+        copy({
+            targets: [
+                { src: './resources/js/pdf.worker.mjs', dest: './resources/dist' },
+            ],
+            verbose: true,
+        }),
+    ],
 })

@@ -64,5 +64,9 @@ return [
         'list-page-title' => 'Έγγραφα LaTeX',
         'view-page-title' => 'Προβολή Εγγράφου',
         'edit-page-title' => 'Επεξεργασία Εγγράφου',
+        'navigation' => [
+            'label' => 'LaTeX Έγγραφα',
+            'group' => 'LaTeX',
+        ],
     ],
 ];

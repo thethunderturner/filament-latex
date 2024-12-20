@@ -24,16 +24,18 @@
         ></div>
 
         {{-- PDF Preview --}}
-        <div class="rounded-lg border border-gray-200 dark:border-gray-700">
+        <div
+            class="rounded-lg border border-gray-200 dark:border-gray-700"
+            x-ignore
+            ax-load
+            ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
+            x-data="pdfViewer({
+                        content: @js($pdfUrl),
+                    })"
+            wire:ignore
+        >
             @if ($pdfUrl)
-                <iframe
-                    x-data="{ pdfUrl: @js($pdfUrl) }"
-                    {{-- '?' + new Date().getTime() is a hack that allows for refresh upon compilation --}}
-                    {{-- New timestamp forces broswer to listen to new query, bypassing caching issues (Not sure if there is a better way) --}}
-                    x-on:document-compiled.window="pdfUrl = @js($pdfUrl) + '?' + new Date().getTime()"
-                    class="h-screen w-full"
-                    :src="pdfUrl"
-                ></iframe>
+                <canvas id="canvas"></canvas>
             @else
                 <p>No PDF available to preview.</p>
             @endif
