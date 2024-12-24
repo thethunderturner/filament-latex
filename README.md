@@ -15,7 +15,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 
-### 🎥 Demo
+## Demo
 
 Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX templates. The plugin is still in development, but the basic functionality is implemented.
 <div style="display: flex; align-items: center; justify-content: center;">
