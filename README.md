@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/thethunderturner/filament-latex.svg?style=flat-square)](https://packagist.org/packages/thethunderturner/filament-latex)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/thethunderturner/filament-latex/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/thethunderturner/filament-latex/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/thethunderturner/filament-latex/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/thethunderturner/filament-latex/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
+[![Fix PHP Code Styling](https://github.com/thethunderturner/filament-latex/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/thethunderturner/filament-latex/actions/workflows/fix-php-code-styling.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/thethunderturner/filament-latex.svg?style=flat-square)](https://packagist.org/packages/thethunderturner/filament-latex)
 
 Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX templates. The plugin is still in development, but the basic functionality is implemented.
