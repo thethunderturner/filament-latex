@@ -18,8 +18,10 @@
 ## Demo
 
 Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX templates. The plugin is still in development, but the basic functionality is implemented.
-![filament-latex](https://github.com/user-attachments/assets/1000dbe9-dd74-4507-8031-d0ad9f5a4170)
-![filament-latex-upload](https://github.com/user-attachments/assets/b0284b90-041b-419f-b7f5-bb4687c3e8dd)
+<div style="display: flex; justify-content: space-around;">
+  <img src="https://github.com/user-attachments/assets/1000dbe9-dd74-4507-8031-d0ad9f5a4170" alt="filament-latex" style="margin-right: 10px; width: 45%;">
+  <img src="https://github.com/user-attachments/assets/b0284b90-041b-419f-b7f5-bb4687c3e8dd" alt="filament-latex-upload" style="margin-left: 10px; width: 45%;">
+</div>
 
 ## Installation
 > [!IMPORTANT]
