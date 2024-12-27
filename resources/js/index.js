@@ -40,7 +40,23 @@ function codeEditor({ content }) {
  */
 function pdfViewer({ content }) {
     return {
+        baseUrl: content, // Store the initial URL
+
         async init() {
+            await this.render();
+
+            // Listen for livewire event to refresh the PDF
+            Livewire.on('document-compiled', async () => {
+                this.$el.innerHTML = '';
+
+                // Add timestamp to force refresh
+                const refreshedUrl = this.baseUrl + '?t=' + new Date().getTime();
+                await this.render(refreshedUrl);
+            });
+        },
+
+        // Asynchronous download of PDF
+        async render(pdfUrl = null) {
             pdfjsLib.GlobalWorkerOptions.workerSrc = '/dist/pdf.worker.js';
             const container = this.$el;
 
@@ -52,10 +68,8 @@ function pdfViewer({ content }) {
 
                 let scale;
                 if (containerAspectRatio > pageAspectRatio) {
-                    // Container is wider than page
                     scale = (containerHeight * 0.95) / viewport.height;
                 } else {
-                    // Container is taller than page
                     scale = (containerWidth * 0.95) / viewport.width;
                 }
 
@@ -68,11 +82,11 @@ function pdfViewer({ content }) {
             container.appendChild(wrapper);
 
             try {
-                const loadingTask = pdfjsLib.getDocument(content);
+                const urlToLoad = pdfUrl || this.baseUrl;
+                const loadingTask = pdfjsLib.getDocument(urlToLoad);
                 const pdf = await loadingTask.promise;
-                console.log('PDF loaded');
+                console.log('PDF loaded:', urlToLoad);
 
-                // Get container dimensions
                 const containerWidth = wrapper.clientWidth;
                 const containerHeight = wrapper.clientHeight;
 
@@ -82,16 +96,18 @@ function pdfViewer({ content }) {
                     const scale = calculateOptimalScale(page, containerWidth, containerHeight);
                     const viewport = page.getViewport({ scale });
 
+                    // Prepare canvas using PDF page dimensions
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
 
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
 
-                    // Center the canvas
+                    // Canvas styling
                     canvas.style.cssText = 'display: block; margin: 10px auto;';
                     wrapper.appendChild(canvas);
 
+                    // Render PDF page into canvas context
                     const renderContext = {
                         canvasContext: context,
                         viewport: viewport,
@@ -101,7 +117,12 @@ function pdfViewer({ content }) {
                 }
             } catch (error) {
                 console.error('Error loading PDF:', error);
-                container.innerHTML = '<p class="text-red-500 p-4">Error loading PDF</p>';
+                wrapper.innerHTML = `
+                    <div class="p-4">
+                        <p class="text-red-500">Error loading PDF:</p>
+                        <p class="text-sm mt-2">${error.message}</p>
+                    </div>
+                `;
             }
         },
     };
