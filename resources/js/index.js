@@ -40,7 +40,7 @@ function codeEditor({ content }) {
  */
 function pdfViewer({ content }) {
     return {
-        baseUrl: content, // Store the initial URL
+        baseUrl: content,
 
         async init() {
             await this.render();
