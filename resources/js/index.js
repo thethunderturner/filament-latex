@@ -42,34 +42,67 @@ function pdfViewer({ content }) {
     return {
         async init() {
             pdfjsLib.GlobalWorkerOptions.workerSrc = '/dist/pdf.worker.js';
+            const container = this.$el;
 
-            const container = this.$el; // The container for rendering PDF pages
+            // Function to calculate optimal scale
+            const calculateOptimalScale = (page, containerWidth, containerHeight) => {
+                const viewport = page.getViewport({ scale: 1.0 });
+                const containerAspectRatio = containerWidth / containerHeight;
+                const pageAspectRatio = viewport.width / viewport.height;
 
-            const loadingTask = pdfjsLib.getDocument(content);
-            loadingTask.promise.then((pdf) => {
+                let scale;
+                if (containerAspectRatio > pageAspectRatio) {
+                    // Container is wider than page
+                    scale = (containerHeight * 0.95) / viewport.height;
+                } else {
+                    // Container is taller than page
+                    scale = (containerWidth * 0.95) / viewport.width;
+                }
+
+                return scale;
+            };
+
+            // Create a wrapper div for proper scrolling
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = 'width: 100%; height: 100%; overflow: auto; position: relative;';
+            container.appendChild(wrapper);
+
+            try {
+                const loadingTask = pdfjsLib.getDocument(content);
+                const pdf = await loadingTask.promise;
                 console.log('PDF loaded');
+
+                // Get container dimensions
+                const containerWidth = wrapper.clientWidth;
+                const containerHeight = wrapper.clientHeight;
+
                 // Render all pages
                 for (let i = 1; i <= pdf.numPages; i++) {
-                    pdf.getPage(i).then((page) => {
-                        const viewport = page.getViewport({ scale: 1.5 });
-                        const canvas = document.createElement('canvas');
-                        const context = canvas.getContext('2d');
+                    const page = await pdf.getPage(i);
+                    const scale = calculateOptimalScale(page, containerWidth, containerHeight);
+                    const viewport = page.getViewport({ scale });
 
-                        canvas.width = viewport.width;
-                        canvas.height = viewport.height;
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
 
-                        container.appendChild(canvas);
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
 
-                        const renderContext = {
-                            canvasContext: context,
-                            viewport: viewport,
-                        };
-                        page.render(renderContext);
-                    });
+                    // Center the canvas
+                    canvas.style.cssText = 'display: block; margin: 10px auto;';
+                    wrapper.appendChild(canvas);
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                    };
+
+                    await page.render(renderContext).promise;
                 }
-            }).catch((error) => {
+            } catch (error) {
                 console.error('Error loading PDF:', error);
-            });
+                container.innerHTML = '<p class="text-red-500 p-4">Error loading PDF</p>';
+            }
         },
     };
 }

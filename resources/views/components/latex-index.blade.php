@@ -25,19 +25,19 @@
 
         {{-- PDF Preview --}}
         <div
-            class="rounded-lg border border-gray-200 dark:border-gray-700"
+            class="h-screen rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
             x-ignore
             ax-load
             ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
             x-data="pdfViewer({
-                        content: @js($pdfUrl),
-                    })"
+                content: @js($pdfUrl),
+            })"
             wire:ignore
         >
             @if ($pdfUrl)
-                <canvas id="canvas"></canvas>
+                {{-- The viewer will create its own canvas elements --}}
             @else
-                <p>No PDF available to preview.</p>
+                <p class="p-4">No PDF available to preview.</p>
             @endif
         </div>
     </div>
