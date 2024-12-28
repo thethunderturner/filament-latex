@@ -68,9 +68,9 @@ function pdfViewer({ content }) {
 
             let scale
             if (containerAspectRatio > pageAspectRatio) {
-                scale = (containerHeight * 0.95) / viewport.height
+                scale = (containerHeight * 0.98) / viewport.height
             } else {
-                scale = (containerWidth * 0.95) / viewport.width
+                scale = (containerWidth * 0.98) / viewport.width
             }
 
             return scale
@@ -104,8 +104,8 @@ function pdfViewer({ content }) {
                     canvas.width = viewport.width
                     canvas.height = viewport.height
 
-                    // Canvas styling (adding 15px offset because for some reason the text is too to the left)
-                    canvas.style.cssText = 'display: block; margin: 10px auto; margin-left: 15px;'
+                    // Canvas styling
+                    canvas.style.cssText = 'display: block; margin: 10px auto;'
 
                     // Render PDF page into canvas context
                     const renderContext = {
@@ -118,6 +118,7 @@ function pdfViewer({ content }) {
                     const textContent = await page.getTextContent()
                     const textLayerDiv = document.createElement('div')
                     textLayerDiv.className = 'textLayer'
+                    textLayerDiv.style.cssText = 'margin-left: 15px;' // adding 15px offset because for some reason the text is too to the left
                     const textLayer = new pdfjsLib.TextLayer({
                         textContentSource: textContent,
                         container: textLayerDiv,
