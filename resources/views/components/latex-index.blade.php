@@ -1,5 +1,6 @@
 <x-filament::section class="w-full rounded-l-none">
     <x-slot name="heading">Filament Latex</x-slot>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf_viewer.min.css" />
     <div
         class="grid grid-cols-2 gap-4"
         x-data="{ message: '' }"
@@ -34,6 +35,7 @@
             })"
             wire:ignore
         >
+            <div id="text-layer" class="textLayer"></div>
             @if ($pdfUrl)
                 {{-- The viewer will create its own canvas elements --}}
             @else

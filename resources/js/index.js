@@ -2,8 +2,8 @@ import { basicSetup, EditorView } from 'codemirror'
 import { EditorState } from '@codemirror/state'
 import { defaultKeymap } from '@codemirror/commands'
 import { keymap } from '@codemirror/view'
-import * as pdfjsLib from 'pdfjs-dist'
-import pdfWorkerSource from 'pdfjs-dist/build/pdf.worker.mjs?raw'
+import "pdfjs-dist/build/pdf.worker.mjs";
+import * as pdfjsLib from "pdfjs-dist";
 
 function codeEditor({ content }) {
     return {
@@ -57,7 +57,6 @@ function pdfViewer({ content }) {
 
         // Asynchronous download of PDF
         async render(pdfUrl = null) {
-            pdfjsLib.GlobalWorkerOptions.workerSrc = '/dist/pdf.worker.js';
             const container = this.$el;
 
             // Function to calculate optimal scale
@@ -105,7 +104,6 @@ function pdfViewer({ content }) {
 
                     // Canvas styling
                     canvas.style.cssText = 'display: block; margin: 10px auto;';
-                    wrapper.appendChild(canvas);
 
                     // Render PDF page into canvas context
                     const renderContext = {
@@ -114,6 +112,23 @@ function pdfViewer({ content }) {
                     };
 
                     await page.render(renderContext).promise;
+
+                    const textContent = await page.getTextContent();
+                    const textLayerDiv = document.createElement("div");
+                    textLayerDiv.className = "textLayer";
+                    const textLayer = new pdfjsLib.TextLayer({
+                        textContentSource: textContent,
+                        container: textLayerDiv,
+                        viewport: viewport,
+                    })
+                    await textLayer.render();
+
+                    const pageDiv = document.createElement('div');
+                    pageDiv.className = 'page';
+                    pageDiv.style.cssText = "position: relative;";
+                    pageDiv.appendChild(canvas);
+                    pageDiv.appendChild(textLayerDiv);
+                    wrapper.appendChild(pageDiv);
                 }
             } catch (error) {
                 console.error('Error loading PDF:', error);
