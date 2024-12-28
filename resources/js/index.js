@@ -41,6 +41,7 @@ function codeEditor({ content }) {
 function pdfViewer({ content }) {
     return {
         baseUrl: content,
+        pageNumber: 1,
 
         async init() {
             await this.render()
@@ -55,49 +56,41 @@ function pdfViewer({ content }) {
             })
         },
 
-        // Asynchronous download of PDF
-        async render(pdfUrl = null) {
-            const container = this.$el
+        // Function to calculate optimal scale
+        calculateOptimalScale(
+            page,
+            containerWidth,
+            containerHeight,
+        ) {
+            const viewport = page.getViewport({ scale: 1.0 })
+            const containerAspectRatio = containerWidth / containerHeight
+            const pageAspectRatio = viewport.width / viewport.height
 
-            // Function to calculate optimal scale
-            const calculateOptimalScale = (
-                page,
-                containerWidth,
-                containerHeight,
-            ) => {
-                const viewport = page.getViewport({ scale: 1.0 })
-                const containerAspectRatio = containerWidth / containerHeight
-                const pageAspectRatio = viewport.width / viewport.height
-
-                let scale
-                if (containerAspectRatio > pageAspectRatio) {
-                    scale = (containerHeight * 0.95) / viewport.height
-                } else {
-                    scale = (containerWidth * 0.95) / viewport.width
-                }
-
-                return scale
+            let scale
+            if (containerAspectRatio > pageAspectRatio) {
+                scale = (containerHeight * 0.95) / viewport.height
+            } else {
+                scale = (containerWidth * 0.95) / viewport.width
             }
 
-            // Create a wrapper div for proper scrolling
-            const wrapper = document.createElement('div')
-            wrapper.style.cssText =
-                'width: 100%; height: 100%; overflow: auto; position: relative;'
-            container.appendChild(wrapper)
+            return scale
+        },
 
-            try {
-                const urlToLoad = pdfUrl || this.baseUrl
-                const loadingTask = pdfjsLib.getDocument(urlToLoad)
-                const pdf = await loadingTask.promise
-                console.log('PDF loaded:', urlToLoad)
+        // Asynchronous download of PDF
+        async render() {
+            const container = this.$el
+            container.style.cssText = 'width: 100%; overflow: auto; position: relative;';
 
-                const containerWidth = wrapper.clientWidth
-                const containerHeight = wrapper.clientHeight
+            const loadingTask = pdfjsLib.getDocument(this.baseUrl)
+            loadingTask.promise.then(async (pdf) => {
+                const containerWidth = container.clientWidth
+                const containerHeight = container.clientHeight
 
                 // Render all pages
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i)
-                    const scale = calculateOptimalScale(
+                for (this.pageNumber; this.pageNumber <= pdf.numPages; this.pageNumber++) {
+                    // Render the page as an image
+                    const page = await pdf.getPage(this.pageNumber)
+                    const scale = this.calculateOptimalScale(
                         page,
                         containerWidth,
                         containerHeight,
@@ -111,17 +104,17 @@ function pdfViewer({ content }) {
                     canvas.width = viewport.width
                     canvas.height = viewport.height
 
-                    // Canvas styling
-                    canvas.style.cssText = 'display: block; margin: 10px auto;'
+                    // Canvas styling (adding 15px offset because for some reason the text is too to the left)
+                    canvas.style.cssText = 'display: block; margin: 10px auto; margin-left: 15px;'
 
                     // Render PDF page into canvas context
                     const renderContext = {
                         canvasContext: context,
                         viewport: viewport,
                     }
-
                     await page.render(renderContext).promise
 
+                    // Render text layer
                     const textContent = await page.getTextContent()
                     const textLayerDiv = document.createElement('div')
                     textLayerDiv.className = 'textLayer'
@@ -137,17 +130,17 @@ function pdfViewer({ content }) {
                     pageDiv.style.cssText = 'position: relative;'
                     pageDiv.appendChild(canvas)
                     pageDiv.appendChild(textLayerDiv)
-                    wrapper.appendChild(pageDiv)
+                    container.appendChild(pageDiv)
                 }
-            } catch (error) {
+            }).catch(function(error) {
                 console.error('Error loading PDF:', error)
-                wrapper.innerHTML = `
+                container.innerHTML = `
                     <div class="p-4">
                         <p class="text-red-500">Error loading PDF:</p>
                         <p class="text-sm mt-2">${error.message}</p>
                     </div>
                 `
-            }
+            })
         },
     }
 }
