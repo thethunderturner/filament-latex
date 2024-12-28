@@ -1,6 +1,9 @@
 <x-filament::section class="w-full rounded-l-none">
     <x-slot name="heading">Filament Latex</x-slot>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf_viewer.min.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf_viewer.min.css"
+    />
     <div
         class="grid grid-cols-2 gap-4"
         x-data="{ message: '' }"
@@ -26,13 +29,13 @@
 
         {{-- PDF Preview --}}
         <div
-            class="h-screen rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+            class="h-screen overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
             x-ignore
             ax-load
             ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
             x-data="pdfViewer({
-                content: @js($pdfUrl),
-            })"
+                        content: @js($pdfUrl),
+                    })"
             wire:ignore
         >
             <div id="text-layer" class="textLayer"></div>
