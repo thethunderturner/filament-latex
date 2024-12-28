@@ -38,7 +38,6 @@
                     })"
             wire:ignore
         >
-            <div id="text-layer" class="textLayer"></div>
             @if ($pdfUrl)
                 {{-- The viewer will create its own canvas elements --}}
             @else
