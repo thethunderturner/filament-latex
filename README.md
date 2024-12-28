@@ -2,18 +2,32 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/thethunderturner/filament-latex.svg?style=flat-square)](https://packagist.org/packages/thethunderturner/filament-latex)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/thethunderturner/filament-latex/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/thethunderturner/filament-latex/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/thethunderturner/filament-latex/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/thethunderturner/filament-latex/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
+[![Fix PHP Code Styling](https://github.com/thethunderturner/filament-latex/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/thethunderturner/filament-latex/actions/workflows/fix-php-code-styling.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/thethunderturner/filament-latex.svg?style=flat-square)](https://packagist.org/packages/thethunderturner/filament-latex)
 
+## 🚀 Table of Contents
+- [Demo](#demo)
+- [Installation](#installation)
+  - [Compiler Installation](#compiler-installation)
+  - [Package Installation](#package-installation)
+- [Usage](#package-usage)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Demo
+
 Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX templates. The plugin is still in development, but the basic functionality is implemented.
-<div style="display: flex; align-items: center; justify-content: center;">
-    <img src="assets/filament-latex.png" alt="Filament LaTeX" style="margin-right: 10px; width: 45%;">
-    <img src="assets/filament-latex-upload.png" alt="Filament LaTeX Upload" style="width: 45%;">
+<div style="display: flex; justify-content: space-around;">
+  <img src="https://github.com/user-attachments/assets/1000dbe9-dd74-4507-8031-d0ad9f5a4170" alt="filament-latex" style="margin-right: 10px; width: 45%;">
+  <img src="https://github.com/user-attachments/assets/b0284b90-041b-419f-b7f5-bb4687c3e8dd" alt="filament-latex-upload" style="margin-left: 10px; width: 45%;">
 </div>
 
 ## Installation
 > [!IMPORTANT]
 > This branch is only compatible with Filament v3. If you are using Filament v4, please switch to branch 4.x.
+
+### Compiler Installation
 
 Before you start, make sure you have `texlive-full` or `texlive-base` installed on your system. You can install it on an Unix based system (Linux/MacOS) by running:
 ```bash
@@ -27,7 +41,10 @@ After you have installed `texlive`, find where the `pdflatex` binary is located 
 which pdflatex # for Unix based systems
 where pdflatex # for Windows
 ```
-Copy and paste the path on the plugin configuration file. <br>
+Copy the path. You will later need to paste it in the plugin configuration file.
+
+### Package Installation
+
 You can install the package via composer:
 ```bash
 composer require thethunderturner/filament-latex
@@ -50,13 +67,15 @@ You can publish the config file with:
 ```bash
 php artisan vendor:publish --tag="filament-latex-config"
 ```
-After publishing the path, make sure you replace the path of your `pdflatex` binary in the `config/filament-latex.php` file. \
-\
+After publishing the path, make sure you replace the path of your `pdflatex` binary in the `config/filament-latex.php` file.
+
 Optionally, you can publish the views using
 
 ```bash
 php artisan vendor:publish --tag="filament-latex-views"
 ```
+
+### Package Usage
 
 You can use the package by adding it to the plugins list of your panel.
 ```php
@@ -64,6 +83,23 @@ You can use the package by adding it to the plugins list of your panel.
     // ...
     FilamentLatexPlugin::make(),
 ]);
+```
+
+You also need a [custome theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) in order to compile some of the tailwind classes. You need to add the path of the blade views in the content array of `tailwind.config.js` of your theme like so:
+```js
+export default {
+    presets: [preset],
+    content: [
+        // ...
+        './vendor/thethunderturner/filament-latex/resources/views/**/*.blade.php',
+    ],
+}
+```
+
+Now we just need to compile the tailwind classes
+```bash
+npm install
+npm run build
 ```
 
 ## Changelog
@@ -77,11 +113,6 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 ## Security Vulnerabilities
 
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [Matthaios Biskas](https://github.com/thethunderturner)
-- [All Contributors](../../contributors)
 
 ## License
 
