@@ -57,9 +57,3 @@ compile({
     entryPoints: ['./resources/js/index.js'],
     outfile: './resources/dist/filament-latex.js',
 })
-
-compile({
-    ...defaultOptions,
-    entryPoints: ['./resources/js/pdf.worker.mjs'],
-    outfile: './resources/dist/pdf.worker.mjs',
-})
