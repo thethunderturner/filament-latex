@@ -49,20 +49,20 @@ function pdfViewer({ content, pagination }) {
         async init() {
             if (pagination) {
                 // Create zoom controls
-                const controls = document.createElement('div');
+                const controls = document.createElement('div')
                 controls.className =
-                    'flex gap-2 p-2 justify-start sticky top-0 bg-white dark:bg-gray-800 z-10 border-b dark:border-gray-700 border-gray-200';
+                    'flex gap-2 p-2 justify-start sticky top-0 bg-white dark:bg-gray-800 z-10 border-b dark:border-gray-700 border-gray-200'
                 controls.innerHTML = `
                     <button class="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600" @click="onPrevPage()">Previous</button>
                     <button class="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600" @click="onNextPage()">Next</button>
                     <span class="px-3 py-1">Page: <span id="page_num"></span> / <span id="page_count"></span></span>
-                `;
-                this.parent.appendChild(controls);
+                `
+                this.parent.appendChild(controls)
 
                 // Create a container for the PDF content
-                const pageContainer = document.createElement('div');
-                pageContainer.id = 'pdf-content';
-                this.parent.appendChild(pageContainer);
+                const pageContainer = document.createElement('div')
+                pageContainer.id = 'pdf-content'
+                this.parent.appendChild(pageContainer)
 
                 await this.renderPage()
             } else {
@@ -72,18 +72,15 @@ function pdfViewer({ content, pagination }) {
                     this.parent.innerHTML = ''
 
                     // Add timestamp to force refresh
-                    const refreshedUrl = this.baseUrl + '?t=' + new Date().getTime()
+                    const refreshedUrl =
+                        this.baseUrl + '?t=' + new Date().getTime()
                     await this.render(refreshedUrl)
                 })
             }
         },
 
         // Function to calculate optimal scale
-        calculateOptimalScale(
-            page,
-            containerWidth,
-            containerHeight,
-        ) {
+        calculateOptimalScale(page, containerWidth, containerHeight) {
             const viewport = page.getViewport({ scale: 1.0 })
             const containerAspectRatio = containerWidth / containerHeight
             const pageAspectRatio = viewport.width / viewport.height
@@ -99,93 +96,99 @@ function pdfViewer({ content, pagination }) {
         },
 
         async renderPage() {
-            const pageContainer = this.parent.querySelector('#pdf-content');
-            pageContainer.innerHTML = ''; // Clear only the PDF content
+            const pageContainer = this.parent.querySelector('#pdf-content')
+            pageContainer.innerHTML = '' // Clear only the PDF content
 
-            this.parent.style.cssText = 'width: 100%; overflow: auto; position: relative;';
+            this.parent.style.cssText =
+                'width: 100%; overflow: auto; position: relative;'
             this.pageRendering = true
 
             const loadingTask = pdfjsLib.getDocument(this.baseUrl)
-            loadingTask.promise.then(async (pdf) => {
-                const containerWidth = this.parent.clientWidth
-                const containerHeight = this.parent.clientHeight
-                this.totalPages = pdf.numPages
-                document.getElementById('page_count').textContent = this.totalPages
-                document.getElementById('page_num').textContent = this.pageNumber;
+            loadingTask.promise
+                .then(async (pdf) => {
+                    const containerWidth = this.parent.clientWidth
+                    const containerHeight = this.parent.clientHeight
+                    this.totalPages = pdf.numPages
+                    document.getElementById('page_count').textContent =
+                        this.totalPages
+                    document.getElementById('page_num').textContent =
+                        this.pageNumber
 
-                // Render page
-                pdf.getPage(this.pageNumber).then(async (page) => {
-                    const scale = this.calculateOptimalScale(
-                        page,
-                        containerWidth,
-                        containerHeight,
-                    )
-                    const viewport = page.getViewport({ scale })
+                    // Render page
+                    pdf.getPage(this.pageNumber).then(async (page) => {
+                        const scale = this.calculateOptimalScale(
+                            page,
+                            containerWidth,
+                            containerHeight,
+                        )
+                        const viewport = page.getViewport({ scale })
 
-                    // Prepare canvas using PDF page dimensions
-                    const canvas = document.createElement('canvas')
-                    const context = canvas.getContext('2d')
+                        // Prepare canvas using PDF page dimensions
+                        const canvas = document.createElement('canvas')
+                        const context = canvas.getContext('2d')
 
-                    canvas.width = viewport.width
-                    canvas.height = viewport.height
+                        canvas.width = viewport.width
+                        canvas.height = viewport.height
 
-                    // Canvas styling
-                    canvas.style.cssText = 'display: block; margin: 10px auto;'
+                        // Canvas styling
+                        canvas.style.cssText =
+                            'display: block; margin: 10px auto;'
 
-                    // Render PDF page into canvas context
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport,
-                    }
-                    await page.render(renderContext).promise.then(() => {
-                        this.pageRendering = false
-                    })
+                        // Render PDF page into canvas context
+                        const renderContext = {
+                            canvasContext: context,
+                            viewport: viewport,
+                        }
+                        await page.render(renderContext).promise.then(() => {
+                            this.pageRendering = false
+                        })
 
-                    // Render text layer
-                    const textContent = await page.getTextContent()
-                    const textLayerDiv = document.createElement('div')
-                    textLayerDiv.className = 'textLayer'
-                    textLayerDiv.style.cssText = 'margin-left: 15px;'
-                    const textLayer = new pdfjsLib.TextLayer({
-                        textContentSource: textContent,
-                        container: textLayerDiv,
-                        viewport: viewport,
-                    })
-                    await textLayer.render().then(() => {
-                        const pageDiv = document.createElement('div')
-                        pageDiv.className = 'page'
-                        pageDiv.style.cssText = 'position: relative;'
-                        pageDiv.appendChild(canvas)
-                        pageDiv.appendChild(textLayerDiv)
-                        pageContainer.appendChild(pageDiv)
+                        // Render text layer
+                        const textContent = await page.getTextContent()
+                        const textLayerDiv = document.createElement('div')
+                        textLayerDiv.className = 'textLayer'
+                        textLayerDiv.style.cssText = 'margin-left: 15px;'
+                        const textLayer = new pdfjsLib.TextLayer({
+                            textContentSource: textContent,
+                            container: textLayerDiv,
+                            viewport: viewport,
+                        })
+                        await textLayer.render().then(() => {
+                            const pageDiv = document.createElement('div')
+                            pageDiv.className = 'page'
+                            pageDiv.style.cssText = 'position: relative;'
+                            pageDiv.appendChild(canvas)
+                            pageDiv.appendChild(textLayerDiv)
+                            pageContainer.appendChild(pageDiv)
+                        })
                     })
                 })
-            }).catch(function(error) {
-                console.error('Error loading PDF:', error)
-                pageContainer.innerHTML = `
+                .catch(function (error) {
+                    console.error('Error loading PDF:', error)
+                    pageContainer.innerHTML = `
                     <div class="p-4">
                         <p class="text-red-500">Error loading PDF:</p>
                         <p class="text-sm mt-2">${error.message}</p>
                     </div>
                 `
-            })
+                })
         },
 
         onPrevPage() {
             if (this.pageNumber <= 1) {
-                return;
+                return
             }
-            this.pageNumber--;
-            this.renderPage();
+            this.pageNumber--
+            this.renderPage()
         },
 
         onNextPage() {
             if (this.pageNumber >= this.totalPages) {
-                return;
+                return
             }
-            this.pageNumber++;
-            this.renderPage();
-        }
+            this.pageNumber++
+            this.renderPage()
+        },
     }
 }
 

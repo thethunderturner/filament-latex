@@ -1,6 +1,6 @@
 @php
-$pdfJS = $this->usePdfJs();
-$paginate = $this->paginate();
+    $pdfJS = $this->usePdfJs();
+    $paginate = $this->paginate();
 @endphp
 
 <x-filament::section class="w-full rounded-l-none">
@@ -33,16 +33,16 @@ $paginate = $this->paginate();
         ></div>
 
         {{-- PDF Preview --}}
-        @if($pdfJS)
+        @if ($pdfJS)
             <div
                 class="h-screen overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
                 x-ignore
                 ax-load
                 ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
                 x-data="pdfViewer({
-                        content: @js($pdfUrl),
-                        pagination: true,
-                    })"
+                            content: @js($pdfUrl),
+                            pagination: true,
+                        })"
                 wire:ignore
             >
                 @if ($pdfUrl)
