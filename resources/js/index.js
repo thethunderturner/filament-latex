@@ -55,6 +55,7 @@ function pdfViewer({ content, pagination }) {
                 controls.innerHTML = `
                     <button class="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600" @click="onPrevPage()">Previous</button>
                     <button class="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600" @click="onNextPage()">Next</button>
+                    <span class="px-3 py-1">Page: <span id="page_num"></span> / <span id="page_count"></span></span>
                 `;
                 this.parent.appendChild(controls);
 
@@ -109,6 +110,8 @@ function pdfViewer({ content, pagination }) {
                 const containerWidth = this.parent.clientWidth
                 const containerHeight = this.parent.clientHeight
                 this.totalPages = pdf.numPages
+                document.getElementById('page_count').textContent = this.totalPages
+                document.getElementById('page_num').textContent = this.pageNumber;
 
                 // Render page
                 pdf.getPage(this.pageNumber).then(async (page) => {

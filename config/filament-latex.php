@@ -20,5 +20,5 @@ return [
      * PDF Settings
      */
     'paginate' => false, // If true, the PDF will be paginated (using next/prev buttons)
-    'pdf-js' => false, // If true, the PDF will be displayed using PDF.js. If false, filament will use the browser's default PDF viewer.
+    'pdf-js' => true, // If true, the PDF will be displayed using PDF.js. If false, filament will use the browser's default PDF viewer.
 ];
