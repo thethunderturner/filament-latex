@@ -12,6 +12,7 @@ use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\Support\Htmlable;
 use TheThunderTurner\FilamentLatex\Concerns\CanUploadFiles;
 use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
+use TheThunderTurner\FilamentLatex\Concerns\Utils;
 use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
 use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
@@ -21,6 +22,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
     use CanUseDocument;
     use InteractsWithActions;
     use InteractsWithForms;
+    use Utils;
 
     protected static string $resource = FilamentLatexResource::class;
 

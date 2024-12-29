@@ -35,12 +35,12 @@ class FilamentLatexResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return config('filament-latex.navigation-label') ?? parent::getNavigationLabel();
+        return __('filament-latex::filament-latex.page.navigation.label') ?? parent::getNavigationLabel();
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return config('filament-latex.navigation-group') ?? parent::getNavigationGroup();
+        return __('filament-latex::filament-latex.page.navigation.label') ?? parent::getNavigationGroup();
     }
 
     public static function form(Form $form): Form

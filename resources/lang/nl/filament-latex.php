@@ -64,5 +64,9 @@ return [
         'list-page-title' => 'LaTeX-documenten',
         'view-page-title' => 'Document bekijken',
         'edit-page-title' => 'Document bewerken',
+        'navigation' => [
+            'label' => 'LaTeX Documenten',
+            'group' => 'LaTeX',
+        ],
     ],
 ];

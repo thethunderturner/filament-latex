@@ -5,7 +5,7 @@ on:
     paths:
       - '**.php'
   push:
-      branches: [3.x, 4.x]
+    branches: [3.x, 4.x]
 
 permissions:
   contents: write
