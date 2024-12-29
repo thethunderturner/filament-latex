@@ -15,4 +15,10 @@ return [
     'compilation-timeout' => 60, // The maximum time in seconds to wait for the compilation to finish.
     'strict-compilation' => false, // Options: strict, non-strict. Strict mode will throw exceptions on compilation errors, otherwise it will not.
     'avatar-columns' => false, // If true, the avatar columns will be shown instead of the names of the author and collaborators.
+
+    /**
+     * PDF Settings
+     */
+    'paginate' => false, // If true, the PDF will be paginated (using next/prev buttons)
+    'pdf-js' => false, // If true, the PDF will be displayed using PDF.js. If false, filament will use the browser's default PDF viewer.
 ];

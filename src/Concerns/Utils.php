@@ -61,6 +61,28 @@ trait Utils
     }
 
     /**
+     * Checks if PDF.js should display the whole pdf,
+     * or show each page separately.
+     *
+     * @return bool
+     */
+    public function paginate(): bool
+    {
+        return config('filament-latex.paginate') ?? false;
+    }
+
+    /**
+     * Checks if PDF.js should be used to display the pdf or
+     * the browser's default PDF viewer.
+     *
+     * @return bool
+     */
+    public function usePdfJs(): bool
+    {
+        return config('filament-latex.pdf-js') ?? true;
+    }
+
+    /**
      * @throws Exception
      */
     public function getUserModel(): string

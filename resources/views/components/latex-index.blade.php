@@ -1,3 +1,8 @@
+@php
+$pdfJS = $this->usePdfJs();
+$paginate = $this->paginate();
+@endphp
+
 <x-filament::section class="w-full rounded-l-none">
     <x-slot name="heading">Filament Latex</x-slot>
     <link
@@ -28,22 +33,39 @@
         ></div>
 
         {{-- PDF Preview --}}
-        <div
-            class="h-screen overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-            x-ignore
-            ax-load
-            ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
-            x-data="pdfViewer({
+        @if($pdfJS)
+            <div
+                class="h-screen overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
+                x-ignore
+                ax-load
+                ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
+                x-data="pdfViewer({
                         content: @js($pdfUrl),
                         pagination: true,
                     })"
-            wire:ignore
-        >
-            @if ($pdfUrl)
-                {{-- The viewer will create its own canvas elements --}}
-            @else
-                <p class="p-4">No PDF available to preview.</p>
-            @endif
-        </div>
+                wire:ignore
+            >
+                @if ($pdfUrl)
+                    {{-- The viewer will create its own canvas elements --}}
+                @else
+                    <p class="p-4">No PDF available to preview.</p>
+                @endif
+            </div>
+        @else
+            <div class="rounded-lg border border-gray-200 dark:border-gray-700">
+                @if ($pdfUrl)
+                    <iframe
+                        x-data="{ pdfUrl: @js($pdfUrl) }"
+                        {{-- '?' + new Date().getTime() is a hack that allows for refresh upon compilation --}}
+                        {{-- New timestamp forces broswer to listen to new query, bypassing caching issues (Unsure if there is a better way). --}}
+                        x-on:document-compiled.window="pdfUrl = @js($pdfUrl) + '?' + new Date().getTime()"
+                        class="h-screen w-full"
+                        :src="pdfUrl"
+                    ></iframe>
+                @else
+                    <p>No PDF available to preview.</p>
+                @endif
+            </div>
+        @endif
     </div>
 </x-filament::section>
