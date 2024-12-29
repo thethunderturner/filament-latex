@@ -38,22 +38,43 @@ function codeEditor({ content }) {
  * @param {string} params.content - URL of the PDF to load
  * @returns {Object} Alpine.js component
  */
-function pdfViewer({ content }) {
+function pdfViewer({ content, pagination }) {
     return {
         baseUrl: content,
         pageNumber: 1,
+        totalPages: 0,
+        pageRendering: false,
+        parent: this.$el,
 
         async init() {
-            await this.render()
+            if (pagination) {
+                // Create zoom controls
+                const controls = document.createElement('div');
+                controls.className =
+                    'flex gap-2 p-2 justify-start sticky top-0 bg-white dark:bg-gray-800 z-10 border-b dark:border-gray-700 border-gray-200';
+                controls.innerHTML = `
+                    <button class="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600" @click="onPrevPage()">Previous</button>
+                    <button class="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600" @click="onNextPage()">Next</button>
+                `;
+                this.parent.appendChild(controls);
 
-            // Listen for livewire event to refresh the PDF
-            Livewire.on('document-compiled', async () => {
-                this.$el.innerHTML = ''
+                // Create a container for the PDF content
+                const pageContainer = document.createElement('div');
+                pageContainer.id = 'pdf-content';
+                this.parent.appendChild(pageContainer);
 
-                // Add timestamp to force refresh
-                const refreshedUrl = this.baseUrl + '?t=' + new Date().getTime()
-                await this.render(refreshedUrl)
-            })
+                await this.renderPage()
+            } else {
+                await this.render()
+                // Listen for livewire event to refresh the PDF
+                Livewire.on('document-compiled', async () => {
+                    this.parent.innerHTML = ''
+
+                    // Add timestamp to force refresh
+                    const refreshedUrl = this.baseUrl + '?t=' + new Date().getTime()
+                    await this.render(refreshedUrl)
+                })
+            }
         },
 
         // Function to calculate optimal scale
@@ -76,20 +97,21 @@ function pdfViewer({ content }) {
             return scale
         },
 
-        // Asynchronous download of PDF
-        async render() {
-            const container = this.$el
-            container.style.cssText = 'width: 100%; overflow: auto; position: relative;';
+        async renderPage() {
+            const pageContainer = this.parent.querySelector('#pdf-content');
+            pageContainer.innerHTML = ''; // Clear only the PDF content
+
+            this.parent.style.cssText = 'width: 100%; overflow: auto; position: relative;';
+            this.pageRendering = true
 
             const loadingTask = pdfjsLib.getDocument(this.baseUrl)
             loadingTask.promise.then(async (pdf) => {
-                const containerWidth = container.clientWidth
-                const containerHeight = container.clientHeight
+                const containerWidth = this.parent.clientWidth
+                const containerHeight = this.parent.clientHeight
+                this.totalPages = pdf.numPages
 
-                // Render all pages
-                for (this.pageNumber; this.pageNumber <= pdf.numPages; this.pageNumber++) {
-                    // Render the page as an image
-                    const page = await pdf.getPage(this.pageNumber)
+                // Render page
+                pdf.getPage(this.pageNumber).then(async (page) => {
                     const scale = this.calculateOptimalScale(
                         page,
                         containerWidth,
@@ -112,30 +134,32 @@ function pdfViewer({ content }) {
                         canvasContext: context,
                         viewport: viewport,
                     }
-                    await page.render(renderContext).promise
+                    await page.render(renderContext).promise.then(() => {
+                        this.pageRendering = false
+                    })
 
                     // Render text layer
                     const textContent = await page.getTextContent()
                     const textLayerDiv = document.createElement('div')
                     textLayerDiv.className = 'textLayer'
-                    textLayerDiv.style.cssText = 'margin-left: 15px;' // adding 15px offset because for some reason the text is too to the left
+                    textLayerDiv.style.cssText = 'margin-left: 15px;'
                     const textLayer = new pdfjsLib.TextLayer({
                         textContentSource: textContent,
                         container: textLayerDiv,
                         viewport: viewport,
                     })
-                    await textLayer.render()
-
-                    const pageDiv = document.createElement('div')
-                    pageDiv.className = 'page'
-                    pageDiv.style.cssText = 'position: relative;'
-                    pageDiv.appendChild(canvas)
-                    pageDiv.appendChild(textLayerDiv)
-                    container.appendChild(pageDiv)
-                }
+                    await textLayer.render().then(() => {
+                        const pageDiv = document.createElement('div')
+                        pageDiv.className = 'page'
+                        pageDiv.style.cssText = 'position: relative;'
+                        pageDiv.appendChild(canvas)
+                        pageDiv.appendChild(textLayerDiv)
+                        pageContainer.appendChild(pageDiv)
+                    })
+                })
             }).catch(function(error) {
                 console.error('Error loading PDF:', error)
-                container.innerHTML = `
+                pageContainer.innerHTML = `
                     <div class="p-4">
                         <p class="text-red-500">Error loading PDF:</p>
                         <p class="text-sm mt-2">${error.message}</p>
@@ -143,6 +167,22 @@ function pdfViewer({ content }) {
                 `
             })
         },
+
+        onPrevPage() {
+            if (this.pageNumber <= 1) {
+                return;
+            }
+            this.pageNumber--;
+            this.renderPage();
+        },
+
+        onNextPage() {
+            if (this.pageNumber >= this.totalPages) {
+                return;
+            }
+            this.pageNumber++;
+            this.renderPage();
+        }
     }
 }
 

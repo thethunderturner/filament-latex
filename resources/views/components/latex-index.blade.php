@@ -35,6 +35,7 @@
             ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
             x-data="pdfViewer({
                         content: @js($pdfUrl),
+                        pagination: true,
                     })"
             wire:ignore
         >
