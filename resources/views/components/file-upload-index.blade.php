@@ -12,9 +12,7 @@
         @forelse ($files as $file)
             @include('filament-latex::components.file-upload', ['file' => $file])
         @empty
-            <div class="text-center text-gray-500 dark:text-gray-400">
-                No files uploaded.
-            </div>
+            <div class="text-center text-gray-500 dark:text-gray-400">No files uploaded.</div>
         @endforelse
     </div>
 </x-filament::section>

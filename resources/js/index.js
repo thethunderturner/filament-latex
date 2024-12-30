@@ -17,10 +17,7 @@ function codeEditor({ content }) {
                         EditorView.lineWrapping,
                         EditorView.updateListener.of((update) => {
                             if (update.docChanged) {
-                                this.$dispatch(
-                                    'input',
-                                    update.state.doc.toString(),
-                                )
+                                this.$dispatch('input', update.state.doc.toString())
                             }
                         }),
                     ],
@@ -137,47 +134,51 @@ function pdfViewer({ content, pagination }) {
             this.pageRendering = true
 
             const loadingTask = pdfjsLib.getDocument(this.baseUrl)
-            loadingTask.promise.then(async (pdf) => {
-                this.totalPages = pdf.numPages
-                document.getElementById('page_count').textContent = this.totalPages
-                document.getElementById('page_num').textContent = this.pageNumber
+            loadingTask.promise
+                .then(async (pdf) => {
+                    this.totalPages = pdf.numPages
+                    document.getElementById('page_count').textContent = this.totalPages
+                    document.getElementById('page_num').textContent = this.pageNumber
 
-                // Render page
-                pdf.getPage(this.pageNumber).then(async (page) => {
-                    const pageDiv = await this.renderPageContent(page, this.parent)
-                    pageContainer.appendChild(pageDiv)
-                    this.pageRendering = false
+                    // Render page
+                    pdf.getPage(this.pageNumber).then(async (page) => {
+                        const pageDiv = await this.renderPageContent(page, this.parent)
+                        pageContainer.appendChild(pageDiv)
+                        this.pageRendering = false
+                    })
                 })
-            }).catch(function(error) {
-                console.error('Error loading PDF:', error)
-                pageContainer.innerHTML = `
+                .catch(function (error) {
+                    console.error('Error loading PDF:', error)
+                    pageContainer.innerHTML = `
                     <div class="p-4">
                         <p class="text-red-500">Error loading PDF:</p>
                         <p class="text-sm mt-2">${error.message}</p>
                     </div>
                 `
-            })
+                })
         },
 
         async render() {
             this.setupContainer(this.parent)
             const loadingTask = pdfjsLib.getDocument(this.baseUrl)
-            loadingTask.promise.then(async (pdf) => {
-                // Render all pages
-                for (this.pageNumber = 1; this.pageNumber <= pdf.numPages; this.pageNumber++) {
-                    const page = await pdf.getPage(this.pageNumber)
-                    const pageDiv = await this.renderPageContent(page, this.parent)
-                    this.parent.appendChild(pageDiv)
-                }
-            }).catch((error) => {
-                console.error('Error loading PDF:', error)
-                this.parent.innerHTML = `
+            loadingTask.promise
+                .then(async (pdf) => {
+                    // Render all pages
+                    for (this.pageNumber = 1; this.pageNumber <= pdf.numPages; this.pageNumber++) {
+                        const page = await pdf.getPage(this.pageNumber)
+                        const pageDiv = await this.renderPageContent(page, this.parent)
+                        this.parent.appendChild(pageDiv)
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading PDF:', error)
+                    this.parent.innerHTML = `
                     <div class="p-4">
                         <p class="text-red-500">Error loading PDF:</p>
                         <p class="text-sm mt-2">${error.message}</p>
                     </div>
                 `
-            })
+                })
         },
 
         onPrevPage() {
