@@ -12,6 +12,8 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-latex';
 
+    public static string $viewNamespace = 'filament-latex';
+
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name)
@@ -24,8 +26,25 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
-                    ->askToRunMigrations();
+                    ->askToRunMigrations()
+                    ->askToStarRepoOnGitHub('thethunderturner/filament-latex');
             });
+
+        if (file_exists($package->basePath("/../config/{$package->name}.php"))) {
+            $package->hasConfigFile();
+        }
+
+        if (file_exists($package->basePath('/../database/migrations'))) {
+            $package->hasMigrations($this->getMigrations());
+        }
+
+        if (file_exists($package->basePath('/../resources/lang'))) {
+            $package->hasTranslations();
+        }
+
+        if (file_exists($package->basePath('/../resources/views'))) {
+            $package->hasViews(static::$viewNamespace);
+        }
     }
 
     public function packageBooted(): void
@@ -37,16 +56,6 @@ class FilamentLatexServiceProvider extends PackageServiceProvider
             package: 'thethunderturner/filament-latex'
         );
     }
-
-    /**
-     * Publish the package's SVG assets.
-     */
-    //    public function bootingPackage(): void
-    //    {
-    //        $this->publishes([
-    //            $this->package->basePath('/../resources/svg') => base_path("resources/svg/vendor/{$this->packageView($this->package->viewNamespace)}"),
-    //        ], "{$this->packageView($this->package->viewNamespace)}-svg");
-    //    }
 
     protected function getMigrations(): array
     {
