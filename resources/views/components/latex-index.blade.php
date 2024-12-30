@@ -34,6 +34,7 @@
 
         {{-- PDF Preview --}}
         @if ($pdfJS)
+            {{-- Use PDF.js --}}
             <div
                 class="h-screen overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
                 x-ignore
@@ -41,7 +42,7 @@
                 ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
                 x-data="pdfViewer({
                             content: @js($pdfUrl),
-                            pagination: true,
+                            pagination: @js($paginate),
                         })"
                 wire:ignore
             >
@@ -52,6 +53,7 @@
                 @endif
             </div>
         @else
+            {{-- Use browser defaullt PDF viewer --}}
             <div class="rounded-lg border border-gray-200 dark:border-gray-700">
                 @if ($pdfUrl)
                     <iframe
