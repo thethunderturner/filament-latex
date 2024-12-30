@@ -174,6 +174,74 @@ function pdfViewer({ content, pagination }) {
                 })
         },
 
+        // Asynchronous download of PDF
+        async render() {
+            const container = this.$el
+            container.style.cssText = 'width: 100%; overflow: auto; position: relative;';
+
+            const loadingTask = pdfjsLib.getDocument(this.baseUrl)
+            loadingTask.promise.then(async (pdf) => {
+                const containerWidth = container.clientWidth
+                const containerHeight = container.clientHeight
+
+                // Render all pages
+                for (this.pageNumber; this.pageNumber <= pdf.numPages; this.pageNumber++) {
+                    // Render the page as an image
+                    const page = await pdf.getPage(this.pageNumber)
+                    const scale = this.calculateOptimalScale(
+                        page,
+                        containerWidth,
+                        containerHeight,
+                    )
+                    const viewport = page.getViewport({ scale })
+
+                    // Prepare canvas using PDF page dimensions
+                    const canvas = document.createElement('canvas')
+                    const context = canvas.getContext('2d')
+
+                    canvas.width = viewport.width
+                    canvas.height = viewport.height
+
+                    // Canvas styling
+                    canvas.style.cssText = 'display: block; margin: 10px auto;'
+
+                    // Render PDF page into canvas context
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                    }
+                    await page.render(renderContext).promise
+
+                    // Render text layer
+                    const textContent = await page.getTextContent()
+                    const textLayerDiv = document.createElement('div')
+                    textLayerDiv.className = 'textLayer'
+                    textLayerDiv.style.cssText = 'margin-left: 15px;' // adding 15px offset because for some reason the text is too to the left
+                    const textLayer = new pdfjsLib.TextLayer({
+                        textContentSource: textContent,
+                        container: textLayerDiv,
+                        viewport: viewport,
+                    })
+                    await textLayer.render()
+
+                    const pageDiv = document.createElement('div')
+                    pageDiv.className = 'page'
+                    pageDiv.style.cssText = 'position: relative;'
+                    pageDiv.appendChild(canvas)
+                    pageDiv.appendChild(textLayerDiv)
+                    container.appendChild(pageDiv)
+                }
+            }).catch(function(error) {
+                console.error('Error loading PDF:', error)
+                container.innerHTML = `
+                    <div class="p-4">
+                        <p class="text-red-500">Error loading PDF:</p>
+                        <p class="text-sm mt-2">${error.message}</p>
+                    </div>
+                `
+            })
+        },
+
         onPrevPage() {
             if (this.pageNumber <= 1) {
                 return
