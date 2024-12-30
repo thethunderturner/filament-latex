@@ -11,7 +11,9 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 class FilamentLatexServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-latex';
+
     public static string $viewNamespace = 'filament-latex';
+
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name)
