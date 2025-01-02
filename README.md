@@ -96,6 +96,14 @@ export default {
 }
 ```
 
+### Documentation
+You can override the default resource, by specifying the new resource in the callback of the plugin:
+```php
+FilamentLatexPlugin::make()
+    ->resource('path/to/your/resource')
+```
+Your new resource should extend the default `FilamentLatexResource` class.
+
 Now we just need to compile the tailwind classes
 ```bash
 npm install

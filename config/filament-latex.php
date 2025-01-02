@@ -1,5 +1,7 @@
 <?php
 
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
+
 return [
     'navigation-icon' => null,
 
@@ -9,6 +11,7 @@ return [
      * The parser to use. Options: pdflatex, xelatex, lualatex (pdflatex is the default). The parser must be installed on the server.
      */
     'user-model' => 'App\Models\User',
+    'resource' => FilamentLatexResource::class,
     'storage' => 'private',  // If you want to change the storage, you have to create a filesystem disk in config/filesystems.php
     'storage-url' => '/private_storage', // The URL to the storage disk. This is used to generate the download link.
     'parser' => '/usr/bin/pdflatex', // The latex parser to use. Options: pdflatex, xelatex, lualatex (pdflatex is the default).

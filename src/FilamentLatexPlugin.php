@@ -5,10 +5,11 @@ namespace TheThunderTurner\FilamentLatex;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Illuminate\Auth\Middleware\Authenticate;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class FilamentLatexPlugin implements Plugin
 {
+    protected ?string $resource = null;
+
     public function getId(): string
     {
         return 'filament-latex';
@@ -18,7 +19,7 @@ class FilamentLatexPlugin implements Plugin
     {
         $panel
             ->resources([
-                FilamentLatexResource::class,
+                $this->getResource(),
             ]);
         $panel->authMiddleware([
             Authenticate::class,
@@ -41,5 +42,17 @@ class FilamentLatexPlugin implements Plugin
         $plugin = filament(app(static::class)->getId());
 
         return $plugin;
+    }
+
+    public function getResource(): string
+    {
+        return $this->resource ?? config('filament-latex.resource');
+    }
+
+    public function resource(string $resource): static
+    {
+        $this->resource = $resource;
+
+        return $this;
     }
 }
