@@ -5,7 +5,6 @@ namespace TheThunderTurner\FilamentLatex;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Illuminate\Auth\Middleware\Authenticate;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
 
 class FilamentLatexPlugin implements Plugin
 {
