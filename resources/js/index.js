@@ -109,7 +109,6 @@ function pdfViewer({ content, pagination }) {
             const textContent = await page.getTextContent()
             const textLayerDiv = document.createElement('div')
             textLayerDiv.className = 'textLayer'
-            textLayerDiv.style.cssText = 'margin-left: 15px;'
             const textLayer = new pdfjsLib.TextLayer({
                 textContentSource: textContent,
                 container: textLayerDiv,
