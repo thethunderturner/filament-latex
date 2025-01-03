@@ -76,18 +76,27 @@ trait CanUseDocument
         // Build the pdflatex command
         $command = [
             config('filament-latex.parser'),
-            '-halt-on-error',
+            config('filament-latex.strict-compilation') ? '-halt-on-error' : '-interaction=nonstopmode',
             '-output-directory=' . $pdfDir,
             $filePath,
         ];
 
+        // File has to be deleted before compiling. This is because we need to check if a pdf can even be compiled.
+        $storage->delete($recordID . '/compiled/main.pdf');
+
         // Run the pdflatex command
         $result = Process::timeout(config('filament-latex.compilation-timeout'))->run($command);
 
-        // Mimic grep behavior to check for specific LaTeX errors
-        $output = $result->output();
-        $errorPattern = '/^!.*$/m'; // Match lines starting with '!'
-        if (preg_match($errorPattern, $output) || $result->failed()) {
+        // Check if the PDF file was generated
+        if ($storage->exists($recordID . '/compiled/main.pdf')) {
+            Notification::make()
+                ->title(__('filament-latex::filament-latex.page.compile.success-title'))
+                ->color('success')
+                ->body(__('filament-latex::filament-latex.page.compile.success-body'))
+                ->send();
+
+            $this->dispatch('document-compiled');
+        } else {
             Notification::make()
                 ->title(__('filament-latex::filament-latex.page.compile.error-title'))
                 ->color('danger')
@@ -98,18 +107,8 @@ trait CanUseDocument
                 'output' => $result->output(),
                 'error' => $result->errorOutput(),
             ]);
-        } else {
-            Notification::make()
-                ->title(__('filament-latex::filament-latex.page.compile.success-title'))
-                ->color('success')
-                ->body(__('filament-latex::filament-latex.page.compile.success-body'))
-                ->send();
-
-            $this->dispatch('document-compiled');
-
         }
     }
-
     /**
      * Download the compiled document.
      */
