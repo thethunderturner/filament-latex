@@ -157,6 +157,11 @@ class FilamentLatexResource extends Resource
                     ->options(fn () => $userModel::all()->pluck('name', 'id'))
                     ->multiple()
                     ->preload(),
+                SelectFilter::make('collaborators_id')
+                    ->default(fn () => [Auth::id()])
+                    ->options(fn () => $userModel::all()->pluck('name', 'id'))
+                    // ->query(fn (Builder $query, $data): Builder => dd($data))
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
