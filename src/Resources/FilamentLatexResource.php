@@ -153,15 +153,23 @@ class FilamentLatexResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('author_id')
+                    ->label(__('filament-latex::filament-latex.column.author.name'))
                     ->default(fn () => Auth::id())
                     ->options(fn () => $userModel::all()->pluck('name', 'id'))
-                    ->multiple()
-                    ->preload(),
+                    ->native(false),
                 SelectFilter::make('collaborators_id')
-                    ->default(fn () => [Auth::id()])
+                    ->label(__('filament-latex::filament-latex.column.collaborators'))
                     ->options(fn () => $userModel::all()->pluck('name', 'id'))
-                    // ->query(fn (Builder $query, $data): Builder => dd($data))
-                    ->preload(),
+                    ->query(function ($query, $data) {
+                        if (! empty($data)) {
+                            // Apply the filter for JSON column
+                            foreach ($data as $id) {
+                                $query->whereJsonContains('collaborators_id', $id);
+                            }
+                        }
+                    })
+                    ->multiple()
+                    ->native(false),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
