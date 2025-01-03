@@ -164,8 +164,8 @@ class FilamentLatexResource extends Resource
                         ->color('warning'),
                     Tables\Actions\DeleteAction::make()
                         ->visible(function ($record) {
-                            // In the future, only the creator can delete the record
-                            return true;
+                            // Only the creator can delete the record
+                            return $record->author_id === Auth::id();
                         })
                         ->requiresConfirmation()
                         ->color('danger'),
