@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
@@ -103,6 +104,7 @@ class FilamentLatexResource extends Resource
                 TextColumn::make('id')
                     ->label(__('filament-latex::filament-latex.column.id')),
                 TextColumn::make('name')
+                    ->searchable()
                     ->label(__('filament-latex::filament-latex.column.name')),
                 ImageColumn::make('author_avatar')
                     ->label(__('filament-latex::filament-latex.column.author_avatar'))
@@ -150,7 +152,24 @@ class FilamentLatexResource extends Resource
                     ->since(),
             ])
             ->filters([
-                //
+                SelectFilter::make('author_id')
+                    ->label(__('filament-latex::filament-latex.column.author.name'))
+                    ->default(fn () => Auth::id())
+                    ->options(fn () => $userModel::all()->pluck('name', 'id'))
+                    ->native(false),
+                SelectFilter::make('collaborators_id')
+                    ->label(__('filament-latex::filament-latex.column.collaborators'))
+                    ->options(fn () => $userModel::all()->pluck('name', 'id'))
+                    ->query(function ($query, $data) {
+                        if (! empty($data)) {
+                            // Apply the filter for JSON column
+                            foreach ($data as $id) {
+                                $query->whereJsonContains('collaborators_id', $id);
+                            }
+                        }
+                    })
+                    ->multiple()
+                    ->native(false),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -158,8 +177,8 @@ class FilamentLatexResource extends Resource
                         ->color('warning'),
                     Tables\Actions\DeleteAction::make()
                         ->visible(function ($record) {
-                            // In the future, only the creator can delete the record
-                            return true;
+                            // Only the creator can delete the record
+                            return $record->author_id === Auth::id();
                         })
                         ->requiresConfirmation()
                         ->color('danger'),
