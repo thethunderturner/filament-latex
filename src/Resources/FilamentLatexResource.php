@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
@@ -103,6 +104,7 @@ class FilamentLatexResource extends Resource
                 TextColumn::make('id')
                     ->label(__('filament-latex::filament-latex.column.id')),
                 TextColumn::make('name')
+                    ->searchable()
                     ->label(__('filament-latex::filament-latex.column.name')),
                 ImageColumn::make('author_avatar')
                     ->label(__('filament-latex::filament-latex.column.author_avatar'))
@@ -150,7 +152,11 @@ class FilamentLatexResource extends Resource
                     ->since(),
             ])
             ->filters([
-                //
+                SelectFilter::make('author_id')
+                    ->default(fn () => Auth::id())
+                    ->options(fn () => $userModel::all()->pluck('name', 'id'))
+                    ->multiple()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
