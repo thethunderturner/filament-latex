@@ -5,6 +5,13 @@
 [![Fix PHP Code Styling](https://github.com/thethunderturner/filament-latex/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/thethunderturner/filament-latex/actions/workflows/fix-php-code-styling.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/thethunderturner/filament-latex.svg?style=flat-square)](https://packagist.org/packages/thethunderturner/filament-latex)
 
+## Compatibility
+
+| Peek | Status | Filament | PHP |
+|------|----------|-----|--------|
+| [3.x](https://github.com/thethunderturner/filament-latex/edit/3.x) | Current version | ^3.2.43 | ^8.1 |
+| [4.x](https://github.com/thethunderturner/filament-latex/edit/4.x) | To Be Added... | ^4.0 | ^8.1 |
+
 ## 🚀 Table of Contents
 - [Demo](#demo)
 - [Installation](#installation)
