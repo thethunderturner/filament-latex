@@ -6,7 +6,7 @@
         "prettier": "npx prettier --write ."
     },
     "devDependencies": {
-        "esbuild": "^0.17.19",
+        "esbuild": "^0.25.0",
         "prettier": "^3.4.2",
         "prettier-plugin-blade": "^2.1.19",
         "prettier-plugin-tailwindcss": "^0.6.9"
