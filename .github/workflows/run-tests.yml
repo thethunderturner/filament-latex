@@ -16,6 +16,8 @@ jobs:
         # Removed prefer-lowest
         stability: [prefer-stable]
         include:
+          - laravel: 12.*
+            testbench: 10.*
           - laravel: 11.*
             testbench: 9.*
           - laravel: 10.*
