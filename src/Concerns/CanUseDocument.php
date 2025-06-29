@@ -114,6 +114,7 @@ trait CanUseDocument
             ]);
         }
     }
+
     /**
      * Download the compiled document.
      */
