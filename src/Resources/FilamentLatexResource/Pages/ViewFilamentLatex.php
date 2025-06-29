@@ -67,9 +67,17 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                 ->label(__('filament-latex::filament-latex.page.compile.action'))
                 ->color('success')
                 ->extraAttributes([
-                    'class' => 'rounded-l-none',
+                    'class' => 'rounded-none -mr-3',
                 ])
                 ->action(fn () => $this->compileDocument()),
+            Action::make('options')
+                ->hiddenLabel()
+                ->color('success')
+                ->tooltip(__('filament-latex::filament-latex.options.tooltip'))
+                ->icon('heroicon-o-cog-6-tooth')
+                ->extraAttributes([
+                    'class' => 'rounded-l-none',
+                ]),
         ];
     }
 }

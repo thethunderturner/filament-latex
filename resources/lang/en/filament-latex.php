@@ -40,6 +40,7 @@ return [
     */
     'page' => [
         'download.tooltip' => 'Download PDF',
+        'options.tooltip' => 'Options',
         'compile' => [
             'action' => 'Compile LaTeX',
             'success-title' => 'Document compiled successfully!',
