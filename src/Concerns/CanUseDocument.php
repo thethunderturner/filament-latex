@@ -84,8 +84,13 @@ trait CanUseDocument
         // File has to be deleted before compiling. This is because we need to check if a pdf can even be compiled.
         $storage->delete($recordID . '/compiled/main.pdf');
 
-        // Run the pdflatex command
-        $result = Process::timeout(config('filament-latex.compilation-timeout'))->run($command);
+        // Get the directory containing main.tex to use as working directory
+        $workingDir = dirname($filePath);
+
+        // Run the pdflatex command with the working directory set to the directory containing main.tex
+        $result = Process::timeout(config('filament-latex.compilation-timeout'))
+            ->path($workingDir)
+            ->run($command);
 
         // Check if the PDF file was generated
         if ($storage->exists($recordID . '/compiled/main.pdf')) {
