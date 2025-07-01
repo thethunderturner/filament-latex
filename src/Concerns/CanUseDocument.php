@@ -75,8 +75,8 @@ trait CanUseDocument
 
         // Build the pdflatex command
         $command = [
-            config('filament-latex.parser'),
-            config('filament-latex.strict-compilation') ? '-halt-on-error' : '-interaction=nonstopmode',
+            $this->filamentLatex->parser,
+            $this->filamentLatex->strict_compilation ? '-halt-on-error' : '-interaction=nonstopmode',
             '-output-directory=' . $pdfDir,
             $filePath,
         ];

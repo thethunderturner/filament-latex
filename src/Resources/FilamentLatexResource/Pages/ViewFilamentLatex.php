@@ -5,8 +5,10 @@ namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\Support\Htmlable;
@@ -73,11 +75,62 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
             Action::make('options')
                 ->hiddenLabel()
                 ->color('success')
-                ->tooltip(__('filament-latex::filament-latex.options.tooltip'))
+                ->tooltip(__('filament-latex::filament-latex.page.options.tooltip'))
                 ->icon('heroicon-o-cog-6-tooth')
                 ->extraAttributes([
                     'class' => 'rounded-l-none',
-                ]),
+                ])
+                ->requiresConfirmation()
+                ->modalHeading(__('filament-latex::filament-latex.page.options.modal.heading', ['default' => 'Document Options']))
+                ->modalDescription(__('filament-latex::filament-latex.page.options.modal.description', ['default' => 'Configure document compilation and display options']))
+                ->modalSubmitActionLabel(__('filament-latex::filament-latex.page.options.modal.submit', ['default' => 'Save']))
+                ->fillForm(fn (): array => [
+                    'parser' => $this->filamentLatex->parser,
+                    'strict_compilation' => $this->filamentLatex->strict_compilation,
+                    'pdfjs' => $this->filamentLatex->pdfjs,
+                    'paginate' => $this->filamentLatex->paginate,
+                ])
+                ->form([
+                    Select::make('parser')
+                        ->label(__('filament-latex::filament-latex.page.options.parser.label', ['default' => 'TeX Parser']))
+                        ->native(false)
+                        ->options(config('filament-latex.parsers')),
+                    Select::make('strict_compilation')
+                        ->label(__('filament-latex::filament-latex.page.options.compilation.label', ['default' => 'Compilation Options']))
+                        ->native(false)
+                        ->options([
+                            true => 'Strict (halt on error)',
+                            false => 'Non-strict (continue on error)',
+                        ]),
+                    Select::make('pdfjs')
+                        ->label(__('filament-latex::filament-latex.page.options.display.label', ['default' => 'Display Options']))
+                        ->native(false)
+                        ->options([
+                            true => 'Use PDF.js',
+                            false => 'Use browser default',
+                        ]),
+                    Select::make('paginate')
+                        ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Display Options']))
+                        ->native(false)
+                        ->options([
+                            true => 'Enabled',
+                            false => 'Disabled',
+                        ]),
+                ])
+                ->action(function (array $data): void {
+                    // Update the current FilamentLatex instance with the new options
+                    $this->filamentLatex->update([
+                        'parser' => $data['parser'],
+                        'strict_compilation' => $data['strict_compilation'],
+                        'pdfjs' => $data['pdfjs'],
+                        'paginate' => $data['paginate'],
+                    ]);
+
+                    Notification::make()
+                        ->title(__('filament-latex::filament-latex.page.options.notification.title', ['default' => 'Options Updated']))
+                        ->success()
+                        ->send();
+                }),
         ];
     }
 }
