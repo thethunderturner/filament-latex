@@ -74,7 +74,6 @@ class FilamentLatexResource extends Resource
                         Section::make([
                             DateTimePicker::make('deadline')
                                 ->label(__('filament-latex::filament-latex.field.deadline'))
-                                ->required()
                                 ->native(false)
                                 ->placeholder('DD-MM-YYYY HH:MM')
                                 ->suffixIcon('heroicon-m-calendar')
@@ -82,9 +81,15 @@ class FilamentLatexResource extends Resource
                                 ->displayFormat('d-m-Y H:i'),
                             Select::make('collaborators_id')
                                 ->label(__('filament-latex::filament-latex.field.collaborators_id'))
+                                ->native(false)
                                 ->multiple()
                                 ->options(fn () => $userModel::all()->pluck('name', 'id'))
                                 ->searchable(),
+                            Select::make('parser')
+                                ->label(__('filament-latex::filament-latex.page.options.parser.label', ['default' => 'TeX Parser']))
+                                ->required()
+                                ->native(false)
+                                ->options(config('filament-latex.parsers')),
                         ]),
                     ])
                     ->columnSpan(['lg' => 1]),

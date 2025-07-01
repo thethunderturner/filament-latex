@@ -14,12 +14,27 @@ use TheThunderTurner\FilamentLatex\Concerns\Utils;
  * @property string $deadline
  * @property int $author_id
  * @property array $collaborators_id
+ * @property string $parser
+ * @property bool $strict_compilation
+ * @property bool $pdfjs
+ * @property bool $paginate
  */
 class FilamentLatex extends Model
 {
     use Utils;
 
-    protected $fillable = ['name', 'content', 'attachment', 'attachment_file_names', 'deadline', 'author_id', 'collaborators_id'];
+    protected $fillable = [
+        'name',
+        'content',
+        'attachment',
+        'attachment_file_names',
+        'deadline', 'author_id',
+        'collaborators_id',
+        'parser',
+        'strict_compilation',
+        'pdfjs',
+        'paginate',
+    ];
 
     protected $table = 'filament-latex';
 

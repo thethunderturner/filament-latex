@@ -40,6 +40,27 @@ return [
     */
     'page' => [
         'download.tooltip' => 'Download PDF',
+        'options' => [
+            'tooltip' => 'Options',
+            'modal' => [
+                'heading' => 'Document Options',
+                'description' => 'Configure the compilation process',
+                'submit' => 'Save',
+            ],
+            'parser' => [
+                'label' => 'LaTeX Parser',
+            ],
+            'compilation' => [
+                'label' => 'Compilation Mode',
+            ],
+            'display' => [
+                'label' => 'Display Options',
+                'paginate' => 'Paginate (Only on pdfjs)',
+            ],
+            'notification' => [
+                'title' => 'Options Updated',
+            ],
+        ],
         'compile' => [
             'action' => 'Compile LaTeX',
             'success-title' => 'Document compiled successfully!',
