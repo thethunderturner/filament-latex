@@ -74,6 +74,10 @@ return [
             'notification' => 'Document created successfully!',
             'button' => 'Create Document',
         ],
+        'rename' => [
+            'label' => 'Rename Document',
+            'helper' => 'A file with this name already exists.',
+        ],
 
         // Refers to the file upload action
         'file-upload' => [
