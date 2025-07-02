@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
@@ -111,12 +112,14 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                         ->label(__('filament-latex::filament-latex.page.options.display.label', ['default' => 'Display Options']))
                         ->native(false)
                         ->columnSpan(2)
+                        ->live()
                         ->options([
                             true => 'Use PDF.js',
                             false => 'Use browser default',
                         ]),
                     Toggle::make('paginate')
                         ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Pagination']))
+                        ->disabled(fn (Get $get) => ! $get('pdfjs'))
                         ->columnSpan(1),
                     Toggle::make('auto_recompile')
                         ->label(__('filament-latex::filament-latex.page.options.auto_recompile', ['default' => 'Auto-recompilation']))

@@ -55,7 +55,7 @@ return [
             ],
             'display' => [
                 'label' => 'Display Options',
-                'paginate' => 'Paginate (Only on PDF.js)',
+                'paginate' => 'Paginate',
             ],
             'notification' => [
                 'title' => 'Options Updated',
