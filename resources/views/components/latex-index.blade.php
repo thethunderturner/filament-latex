@@ -3,10 +3,20 @@
     $paginate = $this->paginate();
     $autocompileDelay = $this->autocompileDelay();
     $autocompile = $this->autocompile();
+    $isFileUploadCollapsed = $this->isFileUploadCollapsed;
 @endphp
 
-<x-filament::section class="w-full rounded-l-none">
-    <x-slot name="heading">Filament Latex</x-slot>
+<x-filament::section
+    class="w-full"
+    x-bind:class="{ 'rounded-lg': !isFileUploadCollapsed, 'rounded-l-none': isFileUploadCollapsed }"
+>
+    <x-slot name="heading">
+        <button type="button" @click="isFileUploadCollapsed = !isFileUploadCollapsed">
+            <x-heroicon-o-arrow-left x-show="isFileUploadCollapsed" class="mr-4 h-4 w-4 text-gray-500" />
+            <x-heroicon-o-arrow-right x-show="!isFileUploadCollapsed" class="mr-4 h-4 w-4 text-gray-500" />
+        </button>
+        Filament Latex
+    </x-slot>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.3.31/pdf_viewer.min.css" />
     <div
         class="grid grid-cols-2 gap-4"
@@ -28,7 +38,7 @@
             x-data="codeEditor({
                         content: @js($latexContent),
                         autocompile: @js($autocompile),
-                        autocompileDelay: @js($autocompileDelay)
+                        autocompileDelay: @js($autocompileDelay),
                     })"
             wire:ignore
         ></div>

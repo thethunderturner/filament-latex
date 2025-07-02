@@ -36,6 +36,8 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
 
     public string $latexContent = '';
 
+    public bool $isFileUploadCollapsed = false;
+
     public function mount(int | string $record): void
     {
         $this->filamentLatex = FilamentLatex::findOrFail($record);
