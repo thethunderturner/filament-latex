@@ -79,6 +79,40 @@ trait Utils
     }
 
     /**
+     * Returns the time (in ms) that has to pass before the
+     * document automatically recompiles
+     */
+    public function getAutorecompileDelay(): int
+    {
+        return config('filament-latex.auto-recompilation-delay', 500);
+    }
+
+    /**
+     * Alias for getAutorecompileDelay() for use in blade templates
+     */
+    public function autocompileDelay(): int
+    {
+        return $this->getAutorecompileDelay();
+    }
+
+    /**
+     * Checks if the document should be automatically recompiled
+     */
+    public function getAutorecompile(): bool
+    {
+        return $this->filamentLatex->auto_recompile ?? false;
+    }
+
+    /**
+     * Alias for getAutorecompile() for use in blade templates
+     */
+    public function autocompile(): bool
+    {
+        return $this->getAutorecompile();
+    }
+
+
+    /**
      * @throws Exception
      */
     public function getUserModel(): string

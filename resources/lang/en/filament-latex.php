@@ -55,11 +55,12 @@ return [
             ],
             'display' => [
                 'label' => 'Display Options',
-                'paginate' => 'Paginate (Only on pdfjs)',
+                'paginate' => 'Paginate (Only on PDF.js)',
             ],
             'notification' => [
                 'title' => 'Options Updated',
             ],
+            'auto_recompile' => 'Auto-recompilation',
         ],
         'compile' => [
             'action' => 'Compile LaTeX',

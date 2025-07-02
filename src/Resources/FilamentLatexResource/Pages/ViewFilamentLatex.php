@@ -89,6 +89,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                     'strict_compilation' => $this->filamentLatex->strict_compilation,
                     'pdfjs' => $this->filamentLatex->pdfjs,
                     'paginate' => $this->filamentLatex->paginate,
+                    'auto_recompile' => $this->filamentLatex->auto_recompile,
                 ])
                 ->form([
                     Select::make('parser')
@@ -110,7 +111,14 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                             false => 'Use browser default',
                         ]),
                     Select::make('paginate')
-                        ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Display Options']))
+                        ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Pagination']))
+                        ->native(false)
+                        ->options([
+                            true => 'Enabled',
+                            false => 'Disabled',
+                        ]),
+                    Select::make('auto_recompile')
+                        ->label(__('filament-latex::filament-latex.page.options.auto_recompile', ['default' => 'Auto-recompilation']))
                         ->native(false)
                         ->options([
                             true => 'Enabled',
@@ -124,6 +132,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                         'strict_compilation' => $data['strict_compilation'],
                         'pdfjs' => $data['pdfjs'],
                         'paginate' => $data['paginate'],
+                        'auto_recompile' => $data['auto_recompile'],
                     ]);
 
                     Notification::make()

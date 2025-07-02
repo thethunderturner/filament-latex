@@ -1,11 +1,13 @@
 @php
     $pdfJS = $this->usePdfJs();
     $paginate = $this->paginate();
+    $autocompileDelay = $this->autocompileDelay();
+    $autocompile = $this->autocompile();
 @endphp
 
 <x-filament::section class="w-full rounded-l-none">
     <x-slot name="heading">Filament Latex</x-slot>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf_viewer.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.3.31/pdf_viewer.min.css" />
     <div
         class="grid grid-cols-2 gap-4"
         x-data="{ message: '' }"
@@ -25,6 +27,8 @@
             ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
             x-data="codeEditor({
                         content: @js($latexContent),
+                        autocompile: @js($autocompile),
+                        autocompileDelay: @js($autocompileDelay)
                     })"
             wire:ignore
         ></div>
@@ -59,7 +63,7 @@
                         {{-- New timestamp forces broswer to listen to new query, bypassing caching issues (Unsure if there is a better way). --}}
                         x-on:document-compiled.window="pdfUrl = @js($pdfUrl) + '?' + new Date().getTime()"
                         class="h-screen w-full"
-                        :src="pdfUrl"
+                        src="pdfUrl"
                     ></iframe>
                 @else
                     <p>No PDF available to preview.</p>

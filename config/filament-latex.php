@@ -21,5 +21,6 @@ return [
         '/usr/bin/lualatex' => 'lualatex',
     ],
     'compilation-timeout' => 60, // The maximum time in seconds to wait for the compilation to finish.
+    'auto-recompilation-delay' => 500, // The time to wait (in ms) before the document is automatically compiled
     'avatar-columns' => false, // If true, the avatar columns will be shown instead of the names of the author and collaborators.
 ];

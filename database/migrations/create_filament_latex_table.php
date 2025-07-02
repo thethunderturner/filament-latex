@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('strict_compilation')->default(false);
             $table->boolean('paginate')->default(false);
             $table->boolean('pdfjs')->default(true);
+            $table->boolean('auto_recompile')->default(false);
             $table->timestamps();
         });
     }
