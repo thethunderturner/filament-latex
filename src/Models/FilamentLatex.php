@@ -16,8 +16,9 @@ use TheThunderTurner\FilamentLatex\Concerns\Utils;
  * @property array $collaborators_id
  * @property string $parser
  * @property bool $strict_compilation
- * @property bool $pdfjs
  * @property bool $paginate
+ * @property bool $pdfjs
+ * @property bool $auto_recompile
  */
 class FilamentLatex extends Model
 {
@@ -32,8 +33,9 @@ class FilamentLatex extends Model
         'collaborators_id',
         'parser',
         'strict_compilation',
-        'pdfjs',
         'paginate',
+        'pdfjs',
+        'auto_recompile',
     ];
 
     protected $table = 'filament-latex';

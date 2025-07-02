@@ -6,8 +6,10 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
@@ -89,15 +91,19 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                     'strict_compilation' => $this->filamentLatex->strict_compilation,
                     'pdfjs' => $this->filamentLatex->pdfjs,
                     'paginate' => $this->filamentLatex->paginate,
+                    'auto_recompile' => $this->filamentLatex->auto_recompile,
                 ])
+                ->modalWidth('xl')
                 ->form([
                     Select::make('parser')
                         ->label(__('filament-latex::filament-latex.page.options.parser.label', ['default' => 'TeX Parser']))
                         ->native(false)
+                        ->columnSpan(2)
                         ->options(config('filament-latex.parsers')),
                     Select::make('strict_compilation')
                         ->label(__('filament-latex::filament-latex.page.options.compilation.label', ['default' => 'Compilation Options']))
                         ->native(false)
+                        ->columnSpan(2)
                         ->options([
                             true => 'Strict (halt on error)',
                             false => 'Non-strict (continue on error)',
@@ -105,17 +111,19 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                     Select::make('pdfjs')
                         ->label(__('filament-latex::filament-latex.page.options.display.label', ['default' => 'Display Options']))
                         ->native(false)
+                        ->columnSpan(2)
+                        ->live()
                         ->options([
                             true => 'Use PDF.js',
                             false => 'Use browser default',
                         ]),
-                    Select::make('paginate')
-                        ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Display Options']))
-                        ->native(false)
-                        ->options([
-                            true => 'Enabled',
-                            false => 'Disabled',
-                        ]),
+                    Toggle::make('paginate')
+                        ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Pagination']))
+                        ->disabled(fn (Get $get) => ! $get('pdfjs'))
+                        ->columnSpan(1),
+                    Toggle::make('auto_recompile')
+                        ->label(__('filament-latex::filament-latex.page.options.auto_recompile', ['default' => 'Auto-recompilation']))
+                        ->columnSpan(1),
                 ])
                 ->action(function (array $data): void {
                     // Update the current FilamentLatex instance with the new options
@@ -124,6 +132,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                         'strict_compilation' => $data['strict_compilation'],
                         'pdfjs' => $data['pdfjs'],
                         'paginate' => $data['paginate'],
+                        'auto_recompile' => $data['auto_recompile'],
                     ]);
 
                     Notification::make()

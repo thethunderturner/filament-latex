@@ -5,8 +5,10 @@ import { keymap } from '@codemirror/view'
 import 'pdfjs-dist/build/pdf.worker.mjs'
 import * as pdfjsLib from 'pdfjs-dist'
 
-function codeEditor({ content }) {
+function codeEditor({ content, autocompileDelay, autocompile }) {
     return {
+        timer: null,
+
         init() {
             const editor = new EditorView({
                 state: EditorState.create({
@@ -17,7 +19,22 @@ function codeEditor({ content }) {
                         EditorView.lineWrapping,
                         EditorView.updateListener.of((update) => {
                             if (update.docChanged) {
-                                this.$dispatch('input', update.state.doc.toString())
+                                const newContent = update.state.doc.toString()
+                                this.$dispatch('input', newContent)
+
+                                // Handle autorecompilation
+                                if (autocompile) {
+                                    // Clear previous timer if it exists
+                                    if (this.timer) {
+                                        clearTimeout(this.timer)
+                                    }
+
+                                    // Set a new timer
+                                    this.timer = setTimeout(() => {
+                                        // Call Livewire method to compile the document
+                                        Livewire.find(this.$wire.id).call('compileDocument')
+                                    }, autocompileDelay)
+                                }
                             }
                         }),
                     ],
