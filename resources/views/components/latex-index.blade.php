@@ -3,10 +3,20 @@
     $paginate = $this->paginate();
     $autocompileDelay = $this->autocompileDelay();
     $autocompile = $this->autocompile();
+    $isFileUploadVisible = $this->isFileUploadCollapsed;
 @endphp
 
 <x-filament::section class="w-full rounded-l-none">
-    <x-slot name="heading">Filament Latex</x-slot>
+    <x-slot name="heading">
+        <button
+            type="button"
+            @click="isFileUploadVisible = !isFileUploadVisible"
+        >
+            <x-heroicon-o-arrow-left x-show="isFileUploadVisible" class="w-4 h-4 text-gray-500 mr-4"/>
+            <x-heroicon-o-arrow-right x-show="!isFileUploadVisible" class="w-4 h-4 text-gray-500 mr-4"/>
+        </button>
+        Filament Latex
+    </x-slot>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.3.31/pdf_viewer.min.css" />
     <div
         class="grid grid-cols-2 gap-4"

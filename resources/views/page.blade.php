@@ -5,11 +5,17 @@
 @endphp
 
 <x-filament-panels::page>
-    <div class="inline-flex w-full justify-stretch rounded-md" role="group">
+    <div x-data="{ isFileUploadVisible: true }" class="inline-flex w-full justify-stretch rounded-md" role="group">
         {{-- File Upload Container --}}
-        @include('filament-latex::components.file-upload-index', ['files' => $files])
+        <div x-show="isFileUploadVisible">
+            @include('filament-latex::components.file-upload-index', ['files' => $files])
+        </div>
 
         {{-- Latex Container --}}
-        @include('filament-latex::components.latex-index', ['latexContent' => $latexContent, 'pdfUrl' => $pdfUrl])
+        @include('filament-latex::components.latex-index', [
+            'latexContent' => $latexContent,
+            'pdfUrl' => $pdfUrl,
+            'isFileUploadVisible' => true
+        ])
     </div>
 </x-filament-panels::page>
