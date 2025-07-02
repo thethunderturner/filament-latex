@@ -14,6 +14,7 @@ trait CanUploadFiles
     use Utils;
 
     protected string $extension;
+
     protected string $renamedFileHelperText = '';
 
     /**
