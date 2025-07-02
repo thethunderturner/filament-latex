@@ -111,7 +111,6 @@ trait Utils
         return $this->getAutorecompile();
     }
 
-
     /**
      * @throws Exception
      */
