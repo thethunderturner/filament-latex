@@ -66,7 +66,7 @@ trait Utils
      */
     public function paginate(): bool
     {
-        return config('filament-latex.paginate') ?? false;
+        return $this->filamentLatex->paginate ?? false;
     }
 
     /**
@@ -75,7 +75,7 @@ trait Utils
      */
     public function usePdfJs(): bool
     {
-        return config('filament-latex.pdf-js') ?? true;
+        return $this->filamentLatex->pdfjs ?? true;
     }
 
     /**

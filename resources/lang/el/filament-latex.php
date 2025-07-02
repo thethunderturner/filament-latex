@@ -40,6 +40,7 @@ return [
     */
     'page' => [
         'download.tooltip' => 'Λήψη PDF',
+        'options.tooltip' => 'Ρυθμήσεις',
         'compile' => [
             'action' => 'Μεταγλώττιση LaTeX',
             'success-title' => 'Το έγγραφο μεταγλωττίστηκε με επιτυχία!',

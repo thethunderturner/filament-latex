@@ -15,11 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('content')->nullable();
-            $table->dateTime('deadline');
+            $table->dateTime('deadline')->nullable();
             $table->bigInteger('author_id');
             $table->json('collaborators_id')->nullable();
             $table->json('attachment')->nullable();
             $table->json('attachment_file_names')->nullable();
+            $table->string('parser');
+            $table->boolean('strict_compilation')->default(false);
+            $table->boolean('paginate')->default(false);
+            $table->boolean('pdfjs')->default(true);
             $table->timestamps();
         });
     }
