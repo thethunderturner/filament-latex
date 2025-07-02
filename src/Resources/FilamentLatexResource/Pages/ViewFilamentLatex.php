@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -91,14 +92,17 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                     'paginate' => $this->filamentLatex->paginate,
                     'auto_recompile' => $this->filamentLatex->auto_recompile,
                 ])
+                ->modalWidth('xl')
                 ->form([
                     Select::make('parser')
                         ->label(__('filament-latex::filament-latex.page.options.parser.label', ['default' => 'TeX Parser']))
                         ->native(false)
+                        ->columnSpan(2)
                         ->options(config('filament-latex.parsers')),
                     Select::make('strict_compilation')
                         ->label(__('filament-latex::filament-latex.page.options.compilation.label', ['default' => 'Compilation Options']))
                         ->native(false)
+                        ->columnSpan(2)
                         ->options([
                             true => 'Strict (halt on error)',
                             false => 'Non-strict (continue on error)',
@@ -106,24 +110,17 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                     Select::make('pdfjs')
                         ->label(__('filament-latex::filament-latex.page.options.display.label', ['default' => 'Display Options']))
                         ->native(false)
+                        ->columnSpan(2)
                         ->options([
                             true => 'Use PDF.js',
                             false => 'Use browser default',
                         ]),
-                    Select::make('paginate')
+                    Toggle::make('paginate')
                         ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Pagination']))
-                        ->native(false)
-                        ->options([
-                            true => 'Enabled',
-                            false => 'Disabled',
-                        ]),
-                    Select::make('auto_recompile')
+                        ->columnSpan(1),
+                    Toggle::make('auto_recompile')
                         ->label(__('filament-latex::filament-latex.page.options.auto_recompile', ['default' => 'Auto-recompilation']))
-                        ->native(false)
-                        ->options([
-                            true => 'Enabled',
-                            false => 'Disabled',
-                        ]),
+                        ->columnSpan(1),
                 ])
                 ->action(function (array $data): void {
                     // Update the current FilamentLatex instance with the new options
