@@ -7,10 +7,10 @@
 
 ## Compatibility
 
-| Peek | Status           | Filament | PHP |
-|------|------------------|-----|--------|
-| [3.x](https://github.com/thethunderturner/filament-latex/edit/3.x) | Previous version | ^3.2.43 | ^8.1 |
-| [4.x](https://github.com/thethunderturner/filament-latex/edit/4.x) | Current version  | ^4.0 | ^8.1 |
+| Peek                                                               | Status           | Filament | PHP  |
+|--------------------------------------------------------------------|------------------|----------|------|
+| [3.x](https://github.com/thethunderturner/filament-latex/edit/3.x) | Previous version | ^3.2.43  | ^8.1 |
+| [4.x](https://github.com/thethunderturner/filament-latex/edit/4.x) | Current version  | ^4.0     | ^8.1 |
 
 ## Demo
 
@@ -25,13 +25,13 @@ Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX
 
 ### Compiler Installation
 
-Before you start, make sure you have `texlive-full` or `texlive-base` installed on your system. You can install it on an Unix based system (Linux/MacOS) by running:
+Before you start, make sure you have `texlive-full` or `texlive-base` installed on your system. You can install it on a Unix-based system (Linux/macOS) by running:
 ```bash
 sudo apt-get install texlive-full # for debian based systems
 sudo pacman -S texlive-full # for arch based systems
 brew install texlive-full # for MacOS
 ```
-If you are on Windows then please visit the [TeX Live website](https://tug.org/texlive/windows.html) and follow the instructions. \
+If you are on Windows, then please visit the [TeX Live website](https://tug.org/texlive/windows.html) and follow the instructions. \
 After you have installed `texlive`, find where the `pdflatex` binary is located by running this in your console:
 ```bash
 which pdflatex # for Unix based systems
@@ -46,7 +46,7 @@ You can install the package via composer:
 composer require thethunderturner/filament-latex
 ```
 
-With the install command, the package will automatically publish the migrations and the config file.
+With the installation command, the package will automatically publish the migrations and the config file.
 ```bash
 php artisan filament-latex:install
 ```
@@ -81,13 +81,13 @@ You can use the package by adding it to the plugins list of your panel.
 ]);
 ```
 
-You also need a [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) in order to compile some of the tailwind classes. You need to add the path of the blade views in the content array of `tailwind.config.js` of your theme like so:
+You also need a [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to compile some of the tailwind classes. You need to add the path of the blade views in the content array of `tailwind.config.js` of your theme like so:
 ```css
-@source './vendor/thethunderturner/filament-latex/{resources,src}/{views}/**/*.{blade.php,php}';
+@source '../../../../vendor/thethunderturner/filament-latex/resources/views/**/*.blade.php';
 ```
 
 ### Documentation
-You can override the default resource, by specifying the new resource in the callback of the plugin:
+You can override the default resource by specifying the new resource in the callback of the plugin:
 ```php
 FilamentLatexPlugin::make()
     ->resource('path/to/your/resource')
@@ -110,7 +110,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Please review [our security policy](https://github.com/thethunderturner/filament-latex/security/policy) on how to report security vulnerabilities.
 
 ## License
 
