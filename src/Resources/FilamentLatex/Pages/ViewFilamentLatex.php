@@ -3,6 +3,7 @@
 namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatex\Pages;
 
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Select;
@@ -59,90 +60,81 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
 
     public function getHeaderActions(): array
     {
-        // TODO: No need to use css hacks to group actions. In v4, this will be possible natively.
         return [
-            Action::make('downloadAction')
-                ->hiddenLabel()
-                ->color('info')
-                ->extraAttributes([
-                    'class' => 'rounded-r-none -mr-3',
-                ])
-                ->tooltip(__('filament-latex::filament-latex.download.tooltip'))
-                ->icon('heroicon-o-document-arrow-down')
-                ->action(fn () => $this->downloadDocument()),
-            Action::make('compileAction')
-                ->label(__('filament-latex::filament-latex.page.compile.action'))
-                ->color('success')
-                ->extraAttributes([
-                    'class' => 'rounded-none -mr-3',
-                ])
-                ->action(fn () => $this->compileDocument()),
-            Action::make('options')
-                ->hiddenLabel()
-                ->color('success')
-                ->tooltip(__('filament-latex::filament-latex.page.options.tooltip'))
-                ->icon('heroicon-o-cog-6-tooth')
-                ->extraAttributes([
-                    'class' => 'rounded-l-none',
-                ])
-                ->requiresConfirmation()
-                ->modalHeading(__('filament-latex::filament-latex.page.options.modal.heading', ['default' => 'Document Options']))
-                ->modalDescription(__('filament-latex::filament-latex.page.options.modal.description', ['default' => 'Configure document compilation and display options']))
-                ->modalSubmitActionLabel(__('filament-latex::filament-latex.page.options.modal.submit', ['default' => 'Save']))
-                ->fillForm(fn (): array => [
-                    'parser' => $this->filamentLatex->parser,
-                    'strict_compilation' => $this->filamentLatex->strict_compilation,
-                    'pdfjs' => $this->filamentLatex->pdfjs,
-                    'paginate' => $this->filamentLatex->paginate,
-                    'auto_recompile' => $this->filamentLatex->auto_recompile,
-                ])
-                ->modalWidth('xl')
-                ->form([
-                    Select::make('parser')
-                        ->label(__('filament-latex::filament-latex.page.options.parser.label', ['default' => 'TeX Parser']))
-                        ->native(false)
-                        ->columnSpan(2)
-                        ->options(config('filament-latex.parsers')),
-                    Select::make('strict_compilation')
-                        ->label(__('filament-latex::filament-latex.page.options.compilation.label', ['default' => 'Compilation Options']))
-                        ->native(false)
-                        ->columnSpan(2)
-                        ->options([
-                            true => 'Strict (halt on error)',
-                            false => 'Non-strict (continue on error)',
-                        ]),
-                    Select::make('pdfjs')
-                        ->label(__('filament-latex::filament-latex.page.options.display.label', ['default' => 'Display Options']))
-                        ->native(false)
-                        ->columnSpan(2)
-                        ->live()
-                        ->options([
-                            true => 'Use PDF.js',
-                            false => 'Use browser default',
-                        ]),
-                    Toggle::make('paginate')
-                        ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Pagination']))
-                        ->disabled(fn (Get $get) => ! $get('pdfjs'))
-                        ->columnSpan(1),
-                    Toggle::make('auto_recompile')
-                        ->label(__('filament-latex::filament-latex.page.options.auto_recompile', ['default' => 'Auto-recompilation']))
-                        ->columnSpan(1),
-                ])
-                ->action(function (array $data): void {
-                    // Update the current FilamentLatex instance with the new options
-                    $this->filamentLatex->update([
-                        'parser' => $data['parser'],
-                        'strict_compilation' => $data['strict_compilation'],
-                        'pdfjs' => $data['pdfjs'],
-                        'paginate' => $data['paginate'],
-                        'auto_recompile' => $data['auto_recompile'],
-                    ]);
-
-                    Notification::make()
-                        ->title(__('filament-latex::filament-latex.page.options.notification.title', ['default' => 'Options Updated']))
-                        ->success()
-                        ->send();
-                }),
+            ActionGroup::make([
+                Action::make('downloadAction')
+                    ->hiddenLabel()
+                    ->color('info')
+                    ->tooltip(__('filament-latex::filament-latex.download.tooltip'))
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->action(fn () => $this->downloadDocument()),
+                Action::make('compileAction')
+                    ->label(__('filament-latex::filament-latex.page.compile.action'))
+                    ->color('success')
+                    ->action(fn () => $this->compileDocument()),
+                Action::make('options')
+                    ->hiddenLabel()
+                    ->color('success')
+                    ->tooltip(__('filament-latex::filament-latex.page.options.tooltip'))
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->requiresConfirmation()
+                    ->modalHeading(__('filament-latex::filament-latex.page.options.modal.heading', ['default' => 'Document Options']))
+                    ->modalDescription(__('filament-latex::filament-latex.page.options.modal.description', ['default' => 'Configure document compilation and display options']))
+                    ->modalSubmitActionLabel(__('filament-latex::filament-latex.page.options.modal.submit', ['default' => 'Save']))
+                    ->fillForm(fn (): array => [
+                        'parser' => $this->filamentLatex->parser,
+                        'strict_compilation' => $this->filamentLatex->strict_compilation,
+                        'pdfjs' => $this->filamentLatex->pdfjs,
+                        'paginate' => $this->filamentLatex->paginate,
+                        'auto_recompile' => $this->filamentLatex->auto_recompile,
+                    ])
+                    ->modalWidth('xl')
+                    ->schema([
+                        Select::make('parser')
+                            ->label(__('filament-latex::filament-latex.page.options.parser.label', ['default' => 'TeX Parser']))
+                            ->native(false)
+                            ->columnSpan(2)
+                            ->options(config('filament-latex.parsers')),
+                        Select::make('strict_compilation')
+                            ->label(__('filament-latex::filament-latex.page.options.compilation.label', ['default' => 'Compilation Options']))
+                            ->native(false)
+                            ->columnSpan(2)
+                            ->options([
+                                true => 'Strict (halt on error)',
+                                false => 'Non-strict (continue on error)',
+                            ]),
+                        Select::make('pdfjs')
+                            ->label(__('filament-latex::filament-latex.page.options.display.label', ['default' => 'Display Options']))
+                            ->native(false)
+                            ->columnSpan(2)
+                            ->live()
+                            ->options([
+                                true => 'Use PDF.js',
+                                false => 'Use browser default',
+                            ]),
+                        Toggle::make('paginate')
+                            ->label(__('filament-latex::filament-latex.page.options.display.paginate', ['default' => 'Pagination']))
+                            ->disabled(fn (Get $get) => ! $get('pdfjs'))
+                            ->columnSpan(1),
+                        Toggle::make('auto_recompile')
+                            ->label(__('filament-latex::filament-latex.page.options.auto_recompile', ['default' => 'Auto-recompilation']))
+                            ->columnSpan(1),
+                    ])
+                    ->action(function (array $data): void {
+                        // Update the current FilamentLatex instance with the new options
+                        $this->filamentLatex->update([
+                            'parser' => $data['parser'],
+                            'strict_compilation' => $data['strict_compilation'],
+                            'pdfjs' => $data['pdfjs'],
+                            'paginate' => $data['paginate'],
+                            'auto_recompile' => $data['auto_recompile'],
+                        ]);
+                        Notification::make()
+                            ->title(__('filament-latex::filament-latex.page.options.notification.title', ['default' => 'Options Updated']))
+                            ->success()
+                            ->send();
+                    }),
+            ])->buttonGroup(),
         ];
     }
 }
