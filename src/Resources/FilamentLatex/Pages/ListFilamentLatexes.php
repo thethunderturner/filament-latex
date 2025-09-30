@@ -1,11 +1,11 @@
 <?php
 
-namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
+namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatex\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatex\FilamentLatexResource;
 
 class ListFilamentLatexes extends ListRecords
 {

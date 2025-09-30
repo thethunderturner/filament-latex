@@ -1,6 +1,6 @@
 <?php
 
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatex\FilamentLatexResource;
 
 return [
     'navigation-icon' => null,

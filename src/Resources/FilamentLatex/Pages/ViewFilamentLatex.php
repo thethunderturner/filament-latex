@@ -1,6 +1,6 @@
 <?php
 
-namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
+namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatex\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -18,7 +18,7 @@ use TheThunderTurner\FilamentLatex\Concerns\CanUploadFiles;
 use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
 use TheThunderTurner\FilamentLatex\Concerns\Utils;
 use TheThunderTurner\FilamentLatex\Models\FilamentLatex;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatex\FilamentLatexResource;
 
 class ViewFilamentLatex extends Page implements HasActions, HasForms
 {

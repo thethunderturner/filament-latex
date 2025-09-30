@@ -1,11 +1,11 @@
 <?php
 
-namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
+namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatex\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatex\FilamentLatexResource;
 
 class CreateFilamentLatex extends CreateRecord
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource\Pages;
+namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatex\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use TheThunderTurner\FilamentLatex\Resources\FilamentLatexResource;
+use TheThunderTurner\FilamentLatex\Resources\FilamentLatex\FilamentLatexResource;
 
 class EditFilamentLatex extends EditRecord
 {
