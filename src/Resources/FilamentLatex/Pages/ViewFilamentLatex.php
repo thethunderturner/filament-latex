@@ -9,10 +9,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
-use Filament\Support\Enums\MaxWidth;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Support\Enums\Width;
 use Illuminate\Contracts\Support\Htmlable;
 use TheThunderTurner\FilamentLatex\Concerns\CanUploadFiles;
 use TheThunderTurner\FilamentLatex\Concerns\CanUseDocument;
@@ -30,7 +30,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
 
     protected static string $resource = FilamentLatexResource::class;
 
-    protected static string $view = 'filament-latex::page';
+    protected string $view = 'filament-latex::page';
 
     public FilamentLatex $filamentLatex;
 
@@ -47,9 +47,9 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
         $this->compileDocument();
     }
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): null | string | Width
     {
-        return MaxWidth::Full;
+        return Width::Full;
     }
 
     public function getTitle(): string | Htmlable
@@ -59,6 +59,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
 
     public function getHeaderActions(): array
     {
+        // TODO: No need to use css hacks to group actions. In v4, this will be possible natively.
         return [
             Action::make('downloadAction')
                 ->hiddenLabel()
