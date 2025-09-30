@@ -34,7 +34,7 @@ trait CanUploadFiles
             ->extraAttributes([
                 'class' => 'w-full',
             ])
-            ->form([
+            ->schema([
                 FileUpload::make('attachment')
                     ->required()
                     ->disk(config('filament-latex.storage'))
@@ -92,7 +92,7 @@ trait CanUploadFiles
         return Action::make('rename')
             ->icon('heroicon-o-pencil')
             ->color('warning')
-            ->form(function (array $arguments) {
+            ->schema(function (array $arguments) {
                 $this->extension = pathinfo($arguments['file'], PATHINFO_EXTENSION);
 
                 return [
