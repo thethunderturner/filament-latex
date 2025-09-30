@@ -7,10 +7,10 @@
 
 ## Compatibility
 
-| Peek | Status | Filament | PHP |
-|------|----------|-----|--------|
-| [3.x](https://github.com/thethunderturner/filament-latex/edit/3.x) | Current version | ^3.2.43 | ^8.1 |
-| [4.x](https://github.com/thethunderturner/filament-latex/edit/4.x) | To Be Added... | ^4.0 | ^8.1 |
+| Peek | Status           | Filament | PHP |
+|------|------------------|-----|--------|
+| [3.x](https://github.com/thethunderturner/filament-latex/edit/3.x) | Previous version | ^3.2.43 | ^8.1 |
+| [4.x](https://github.com/thethunderturner/filament-latex/edit/4.x) | Current version  | ^4.0 | ^8.1 |
 
 ## Demo
 
