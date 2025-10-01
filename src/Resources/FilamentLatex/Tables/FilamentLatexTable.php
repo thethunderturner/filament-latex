@@ -55,14 +55,12 @@ class FilamentLatexTable
                 TextColumn::make('author.name')
                     ->label(__('filament-latex::filament-latex.column.author.name'))
                     ->visible(! config('filament-latex.avatar-columns'))
-                    ->badge()
-                    ->color('info'),
+                    ->badge(),
                 TextColumn::make('collaborators')
                     ->label(__('filament-latex::filament-latex.column.collaborators'))
                     ->visible(! config('filament-latex.avatar-columns'))
                     ->badge()
                     ->limit(15)
-                    ->color('info')
                     ->getStateUsing(function ($record) use ($userModel) {
                         return $userModel::whereIn('id', $record->collaborators_id)->pluck('name')->toArray();
                     }),
