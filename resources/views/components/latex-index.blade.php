@@ -39,6 +39,7 @@
                         autocompile: @js($autocompile),
                         autocompileDelay: @js($autocompileDelay),
                     })"
+            wire:ignore
         ></div>
 
         {{-- PDF Preview --}}
@@ -52,6 +53,7 @@
                             content: @js($pdfUrl),
                             pagination: @js($paginate),
                         })"
+                wire:ignore
             >
                 @if ($pdfUrl)
                     {{-- The viewer will create its own canvas elements --}}
