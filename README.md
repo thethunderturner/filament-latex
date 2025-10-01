@@ -20,9 +20,6 @@ Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX
 <img src="https://github.com/user-attachments/assets/b0284b90-041b-419f-b7f5-bb4687c3e8dd" alt="filament-latex-upload">
 
 ## Installation
-> [!IMPORTANT]
-> This branch is only compatible with Filament v3. If you are using Filament v4, please switch to branch 4.x.
-
 ### Compiler Installation
 
 Before you start, make sure you have `texlive-full` or `texlive-base` installed on your system. You can install it on a Unix-based system (Linux/macOS) by running:
