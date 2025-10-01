@@ -31,16 +31,14 @@
         {{-- Latex Editor --}}
         <div
             class="h-screen w-full overflow-auto rounded-lg border border-gray-200 dark:border-gray-700"
-            x-ignore
-            ax-load
+            x-load
             x-model="message"
-            ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
+            x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
             x-data="codeEditor({
                         content: @js($latexContent),
                         autocompile: @js($autocompile),
                         autocompileDelay: @js($autocompileDelay),
                     })"
-            wire:ignore
         ></div>
 
         {{-- PDF Preview --}}
@@ -48,14 +46,12 @@
             {{-- Use PDF.js --}}
             <div
                 class="h-screen overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
-                x-ignore
-                ax-load
-                ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
+                x-load
+                x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('filament-latex', 'thethunderturner/filament-latex') }}"
                 x-data="pdfViewer({
                             content: @js($pdfUrl),
                             pagination: @js($paginate),
                         })"
-                wire:ignore
             >
                 @if ($pdfUrl)
                     {{-- The viewer will create its own canvas elements --}}
