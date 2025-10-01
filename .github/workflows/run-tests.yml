@@ -42,5 +42,10 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
+      # Coverage driver for pest
+      - name: Install Xdebug
+        run: |
+          sudo apt-get install php-xdebug
+
       - name: Execute tests
         run: vendor/bin/pest
