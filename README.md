@@ -81,7 +81,7 @@ You can use the package by adding it to the plugins list of your panel.
 ]);
 ```
 
-You also need a [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to compile some of the tailwind classes. You need to add the path of the blade views in the content array of `tailwind.config.js` of your theme like so:
+You also need a [custom theme](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) to compile some of the tailwind classes. You need to add the path of the blade views in the `theme.css` file like so:
 ```css
 @source '../../../../vendor/thethunderturner/filament-latex/resources/views/**/*.blade.php';
 ```
