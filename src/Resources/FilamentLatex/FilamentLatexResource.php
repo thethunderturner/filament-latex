@@ -2,6 +2,7 @@
 
 namespace TheThunderTurner\FilamentLatex\Resources\FilamentLatex;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -21,7 +22,7 @@ class FilamentLatexResource extends Resource
     /**
      * The view(...) in this case is the default view for the navigation icon.
      */
-    public static function getNavigationIcon(): string | Htmlable | null
+    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
     {
         return config('filament-latex.navigation-icon') ?? view('filament-latex::svg.latex');
     }
