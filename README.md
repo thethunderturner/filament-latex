@@ -7,10 +7,10 @@
 
 ## Compatibility
 
-| Peek                                                               | Status           | Filament | PHP  |
-|--------------------------------------------------------------------|------------------|----------|------|
-| [3.x](https://github.com/thethunderturner/filament-latex/edit/3.x) | Previous version | ^3.2.43  | ^8.1 |
-| [4.x](https://github.com/thethunderturner/filament-latex/edit/4.x) | Current version  | ^4.0     | ^8.2 |
+| Peek                                                               | Status           | Filament   | PHP  |
+|--------------------------------------------------------------------|------------------|------------|------|
+| [3.x](https://github.com/thethunderturner/filament-latex/edit/3.x) | Previous version | ^3.2.43    | ^8.1 |
+| [4.x](https://github.com/thethunderturner/filament-latex/edit/4.x) | Current version  | ^4.0, ^5.0 | ^8.2 |
 
 ## Demo
 
@@ -20,6 +20,9 @@ Filament LaTeX is a powerful package that allows you to generate PDFs from LaTeX
 <img src="https://github.com/user-attachments/assets/b0284b90-041b-419f-b7f5-bb4687c3e8dd" alt="filament-latex-upload">
 
 ## Installation
+> [!IMPORTANT]
+> This branch is only compatible with Filament v3. If you are using Filament v4, please switch to branch 4.x.
+
 ### Compiler Installation
 
 Before you start, make sure you have `texlive-full` or `texlive-base` installed on your system. You can install it on a Unix-based system (Linux/macOS) by running:
@@ -78,7 +81,7 @@ You can use the package by adding it to the plugins list of your panel.
 ]);
 ```
 
-You also need a [custom theme](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) to compile some of the tailwind classes. You need to add the path of the blade views in the `theme.css` file like so:
+You also need a [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) to compile some of the tailwind classes. You need to add the path of the blade views in the content array of `tailwind.config.js` of your theme like so:
 ```css
 @source '../../../../vendor/thethunderturner/filament-latex/resources/views/**/*.blade.php';
 ```
