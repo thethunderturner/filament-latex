@@ -65,7 +65,7 @@ class ViewFilamentLatex extends Page implements HasActions, HasForms
                 Action::make('downloadAction')
                     ->hiddenLabel()
                     ->color('info')
-                    ->tooltip(__('filament-latex::filament-latex.download.tooltip'))
+                    ->tooltip(__('filament-latex::filament-latex.page.download.tooltip'))
                     ->icon('heroicon-o-document-arrow-down')
                     ->action(fn () => $this->downloadDocument()),
                 Action::make('compileAction')
