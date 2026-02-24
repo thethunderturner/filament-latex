@@ -39,7 +39,9 @@ return [
     |--------------------------------------------------------------------------
     */
     'page' => [
-        'download.tooltip' => 'Download PDF',
+        'download' => [
+            'tooltip' => 'Download PDF',
+        ],
         'options' => [
             'tooltip' => 'Options',
             'modal' => [

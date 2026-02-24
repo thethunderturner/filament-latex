@@ -39,7 +39,9 @@ return [
     |--------------------------------------------------------------------------
     */
     'page' => [
-        'download.tooltip' => 'PDF Downloaden',
+        'download' => [
+            'tooltip' => 'PDF Downloaden',
+        ],
         'options.tooltip' => 'Instellingen',
         'compile' => [
             'action' => 'Compile LaTeX',

@@ -39,7 +39,9 @@ return [
     |--------------------------------------------------------------------------
     */
     'page' => [
-        'download.tooltip' => 'Λήψη PDF',
+        'download' => [
+            'tooltip' => 'Λήψη PDF',
+        ],
         'options.tooltip' => 'Ρυθμήσεις',
         'compile' => [
             'action' => 'Μεταγλώττιση LaTeX',
