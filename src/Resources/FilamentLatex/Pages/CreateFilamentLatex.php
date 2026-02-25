@@ -50,7 +50,9 @@ class CreateFilamentLatex extends CreateRecord
             \end{document}
             LATEX;
 
-        $this->updateDocument($this->record->id ?? null, $defaultContent);
+        $filename = $this->getDocumentFilename($this->record?->name);
+
+        $this->updateDocument($this->record->id ?? null, $defaultContent, $filename);
         $this->updateRecord($this->record, $defaultContent);
     }
 }

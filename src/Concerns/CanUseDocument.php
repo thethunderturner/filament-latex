@@ -7,6 +7,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -21,11 +22,11 @@ trait CanUseDocument
     use Utils;
 
     /**
-     * We pass the content as an argument.
+     * We pass the content and the slugged name as arguments.
      */
-    protected function updateDocument(int $recordID, string $content): void
+    protected function updateDocument(int $recordID, string $content, string $filename): void
     {
-        $this->getStorage()->put($recordID . '/files/main.tex', $content);
+        $this->getStorage()->put($recordID . '/files/' . $filename . '.tex', $content);
     }
 
     /**
@@ -37,6 +38,16 @@ trait CanUseDocument
     {
         $record->content = $content;
         $record->save();
+    }
+
+    protected function getDocumentFilename(?string $name): string
+    {
+        $source = trim((string) $name);
+        if ($source == '') {
+            $source = 'document';
+        }
+
+        return Str::slug($source);
     }
 
     /**
@@ -54,15 +65,16 @@ trait CanUseDocument
     public function compileDocument(): void
     {
         $recordID = $this->filamentLatex->id;
+        $filename = $this->getDocumentFilename($this->record?->name);
 
-        $this->updateDocument($recordID, $this->latexContent);
+        $this->updateDocument($recordID, $this->latexContent, $filename);
         $this->updateRecord($this->filamentLatex, $this->latexContent);
 
         $storage = $this->getStorage();
-        $filePath = $storage->path($recordID . '/files/main.tex');
+        $filePath = $storage->path($recordID . '/files/' . $filename . '.tex');
         $pdfDir = $storage->path($recordID . '/compiled');
 
-        if (! $storage->exists($recordID . '/files/main.tex')) {
+        if (! $storage->exists($recordID . '/files/' . $filename . '.tex')) {
             throw new RuntimeException(sprintf(
                 'LaTeX file not found at: %s',
                 $filePath
@@ -82,18 +94,18 @@ trait CanUseDocument
         ];
 
         // File has to be deleted before compiling. This is because we need to check if a pdf can even be compiled.
-        $storage->delete($recordID . '/compiled/main.pdf');
+        $storage->delete($recordID . '/compiled/' . $filename . '.pdf');
 
-        // Get the directory containing main.tex to use as working directory
+        // Get the directory containing the .tex file to use as working directory
         $workingDir = dirname($filePath);
 
-        // Run the pdflatex command with the working directory set to the directory containing main.tex
+        // Run the pdflatex command with the working directory set to the directory containing the .tex file
         $result = Process::timeout(config('filament-latex.compilation-timeout'))
             ->path($workingDir)
             ->run($command);
 
         // Check if the PDF file was generated
-        if ($storage->exists($recordID . '/compiled/main.pdf')) {
+        if ($storage->exists($recordID . '/compiled/' . $filename . '.pdf')) {
             Notification::make()
                 ->title(__('filament-latex::filament-latex.page.compile.success-title'))
                 ->color('success')
@@ -123,11 +135,12 @@ trait CanUseDocument
         $this->compileDocument();
 
         $recordID = $this->filamentLatex->id ?? null;
+        $filename = $this->getDocumentFilename($this->filamentLatex->name);
         $storage = Storage::disk(config('filament-latex.storage'));
-        $pdfPath = $recordID . '/compiled/main.pdf';
+        $pdfPath = $recordID . '/compiled/' . $filename . '.pdf';
 
         if ($storage->exists($pdfPath)) {
-            return response()->download($storage->path($pdfPath), 'invoice.pdf', [
+            return response()->download($storage->path($pdfPath), $filename . '.pdf', [
                 'Content-Type' => 'application/pdf',
             ]);
         } else {
