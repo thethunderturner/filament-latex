@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class FileController extends Controller
 {
-    public function getPrivateFile(Request $request, $recordID): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function getPrivateFile(Request $request, $recordID): BinaryFileResponse
     {
         if (! Auth::check()) {
             abort(403, 'Unauthorized');
