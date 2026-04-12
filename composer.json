@@ -22,7 +22,7 @@
         "spatie/laravel-package-tools": "^1.15.0",
         "laravel/framework": "^v11.28.0|^12.0|^13.0",
         "larastan/larastan": "^3.2.0",
-        "orchestra/testbench": "^v10.2.0"
+        "orchestra/testbench": "v10.2.0|v11.0.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
